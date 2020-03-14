@@ -12,7 +12,7 @@
  */
 declare(strict_types=1);
 
-namespace Modules\tests\Knowledgebase\Admin;
+namespace Modules\Knowledgebase\tests\Admin;
 
 /**
  * @internal

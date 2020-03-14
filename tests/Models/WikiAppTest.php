@@ -12,7 +12,7 @@
  */
 declare(strict_types=1);
 
-namespace Modules\tests\Knowledgebase\Models;
+namespace Modules\Knowledgebase\tests\Models;
 
 use Modules\Knowledgebase\Models\WikiApp;
 
