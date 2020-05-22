@@ -20,6 +20,7 @@ use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use phpOMS\DataStorage\Database\DatabasePool;
 use phpOMS\Module\InstallerAbstract;
 use phpOMS\Module\ModuleInfo;
+use phpOMS\Config\SettingsInterface;
 
 /**
  * Installer class.
@@ -34,9 +35,9 @@ final class Installer extends InstallerAbstract
     /**
      * {@inheritdoc}
      */
-    public static function install(DatabasePool $dbPool, ModuleInfo $info) : void
+    public static function install(DatabasePool $dbPool, ModuleInfo $info, SettingsInterface $cfgHandler) : void
     {
-        parent::install($dbPool, $info);
+        parent::install($dbPool, $info, $cfgHandler);
 
         $category = new WikiCategory();
         $category->setName('Default');
