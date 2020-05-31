@@ -35,7 +35,7 @@ echo $this->getData('nav')->render();
                 <tbody>
                 <?php foreach ($categories as $key => $value) :
                         $url = UriFactory::build('{/prefix}admin/account/settings?{?}&id=' . $value->getId()); ?>
-                <tr data-href="<?= $url; ?>">
+                <tr tabindex="0" data-href="<?= $url; ?>">
                     <td data-label="<?= $this->getHtml('ID', '0', '0') ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getId()); ?></a>
                     <td data-label="<?= $this->getHtml('Name') ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getName()); ?></a>
                     <td data-label="<?= $this->getHtml('Parent') ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getParent() !== null ? $value->getParent()->getName() : ''); ?></a>
