@@ -64,7 +64,7 @@ final class ApiController extends Controller
         }
 
         $doc = $this->createWikiDocFromRequest($request, $response, $data);
-        $this->createModel($request->getHeader()->getAccount(), $doc, WikiDocMapper::class, 'doc');
+        $this->createModel($request->getHeader()->getAccount(), $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Wiki', 'Wiki successfully created.', $doc);
     }
 
@@ -155,7 +155,7 @@ final class ApiController extends Controller
         }
 
         $category = $this->createWikiCategoryFromRequest($request);
-        $this->createModel($request->getHeader()->getAccount(), $category, WikiCategoryMapper::class, 'category');
+        $this->createModel($request->getHeader()->getAccount(), $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Category', 'Category successfully created.', $category);
     }
 
