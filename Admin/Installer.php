@@ -17,10 +17,10 @@ namespace Modules\Knowledgebase\Admin;
 use Modules\Knowledgebase\Models\WikiCategory;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 
+use phpOMS\Config\SettingsInterface;
 use phpOMS\DataStorage\Database\DatabasePool;
 use phpOMS\Module\InstallerAbstract;
 use phpOMS\Module\ModuleInfo;
-use phpOMS\Config\SettingsInterface;
 
 /**
  * Installer class.
