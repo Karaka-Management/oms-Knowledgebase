@@ -16,9 +16,7 @@ use phpOMS\Uri\UriFactory;
 
 $categories = $this->getData('categories');
 
-/**
- * @var \phpOMS\Views\View $this
- */
+/** @var \phpOMS\Views\View $this */
 echo $this->getData('nav')->render();
 ?>
 

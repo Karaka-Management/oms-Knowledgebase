@@ -14,18 +14,14 @@ declare(strict_types=1);
 
 use \phpOMS\Uri\UriFactory;
 
-/**
- * @var \Modules\Knowledgebase\Models\WikiCategory[] $categories
- * @var \Modules\Knowledgebase\Models\WikiDoc[]      $documents
- */
+/** @var \phpOMS\Views\View $this */
+/** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
 $categories = $this->getData('categories') ?? [];
-$documents  = $this->getData('docs') ?? [];
 
-/**
- * @var \phpOMS\Views\View $this
- */
+/** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
+$documents = $this->getData('docs') ?? [];
+
 echo $this->getData('nav')->render(); ?>
-
 <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-9">
         <div class="row">

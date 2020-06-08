@@ -14,7 +14,5 @@ declare(strict_types=1);
 
 $apps = $this->getData('apps');
 
-/**
- * @var \phpOMS\Views\View $this
- */
+/** @var \phpOMS\Views\View $this */
 echo $this->getData('nav')->render();
