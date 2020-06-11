@@ -316,10 +316,13 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-single');
+        $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-create');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $view->setData('category', new NullWikiDoc());
+        $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
+        $view->addData('editor', $editor);
+
+        $view->setData('doc', new NullWikiDoc());
 
         return $view;
     }

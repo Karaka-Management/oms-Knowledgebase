@@ -1,0 +1,84 @@
+<?php
+/**
+ * Orange Management
+ *
+ * PHP Version 7.4
+ *
+ * @package   Modules\News
+ * @copyright Dennis Eichhorn
+ * @license   OMS License 1.0
+ * @version   1.0.0
+ * @link      https://orange-management.org
+ */
+declare(strict_types=1);
+
+use Modules\Knowledgebase\Models\NullWikiDoc;
+use phpOMS\Uri\UriFactory;
+use Modules\Knowledgebase\Models\WikiStatus;
+
+/** @var \Modules\Knowledgebase\Models\WikiDoc $wiki */
+$wiki         = $this->getData('doc') ?? new NullWikiDoc();
+$isNewDoc = $wiki instanceof NullWikiDoc;
+$languages    = \phpOMS\Localization\ISO639Enum::getConstants();
+
+/** @var \phpOMS\Views\View $this */
+echo $this->getData('nav')->render(); ?>
+
+<div class="row">
+    <div class="col-xs-12 col-md-9">
+        <div id="testEditor" class="m-editor">
+            <section class="portlet">
+                <div class="portlet-body">
+                    <input id="iTitle" type="text" name="title" form="docForm" value="<?= $wiki->getName(); ?>">
+                </div>
+            </section>
+
+            <section class="portlet">
+                <div class="portlet-body">
+                    <?= $this->getData('editor')->render('iWiki'); ?>
+                </div>
+            </section>
+
+            <div class="box wf-100">
+            <?= $this->getData('editor')->getData('text')->render('iWiki', 'plain', 'docForm', $wiki->getDocRaw(), $wiki->getDoc()); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-3">
+        <section class="portlet">
+            <form id="docForm" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}wiki?' . ($isNewDoc ? '' : 'id={?id}&') . 'csrf={$CSRF}'); ?>">
+                <div class="portlet-head"><?= $this->getHtml('Status'); ?></div>
+                <div class="portlet-body">
+                    <table class="layout wf-100">
+                        <tr><td>
+                                <select name="status" id="iStatus">
+                                    <option value="<?= $this->printHtml(WikiStatus::DRAFT); ?>"<?= $wiki->getStatus() === WikiStatus::DRAFT ? ' selected' : ''; ?>><?= $this->getHtml('Draft'); ?>
+                                    <option value="<?= $this->printHtml(WikiStatus::ACTIVE); ?>"<?= $wiki->getStatus() === WikiStatus::ACTIVE ? ' selected' : ''; ?>><?= $this->getHtml('Active'); ?>
+                                </select>
+                        <tr><td><label for="iLanguages"><?= $this->getHtml('Language'); ?></label>
+                        <tr><td>
+                                <select id="iLanguages" name="lang">
+                                    <?php foreach ($languages as $code => $language) : $code = \strtolower(\substr($code, 1)); ?>
+                                    <option value="<?= $this->printHtml($code); ?>"<?= $this->printHtml($code === $wiki->getLanguage() ? ' selected' : ''); ?>><?= $this->printHtml($language); ?>
+                                    <?php endforeach; ?>
+                                </select>
+                    </table>
+                </div>
+                <div class="portlet-foot">
+                    <table class="layout wf-100">
+                        <tr>
+                            <td>
+                                <?php if ($isNewDoc) : ?>
+                                    <a href="<?= UriFactory::build('/wiki/dashboard'); ?>" class="button"><?= $this->getHtml('Delete', '0', '0'); ?></a>
+                                <?php else : ?>
+                                    <input type="submit" name="deleteButton" id="iDeleteButton" value="<?= $this->getHtml('Delete', '0', '0'); ?>">
+                                <?php endif; ?>
+                            <td class="rightText">
+                                <input type="submit" name="saveButton" id="iSaveButton" value="<?= $this->getHtml('Save', '0', '0'); ?>">
+                    </table>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
