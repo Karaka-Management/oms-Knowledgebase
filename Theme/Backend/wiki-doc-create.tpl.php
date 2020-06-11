@@ -13,8 +13,8 @@
 declare(strict_types=1);
 
 use Modules\Knowledgebase\Models\NullWikiDoc;
-use phpOMS\Uri\UriFactory;
 use Modules\Knowledgebase\Models\WikiStatus;
+use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc $wiki */
 $wiki         = $this->getData('doc') ?? new NullWikiDoc();
