@@ -47,7 +47,7 @@ echo $this->getData('nav')->render(); ?>
 
     <div class="col-xs-12 col-md-3">
         <section class="portlet">
-            <form id="docForm" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}wiki?' . ($isNewDoc ? '' : 'id={?id}&') . 'csrf={$CSRF}'); ?>">
+            <form id="docForm" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}wiki/doc?' . ($isNewDoc ? '' : 'id={?id}&') . 'csrf={$CSRF}'); ?>">
                 <div class="portlet-head"><?= $this->getHtml('Status'); ?></div>
                 <div class="portlet-body">
                     <table class="layout wf-100">
@@ -79,6 +79,20 @@ echo $this->getData('nav')->render(); ?>
                     </table>
                 </div>
             </form>
+        </section>
+
+        <section class="portlet">
+            <div class="portlet-head"><?= $this->getHtml('Categories'); ?></div>
+            <div class="portlet-body">
+                <table class="layout wf-100">
+                    <tr><td><label for="iApp"><?= $this->getHtml('App'); ?></label>
+                    <tr><td><select id="iApp" name="app"></select>
+                    <tr><td><label for="iCategory"><?= $this->getHtml('Category'); ?></label>
+                    <tr><td><select id="iCategory" name="category"></select>
+                    <tr><td><?= $this->getHtml('Tags', 'Tag'); ?>
+                    <tr><td><?= $this->getData('tagSelector')->render('iTag', 'tag', 'fEditor', false); ?>
+                </table>
+            </div>
         </section>
     </div>
 </div>

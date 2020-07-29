@@ -14,7 +14,9 @@ declare(strict_types=1);
 
 return ['Knowledgebase' => [
     'Active' => 'Active',
+    'App' => 'App',
     'Categories' => 'Categories',
+    'Category' => 'Category',
     'Draft'       => 'Draft',
     'Language'       => 'Language',
     'Name'       => 'Name',

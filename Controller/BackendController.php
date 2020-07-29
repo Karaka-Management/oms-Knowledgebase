@@ -322,6 +322,9 @@ final class BackendController extends Controller
         $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
         $view->addData('editor', $editor);
 
+        $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
+        $view->addData('tagSelector', $tagSelector);
+
         $view->setData('doc', new NullWikiDoc());
 
         return $view;
