@@ -32,7 +32,6 @@ class WikiCategoryTest extends \PHPUnit\Framework\TestCase
         $this->category = new WikiCategory();
     }
 
-
     /**
      * @testdox The model has the expected default values after initialization
      * @covers Modules\Knowledgebase\Models\WikiApp
