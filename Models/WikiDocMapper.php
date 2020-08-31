@@ -51,9 +51,9 @@ final class WikiDocMapper extends DataMapperAbstract
      */
     protected static array $hasMany = [
         'tags' => [
-            'mapper' => TagMapper::class,
-            'table'  => 'wiki_tag',
-            'self'   => 'wiki_tag_src',
+            'mapper'   => TagMapper::class,
+            'table'    => 'wiki_tag',
+            'self'     => 'wiki_tag_src',
             'external' => 'wiki_tag_dst',
         ],
     ];
@@ -71,7 +71,7 @@ final class WikiDocMapper extends DataMapperAbstract
         ],
         'app' => [
             'mapper' => WikiAppMapper::class,
-            'self' => 'wiki_article_app',
+            'self'   => 'wiki_article_app',
         ],
     ];
 

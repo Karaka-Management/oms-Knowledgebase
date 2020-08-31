@@ -18,7 +18,7 @@ use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc $wiki */
 $wiki         = $this->getData('doc') ?? new NullWikiDoc();
-$isNewDoc = $wiki instanceof NullWikiDoc;
+$isNewDoc     = $wiki instanceof NullWikiDoc;
 $languages    = \phpOMS\Localization\ISO639Enum::getConstants();
 
 /** @var \phpOMS\Views\View $this */

@@ -53,7 +53,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
         ],
         'app' => [
             'mapper' => WikiAppMapper::class,
-            'self' => 'wiki_category_app',
+            'self'   => 'wiki_category_app',
         ],
     ];
 
