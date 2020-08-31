@@ -21,7 +21,6 @@ use Modules\Knowledgebase\Models\PermissionState;
 use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use Modules\Knowledgebase\Models\WikiDocMapper;
-
 use phpOMS\Account\PermissionType;
 use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
