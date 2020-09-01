@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Controller;
 
+use Modules\Knowledgebase\Models\WikiApp;
+use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiCategory;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
