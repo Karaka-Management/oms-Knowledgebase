@@ -14,12 +14,15 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Admin;
 
+use Modules\Knowledgebase\Models\WikiApp;
 use Modules\Knowledgebase\Models\WikiCategory;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use phpOMS\Config\SettingsInterface;
 use phpOMS\DataStorage\Database\DatabasePool;
 use phpOMS\Module\InstallerAbstract;
 use phpOMS\Module\ModuleInfo;
+use Modules\Knowledgebase\Models\WikiAppMapper;
+use Modules\Knowledgebase\Models\NullWikiApp;
 
 /**
  * Installer class.
@@ -38,7 +41,13 @@ final class Installer extends InstallerAbstract
     {
         parent::install($dbPool, $info, $cfgHandler);
 
+        $app = new WikiApp();
+        $app->setName('Default');
+
+        $id = WikiAppMapper::create($app);
+
         $category = new WikiCategory();
+        $category->setApp(new NullWikiApp($id));
         $category->setName('Default');
         $category->setPath('/');
 

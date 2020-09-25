@@ -37,10 +37,10 @@ class WikiCategory implements \JsonSerializable
      *
      * There can be different wikis
      *
-     * @var null|WikiApp
+     * @var WikiApp
      * @since 1.0.0
      */
-    private ?WikiApp $app = null;
+    private WikiApp $app;
 
     /**
      * Name.
@@ -65,6 +65,16 @@ class WikiCategory implements \JsonSerializable
      * @since 1.0.0
      */
     private ?self $parent = null;
+
+    /**
+     * Cosntructor
+     *
+     * @since 1.0.0
+     */
+    public function __construct()
+    {
+        $this->app = new NullWikiApp();
+    }
 
     /**
      * Get id.
