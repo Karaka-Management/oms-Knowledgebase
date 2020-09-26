@@ -14,15 +14,15 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Admin;
 
+use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\WikiApp;
+use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\WikiCategory;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use phpOMS\Config\SettingsInterface;
 use phpOMS\DataStorage\Database\DatabasePool;
 use phpOMS\Module\InstallerAbstract;
 use phpOMS\Module\ModuleInfo;
-use Modules\Knowledgebase\Models\WikiAppMapper;
-use Modules\Knowledgebase\Models\NullWikiApp;
 
 /**
  * Installer class.
