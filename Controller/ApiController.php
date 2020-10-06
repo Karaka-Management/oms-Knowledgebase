@@ -29,6 +29,7 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
+use phpOMS\Message\Http\RequestStatusCode;
 
 /**
  * Knowledgebase class.
@@ -61,6 +62,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateWikiDocCreate($request))) {
             $response->set($request->getUri()->__toString(), new FormValidation($val));
+            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
 
             return;
         }
@@ -229,6 +231,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateWikiCategoryCreate($request))) {
             $response->set($request->getUri()->__toString(), new FormValidation($val));
+            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
 
             return;
         }
@@ -376,6 +379,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateWikiAppCreate($request))) {
             $response->set($request->getUri()->__toString(), new FormValidation($val));
+            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
 
             return;
         }
