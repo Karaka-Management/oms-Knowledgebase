@@ -53,8 +53,8 @@ final class WikiDocMapper extends DataMapperAbstract
         'tags' => [
             'mapper'   => TagMapper::class,
             'table'    => 'wiki_tag',
-            'self'     => 'wiki_tag_src',
-            'external' => 'wiki_tag_dst',
+            'self'     => 'wiki_tag_dst',
+            'external' => 'wiki_tag_src',
         ],
     ];
 
@@ -67,11 +67,11 @@ final class WikiDocMapper extends DataMapperAbstract
     protected static array $belongsTo = [
         'category' => [
             'mapper' => WikiCategoryMapper::class,
-            'self'   => 'wiki_article_category',
+            'external'   => 'wiki_article_category',
         ],
         'app' => [
             'mapper' => WikiAppMapper::class,
-            'self'   => 'wiki_article_app',
+            'external'   => 'wiki_article_app',
         ],
     ];
 
