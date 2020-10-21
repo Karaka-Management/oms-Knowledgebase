@@ -66,11 +66,11 @@ final class WikiDocMapper extends DataMapperAbstract
      */
     protected static array $belongsTo = [
         'category' => [
-            'mapper' => WikiCategoryMapper::class,
+            'mapper'     => WikiCategoryMapper::class,
             'external'   => 'wiki_article_category',
         ],
         'app' => [
-            'mapper' => WikiAppMapper::class,
+            'mapper'     => WikiAppMapper::class,
             'external'   => 'wiki_article_app',
         ],
     ];

@@ -48,11 +48,11 @@ final class WikiCategoryMapper extends DataMapperAbstract
      */
     protected static array $belongsTo = [
         'parent' => [
-            'mapper' => self::class,
+            'mapper'     => self::class,
             'external'   => 'wiki_category_parent',
         ],
         'app' => [
-            'mapper' => WikiAppMapper::class,
+            'mapper'     => WikiAppMapper::class,
             'external'   => 'wiki_category_app',
         ],
     ];
