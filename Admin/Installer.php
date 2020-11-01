@@ -19,6 +19,7 @@ use Modules\Knowledgebase\Models\WikiApp;
 use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\WikiCategory;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
+use Modules\Organization\Models\UnitMapper;
 use phpOMS\Config\SettingsInterface;
 use phpOMS\DataStorage\Database\DatabasePool;
 use phpOMS\Module\InstallerAbstract;
@@ -52,5 +53,19 @@ final class Installer extends InstallerAbstract
         $category->setPath('/');
 
         WikiCategoryMapper::create($category);
+
+        // @todo: create hook for when a new unit is created
+        $units = UnitMapper::getAll();
+        foreach ($units as $unit) {
+            $app = new WikiApp();
+            $app->setName($unit->getName());
+
+            $id = WikiAppMapper::create($app);
+
+            $category = new WikiCategory();
+            $category->setApp(new NullWikiApp($id));
+            $category->setName('Default');
+            $category->setPath('/');
+        }
     }
 }
