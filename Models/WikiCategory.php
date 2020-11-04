@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
+use phpOMS\Localization\ISO639x1Enum;
+
 /**
  * Wiki category class.
  *
@@ -45,18 +47,10 @@ class WikiCategory implements \JsonSerializable
     /**
      * Name.
      *
-     * @var string
+     * @var string|WikiCategoryL11n
      * @since 1.0.0
      */
-    private string $name = '';
-
-    /**
-     * Path.
-     *
-     * @var string
-     * @since 1.0.0
-     */
-    private string $path = '/';
+    private $name = '';
 
     /**
      * Parent category.
@@ -123,47 +117,29 @@ class WikiCategory implements \JsonSerializable
      */
     public function getName() : string
     {
-        return $this->name;
+        return $this->name instanceof WikiCategoryL11n ? $this->name->getName() : $this->name;
     }
 
     /**
      * Set name
      *
-     * @param string $name Name
+     * @param string|TagL11n $name Tag article name
      *
      * @return void
      *
      * @since 1.0.0
      */
-    public function setName(string $name) : void
+    public function setName($name, string $lang = ISO639x1Enum::_EN) : void
     {
-        $this->name = $name;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getPath() : string
-    {
-        return $this->path;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path Path
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setPath(string $path) : void
-    {
-        $this->path = $path;
+        if ($name instanceof WikiCategoryL11n) {
+            $this->name = $name;
+        } elseif ($this->name instanceof WikiCategoryL11n && \is_string($name)) {
+            $this->name->setName($name);
+        } elseif (\is_string($name)) {
+            $this->name = new WikiCategoryL11n();
+            $this->name->setName($name);
+            $this->name->setLanguage($lang);
+        }
     }
 
     /**
@@ -201,7 +177,6 @@ class WikiCategory implements \JsonSerializable
             'id'   => $this->id,
             'app'  => $this->app,
             'name' => $this->name,
-            'path' => $this->path,
         ];
     }
 

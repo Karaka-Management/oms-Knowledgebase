@@ -77,14 +77,19 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
+        $app = (int) ($request->getData('app') ?? $this->app->orgId);
+
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $categories = WikiCategoryMapper::getAll();
+        $categories = WikiCategoryMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())::getByParentAndApp($request->hasData('category') ? (int) $request->getData('category') : null, $app, 2);
         $view->setData('categories', $categories);
 
-        $documents = WikiDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())::getNewest(50);
+        $documents = WikiDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())::getNewestByApp($app, 10);
         $view->setData('docs', $documents);
+
+        $apps = WikiAppMapper::getAll();
+        $view->setData('apps', $apps);
 
         return $view;
     }
@@ -178,10 +183,12 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
+        $app = (int) ($request->getData('app') ?? $this->app->orgId);
+
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $list = WikiCategoryMapper::getAll();
+        $list = WikiCategoryMapper::getByApp($app, 2);
         $view->setData('categories', $list);
 
         return $view;
@@ -276,11 +283,14 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $category  = WikiDocMapper::get((int) $request->getData('id'));
+        $app  = (int) ($request->getData('app') ?? $this->app->orgId);
+        $lang = $response->getHeader()->getL11n()->getLanguage();
+
+        $document  = WikiDocMapper::withConditional('language', $lang)::get((int) $request->getData('id'));
         $accountId = $request->getHeader()->getAccount();
 
         if (!$this->app->accountManager->get($accountId)->hasPermission(
-                PermissionType::READ, $this->app->orgId, $this->app->appName, self::MODULE_NAME, PermissionState::WIKI, $category->getId())
+                PermissionType::READ, $this->app->orgId, $this->app->appName, self::MODULE_NAME, PermissionState::WIKI, $document->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
             $response->getHeader()->setStatusCode(RequestStatusCode::R_403);
@@ -290,10 +300,8 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-single');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $categories = WikiCategoryMapper::getAll();
+        $categories = WikiCategoryMapper::withConditional('language', $lang)::getByParentAndApp($request->hasData('category') ? (int) $request->getData('category') : null, $app, 2);
         $view->setData('categories', $categories);
-
-        $document = WikiDocMapper::get((int) $request->getData('id'));
         $view->setData('document', $document);
 
         return $view;

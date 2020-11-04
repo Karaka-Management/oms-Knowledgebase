@@ -30,6 +30,10 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
+use Modules\Knowledgebase\Models\WikiCategoryL11n;
+use phpOMS\Message\Http\HttpRequest;
+use Modules\Knowledgebase\Models\WikiCategoryL11nMapper;
+use Modules\Knowledgebase\Models\NullWikiApp;
 
 /**
  * Knowledgebase class.
@@ -92,6 +96,7 @@ final class ApiController extends Controller
         $doc->setCategory(new NullWikiCategory((int) ($request->getData('category') ?? 1)));
         $doc->setLanguage((string) ($request->getData('language') ?? $request->getHeader()->getL11n()->getLanguage()));
         $doc->setStatus((int) ($request->getData('status') ?? WikiStatus::INACTIVE));
+        $doc->setApp(new NullWikiApp((int) ($request->getData('app') ?? 1)));
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -135,6 +140,76 @@ final class ApiController extends Controller
         }
 
         return [];
+    }
+
+    /**
+     * Validate tag l11n create request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @since 1.0.0
+     */
+    private function validateWikiCategoryL11nCreate(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['name'] = empty($request->getData('name')))
+            || ($val['tag'] = empty($request->getData('tag')))
+        ) {
+            return $val;
+        }
+
+        return [];
+    }
+
+    /**
+     * Api method to create tag localization
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiWikiCategoryL11nCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    {
+        if (!empty($val = $this->validateWikiCategoryL11nCreate($request))) {
+            $response->set('wiki_category_l11n_create', new FormValidation($val));
+            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
+
+            return;
+        }
+
+        $l11nWikiCategory = $this->createWikiCategoryL11nFromRequest($request);
+        $this->createModel($request->getHeader()->getAccount(), $l11nWikiCategory, WikiCategoryL11nMapper::class, 'wiki_category_l11n', $request->getOrigin());
+
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Category localization successfully created', $l11nWikiCategory);
+    }
+
+    /**
+     * Method to create tag localization from request.
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return WikiCategoryL11n
+     *
+     * @since 1.0.0
+     */
+    private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : WikiCategoryL11n
+    {
+        $l11nWikiCategory = new WikiCategoryL11n();
+        $l11nWikiCategory->setCategory((int) ($request->getData('category') ?? 0));
+        $l11nWikiCategory->setLanguage((string) (
+            $request->getData('language') ?? $request->getHeader()->getL11n()->getLanguage()
+        ));
+        $l11nWikiCategory->setName((string) ($request->getData('name') ?? ''));
+
+        return $l11nWikiCategory;
     }
 
     /**
@@ -238,6 +313,17 @@ final class ApiController extends Controller
 
         $category = $this->createWikiCategoryFromRequest($request);
         $this->createModel($request->getHeader()->getAccount(), $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
+
+        $l11nRequest = new HttpRequest($request->getUri());
+        $l11nRequest->setData('category', $category->getId());
+        $l11nRequest->setData('name', $request->getData('name'));
+        $l11nRequest->setData('language', $request->getData('language'));
+
+        $l11nWikiCategory = $this->createWikiCategoryL11nFromRequest($l11nRequest);
+        $this->createModel($request->getHeader()->getAccount(), $l11nWikiCategory, WikiCategoryL11nMapper::class, 'tag_l11n', $request->getOrigin());
+
+        $category->setName($l11nWikiCategory);
+
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Category', 'Category successfully created.', $category);
     }
 
@@ -253,11 +339,7 @@ final class ApiController extends Controller
     public function createWikiCategoryFromRequest(RequestAbstract $request) : WikiCategory
     {
         $category = new WikiCategory();
-        $category->setName((string) $request->getData('title'));
-
-        if ($request->getData('path') !== null) {
-            $category->setPath((string) $request->getData('path'));
-        }
+        $category->setApp(new NullWikiApp((int) ($request->getData('app') ?? 1)));
 
         if ($request->getData('parent') !== null) {
             $category->setParent(new NullWikiCategory((int) $request->getData('parent')));
@@ -278,7 +360,7 @@ final class ApiController extends Controller
     private function validateWikiCategoryCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['title'] = empty($request->getData('title')))) {
+        if (($val['name'] = empty($request->getData('name')))) {
             return $val;
         }
 
@@ -337,7 +419,6 @@ final class ApiController extends Controller
     private function updateCategoryFromRequest(RequestAbstract $request) : WikiCategory
     {
         $category = WikiCategoryMapper::get((int) $request->getData('id'));
-        $category->setName((string) ($request->getData('title') ?? $category->getName()));
 
         return $category;
     }

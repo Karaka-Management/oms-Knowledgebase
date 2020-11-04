@@ -27,16 +27,6 @@
                 "primary": true,
                 "autoincrement": true
             },
-            "wiki_category_name": {
-                "name": "wiki_category_name",
-                "type": "VARCHAR(255)",
-                "null": false
-            },
-            "wiki_category_path": {
-                "name": "wiki_category_path",
-                "type": "VARCHAR(255)",
-                "null": false
-            },
             "wiki_category_parent": {
                 "name": "wiki_category_parent",
                 "type": "INT",
@@ -52,6 +42,38 @@
                 "null": true,
                 "foreignTable": "wiki_app",
                 "foreignKey": "wiki_app_id"
+            }
+        }
+    },
+    "wiki_category_l11n": {
+        "name": "wiki_category_l11n",
+        "fields": {
+            "wiki_category_l11n_id": {
+                "name": "wiki_category_l11n_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "wiki_category_l11n_name": {
+                "name": "wiki_category_l11n_name",
+                "type": "VARCHAR(255)",
+                "null": false
+            },
+            "wiki_category_l11n_category": {
+                "name": "wiki_category_l11n_category",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "wiki_category",
+                "foreignKey": "wiki_category_id"
+            },
+            "wiki_category_l11n_language": {
+                "name": "wiki_category_l11n_language",
+                "type": "VARCHAR(2)",
+                "default": null,
+                "null": true,
+                "foreignTable": "language",
+                "foreignKey": "language_639_1"
             }
         }
     },
@@ -82,6 +104,11 @@
             },
             "wiki_article_doc": {
                 "name": "wiki_article_doc",
+                "type": "TEXT",
+                "null": false
+            },
+            "wiki_article_docraw": {
+                "name": "wiki_article_docraw",
                 "type": "TEXT",
                 "null": false
             },

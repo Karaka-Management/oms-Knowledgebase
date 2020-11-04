@@ -16,6 +16,8 @@ namespace Modules\Knowledgebase\Models;
 
 use Modules\Tag\Models\TagMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\RelationType;
+use phpOMS\DataStorage\Database\Query\Builder;
 
 /**
  * Mapper class.
@@ -39,6 +41,7 @@ final class WikiDocMapper extends DataMapperAbstract
         'wiki_article_title'    => ['name' => 'wiki_article_title',    'type' => 'string', 'internal' => 'name'],
         'wiki_article_language' => ['name' => 'wiki_article_language', 'type' => 'string', 'internal' => 'language'],
         'wiki_article_doc'      => ['name' => 'wiki_article_doc',      'type' => 'string', 'internal' => 'doc'],
+        'wiki_article_docraw'      => ['name' => 'wiki_article_docraw',      'type' => 'string', 'internal' => 'docRaw'],
         'wiki_article_status'   => ['name' => 'wiki_article_status',   'type' => 'int',    'internal' => 'status'],
         'wiki_article_category' => ['name' => 'wiki_article_category', 'type' => 'int',    'internal' => 'category'],
     ];
@@ -90,4 +93,35 @@ final class WikiDocMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static string $primaryField = 'wiki_article_id';
+
+    /**
+     * Get newest.
+     *
+     * This will fall back to the insert id if no datetime column is present.
+     *
+     * @param int     $app       App
+     * @param int     $limit     Newest limit
+     * @param Builder $query     Pre-defined query
+     * @param int     $relations Load relations
+     * @param int     $depth     Relation depth
+     *
+     * @return array
+     *
+     * @since 1.0.0
+     */
+    public static function getNewestByApp(int $app, int $limit = 1, Builder $query = null, int $relations = RelationType::ALL, int $depth = 3) : array
+    {
+        $query ??= self::getQuery(null, [], $relations, $depth);
+
+        $query->where(static::$table . '_' . $depth . '.' . 'wiki_article_app', '=', $app)
+            ->limit($limit);
+
+        if (!empty(static::$createdAt)) {
+            $query->orderBy(static::$table  . '_' . $depth . '.' . static::$columns[static::$createdAt]['name'], 'DESC');
+        } else {
+            $query->orderBy(static::$table  . '_' . $depth . '.' . static::$columns[static::$primaryField]['name'], 'DESC');
+        }
+
+        return self::getAllByQuery($query, $relations, $depth);
+    }
 }

@@ -62,7 +62,8 @@ echo $this->getData('nav')->render();
 
     <div class="col-xs-12 col-md-4 col-lg-3">
         <section class="portlet">
-            <div class="inner">
+            <div class="portlet-head">Categories</div>
+            <div class="portlet-body">
                 <ul>
                     <?php foreach ($categories as $category) : ?>
                         <li><a href="<?= UriFactory::build('{/prefix}wiki/doc/list?{?}&id=' . $category->getId()); ?>"><?= $this->printHtml($category->getName()); ?></a>

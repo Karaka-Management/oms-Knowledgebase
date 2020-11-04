@@ -13,6 +13,7 @@
 declare(strict_types=1);
 
 use \phpOMS\Uri\UriFactory;
+use phpOMS\Utils\Parser\Markdown\Markdown;
 
 /** @var \phpOMS\Views\View $this */
 /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
@@ -20,6 +21,9 @@ $categories = $this->getData('categories') ?? [];
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
 $documents = $this->getData('docs') ?? [];
+
+/** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
+$apps = $this->getData('apps') ?? [];
 
 echo $this->getData('nav')->render(); ?>
 <div class="row">
@@ -31,7 +35,7 @@ echo $this->getData('nav')->render(); ?>
                     <div class="portlet-head"><a href="<?= $url; ?>"><?= $this->printHtml($doc->getName()); ?></a></div>
                     <div class="portlet-body">
                         <article>
-                            <?= \substr($doc->getDoc(), 0, 300) . (\strlen($doc->getDoc()) > 300 ? '...' : ''); ?>
+                            <?= Markdown::parse(\substr($doc->getDocRaw(), 0, 500)); ?>
                         </article>
                     </div>
                     <div class="portlet-foot">
@@ -49,8 +53,22 @@ echo $this->getData('nav')->render(); ?>
     </div>
 
     <div class="col-xs-12 col-md-4 col-lg-3">
-        <section class="box wf-100">
-            <div class="inner">
+        <section class="portlet">
+            <div class="portlet-head">App</div>
+            <div class="portlet-body">
+                <form>
+                    <select>
+                        <?php foreach ($apps as $app) : ?>
+                            <option><?= $this->printHtml($app->getName()); ?>
+                        <?php endforeach; ?>
+                    </select>
+                </form>
+            </div>
+        </section>
+
+        <section class="portlet">
+            <div class="portlet-head">Categories</div>
+            <div class="portlet-body">
                 <ul>
                     <?php foreach ($categories as $category) : ?>
                         <li><a href="<?= UriFactory::build('{/prefix}wiki/doc/list?{?}&id=' . $category->getId()); ?>"><?= $this->printHtml($category->getName()); ?></a>
