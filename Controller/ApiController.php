@@ -94,7 +94,7 @@ final class ApiController extends Controller
         $doc->setDoc(Markdown::parse((string) ($request->getData('plain') ?? '')));
         $doc->setDocRaw((string) ($request->getData('plain') ?? ''));
         $doc->setCategory(new NullWikiCategory((int) ($request->getData('category') ?? 1)));
-        $doc->setLanguage((string) ($request->getData('language') ?? $request->getHeader()->getL11n()->getLanguage()));
+        $doc->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
         $doc->setStatus((int) ($request->getData('status') ?? WikiStatus::INACTIVE));
         $doc->setApp(new NullWikiApp((int) ($request->getData('app') ?? 1)));
 
@@ -205,7 +205,7 @@ final class ApiController extends Controller
         $l11nWikiCategory = new WikiCategoryL11n();
         $l11nWikiCategory->setCategory((int) ($request->getData('category') ?? 0));
         $l11nWikiCategory->setLanguage((string) (
-            $request->getData('language') ?? $request->getHeader()->getL11n()->getLanguage()
+            $request->getData('language') ?? $request->getLanguage()
         ));
         $l11nWikiCategory->setName((string) ($request->getData('name') ?? ''));
 

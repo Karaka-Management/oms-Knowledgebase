@@ -82,10 +82,10 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $categories = WikiCategoryMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())::getByParentAndApp($request->hasData('category') ? (int) $request->getData('category') : null, $app, 2);
+        $categories = WikiCategoryMapper::withConditional('language', $response->getLanguage())::getByParentAndApp($request->hasData('category') ? (int) $request->getData('category') : null, $app, 2);
         $view->setData('categories', $categories);
 
-        $documents = WikiDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())::getNewestByApp($app, 10);
+        $documents = WikiDocMapper::withConditional('language', $response->getLanguage())::getNewestByApp($app, 10);
         $view->setData('docs', $documents);
 
         $apps = WikiAppMapper::getAll();
@@ -284,7 +284,7 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $app  = (int) ($request->getData('app') ?? $this->app->orgId);
-        $lang = $response->getHeader()->getL11n()->getLanguage();
+        $lang = $response->getLanguage();
 
         $document  = WikiDocMapper::withConditional('language', $lang)::get((int) $request->getData('id'));
         $accountId = $request->getHeader()->getAccount();
