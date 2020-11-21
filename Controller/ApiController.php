@@ -155,7 +155,7 @@ final class ApiController extends Controller
     {
         $val = [];
         if (($val['name'] = empty($request->getData('name')))
-            || ($val['tag'] = empty($request->getData('tag')))
+            || ($val['category'] = empty($request->getData('category')))
         ) {
             return $val;
         }
