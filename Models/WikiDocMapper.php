@@ -16,8 +16,8 @@ namespace Modules\Knowledgebase\Models;
 
 use Modules\Tag\Models\TagMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
-use phpOMS\DataStorage\Database\RelationType;
 use phpOMS\DataStorage\Database\Query\Builder;
+use phpOMS\DataStorage\Database\RelationType;
 
 /**
  * Mapper class.
@@ -36,14 +36,14 @@ final class WikiDocMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static array $columns = [
-        'wiki_article_id'       => ['name' => 'wiki_article_id',       'type' => 'int',    'internal' => 'id'],
-        'wiki_article_app'      => ['name' => 'wiki_article_app',      'type' => 'int',    'internal' => 'app'],
-        'wiki_article_title'    => ['name' => 'wiki_article_title',    'type' => 'string', 'internal' => 'name'],
-        'wiki_article_language' => ['name' => 'wiki_article_language', 'type' => 'string', 'internal' => 'language'],
-        'wiki_article_doc'      => ['name' => 'wiki_article_doc',      'type' => 'string', 'internal' => 'doc'],
+        'wiki_article_id'          => ['name' => 'wiki_article_id',       'type' => 'int',    'internal' => 'id'],
+        'wiki_article_app'         => ['name' => 'wiki_article_app',      'type' => 'int',    'internal' => 'app'],
+        'wiki_article_title'       => ['name' => 'wiki_article_title',    'type' => 'string', 'internal' => 'name'],
+        'wiki_article_language'    => ['name' => 'wiki_article_language', 'type' => 'string', 'internal' => 'language'],
+        'wiki_article_doc'         => ['name' => 'wiki_article_doc',      'type' => 'string', 'internal' => 'doc'],
         'wiki_article_docraw'      => ['name' => 'wiki_article_docraw',      'type' => 'string', 'internal' => 'docRaw'],
-        'wiki_article_status'   => ['name' => 'wiki_article_status',   'type' => 'int',    'internal' => 'status'],
-        'wiki_article_category' => ['name' => 'wiki_article_category', 'type' => 'int',    'internal' => 'category'],
+        'wiki_article_status'      => ['name' => 'wiki_article_status',   'type' => 'int',    'internal' => 'status'],
+        'wiki_article_category'    => ['name' => 'wiki_article_category', 'type' => 'int',    'internal' => 'category'],
     ];
 
     /**

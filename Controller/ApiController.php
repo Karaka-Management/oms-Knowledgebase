@@ -14,15 +14,19 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Controller;
 
+use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiApp;
 use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\WikiCategory;
+use Modules\Knowledgebase\Models\WikiCategoryL11n;
+use Modules\Knowledgebase\Models\WikiCategoryL11nMapper;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use Modules\Knowledgebase\Models\WikiDoc;
 use Modules\Knowledgebase\Models\WikiDocMapper;
 use Modules\Knowledgebase\Models\WikiStatus;
 use Modules\Tag\Models\NullTag;
+use phpOMS\Message\Http\HttpRequest;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
@@ -30,10 +34,6 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
-use Modules\Knowledgebase\Models\WikiCategoryL11n;
-use phpOMS\Message\Http\HttpRequest;
-use Modules\Knowledgebase\Models\WikiCategoryL11nMapper;
-use Modules\Knowledgebase\Models\NullWikiApp;
 
 /**
  * Knowledgebase class.
@@ -89,9 +89,9 @@ final class ApiController extends Controller
      */
     public function createWikiDocFromRequest(RequestAbstract $request, ResponseAbstract $response, $data = null) : WikiDoc
     {
-        $doc = new WikiDoc();
-        $doc->name = (string) $request->getData('title');
-        $doc->doc = Markdown::parse((string) ($request->getData('plain') ?? ''));
+        $doc         = new WikiDoc();
+        $doc->name   = (string) $request->getData('title');
+        $doc->doc    = Markdown::parse((string) ($request->getData('plain') ?? ''));
         $doc->docRaw = (string) ($request->getData('plain') ?? '');
         $doc->setCategory(new NullWikiCategory((int) ($request->getData('category') ?? 1)));
         $doc->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
@@ -481,7 +481,7 @@ final class ApiController extends Controller
      */
     public function createWikiAppFromRequest(RequestAbstract $request) : WikiApp
     {
-        $app = new WikiApp();
+        $app       = new WikiApp();
         $app->name = (string) $request->getData('name');
 
         return $app;

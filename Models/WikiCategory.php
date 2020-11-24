@@ -75,7 +75,7 @@ class WikiCategory implements \JsonSerializable
      */
     public function __construct()
     {
-        $this->app = new NullWikiApp();
+        $this->app    = new NullWikiApp();
         $this->parent = new NullWikiCategory();
     }
 
@@ -145,7 +145,7 @@ class WikiCategory implements \JsonSerializable
         } elseif ($this->name instanceof WikiCategoryL11n && \is_string($name)) {
             $this->name->name = $name;
         } elseif (\is_string($name)) {
-            $this->name = new WikiCategoryL11n();
+            $this->name       = new WikiCategoryL11n();
             $this->name->name = $name;
             $this->name->setLanguage($lang);
         }

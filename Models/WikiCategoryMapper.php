@@ -34,10 +34,10 @@ final class WikiCategoryMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static array $columns = [
-        'wiki_category_id'     => ['name' => 'wiki_category_id',     'type' => 'int',    'internal' => 'id'],
-        'wiki_category_app'    => ['name' => 'wiki_category_app',    'type' => 'int',    'internal' => 'app'],
+        'wiki_category_id'         => ['name' => 'wiki_category_id',     'type' => 'int',    'internal' => 'id'],
+        'wiki_category_app'        => ['name' => 'wiki_category_app',    'type' => 'int',    'internal' => 'app'],
         'wiki_category_virtual'    => ['name' => 'wiki_category_virtual',    'type' => 'string',    'internal' => 'virtualPath'],
-        'wiki_category_parent' => ['name' => 'wiki_category_parent', 'type' => 'int',    'internal' => 'parent'],
+        'wiki_category_parent'     => ['name' => 'wiki_category_parent', 'type' => 'int',    'internal' => 'parent'],
     ];
 
     /**
@@ -121,8 +121,8 @@ final class WikiCategoryMapper extends DataMapperAbstract
     /**
      * Get by app.
      *
-     * @param int   $app   App
-     * @param int   $depth Relation depth
+     * @param int $app   App
+     * @param int $depth Relation depth
      *
      * @return array
      *
