@@ -43,7 +43,7 @@ final class Installer extends InstallerAbstract
         parent::install($dbPool, $info, $cfgHandler);
 
         $app = new WikiApp();
-        $app->setName('Default');
+        $app->name = 'Default';
 
         $id = WikiAppMapper::create($app);
 
@@ -57,7 +57,7 @@ final class Installer extends InstallerAbstract
         $units = UnitMapper::getAll();
         foreach ($units as $unit) {
             $app = new WikiApp();
-            $app->setName($unit->getName());
+            $app->name = $unit->name;
 
             $id = WikiAppMapper::create($app);
 

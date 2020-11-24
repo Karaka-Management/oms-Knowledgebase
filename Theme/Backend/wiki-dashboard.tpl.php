@@ -32,10 +32,10 @@ echo $this->getData('nav')->render(); ?>
             <?php foreach ($documents as $doc) : $url = UriFactory::build('{/prefix}wiki/doc/single?id=' . $doc->getId()); ?>
             <div class="col-xs-12 plain-grid">
                 <div class="portlet">
-                    <div class="portlet-head"><a href="<?= $url; ?>"><?= $this->printHtml($doc->getName()); ?></a></div>
+                    <div class="portlet-head"><a href="<?= $url; ?>"><?= $this->printHtml($doc->name); ?></a></div>
                     <div class="portlet-body">
                         <article>
-                            <?= Markdown::parse(\substr($doc->getDocRaw(), 0, 500)); ?>
+                            <?= Markdown::parse(\substr($doc->docRaw, 0, 500)); ?>
                         </article>
                     </div>
                     <div class="portlet-foot">
@@ -59,7 +59,7 @@ echo $this->getData('nav')->render(); ?>
                 <form>
                     <select>
                         <?php foreach ($apps as $app) : ?>
-                            <option><?= $this->printHtml($app->getName()); ?>
+                            <option><?= $this->printHtml($app->name); ?>
                         <?php endforeach; ?>
                     </select>
                 </form>

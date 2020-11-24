@@ -38,7 +38,7 @@ class WikiAppTest extends \PHPUnit\Framework\TestCase
     public function testDefault() : void
     {
         self::assertEquals(0, $this->app->getId());
-        self::assertEquals('', $this->app->getName());
+        self::assertEquals('', $this->app->name);
     }
 
     /**
@@ -48,7 +48,7 @@ class WikiAppTest extends \PHPUnit\Framework\TestCase
      */
     public function testNameInputOutput() : void
     {
-        $this->app->setName('Test name');
-        self::assertEquals('Test name', $this->app->getName());
+        $this->app->name = 'Test name';
+        self::assertEquals('Test name', $this->app->name);
     }
 }

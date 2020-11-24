@@ -58,7 +58,15 @@ class WikiCategory implements \JsonSerializable
      * @var self
      * @since 1.0.0
      */
-    private ?self $parent = null;
+    public self $parent;
+
+    /**
+     * Path for organizing.
+     *
+     * @var string
+     * @since 1.0.0
+     */
+    private string $virtualPath = '/';
 
     /**
      * Cosntructor
@@ -68,6 +76,7 @@ class WikiCategory implements \JsonSerializable
     public function __construct()
     {
         $this->app = new NullWikiApp();
+        $this->parent = new NullWikiCategory();
     }
 
     /**
@@ -134,38 +143,38 @@ class WikiCategory implements \JsonSerializable
         if ($name instanceof WikiCategoryL11n) {
             $this->name = $name;
         } elseif ($this->name instanceof WikiCategoryL11n && \is_string($name)) {
-            $this->name->setName($name);
+            $this->name->name = $name;
         } elseif (\is_string($name)) {
             $this->name = new WikiCategoryL11n();
-            $this->name->setName($name);
+            $this->name->name = $name;
             $this->name->setLanguage($lang);
         }
     }
 
     /**
-     * Get parent category
+     * Get the path
      *
-     * @return self
+     * @return string
      *
      * @since 1.0.0
      */
-    public function getParent() : self
+    public function getVirtualPath() : string
     {
-        return $this->parent ?? new NullWikiCategory();
+        return $this->virtualPath;
     }
 
     /**
-     * Set parent category
+     * Set the path if file
      *
-     * @param null|self $parent Parent category
+     * @param string $path Path to file
      *
-     * @return void
+     * @return mixed
      *
      * @since 1.0.0
      */
-    public function setParent(?self $parent) : void
+    public function setVirtualPath(string $path)
     {
-        $this->parent = $parent;
+        $this->virtualPath = $path;
     }
 
     /**

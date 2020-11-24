@@ -36,8 +36,8 @@ class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
     {
         $doc = new WikiDoc();
 
-        $doc->setName('Doc Name');
-        $doc->setDoc('Doc content');
+        $doc->name = 'Doc Name';
+        $doc->doc = 'Doc content';
         $doc->setStatus(WikiStatus::DRAFT);
         $doc->setCategory(new NullWikiCategory(1));
         $doc->setLanguage('en');
@@ -47,8 +47,8 @@ class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($id, $doc->getId());
 
         $docR = WikiDocMapper::get($doc->getId());
-        self::assertEquals($doc->getName(), $docR->getName());
-        self::assertEquals($doc->getDoc(), $docR->getDoc());
+        self::assertEquals($doc->name, $docR->name);
+        self::assertEquals($doc->doc, $docR->doc);
         self::assertEquals($doc->getStatus(), $docR->getStatus());
         self::assertEquals($doc->getLanguage(), $docR->getLanguage());
         self::assertEquals($doc->getCategory()->getId(), $docR->getCategory()->getId());
@@ -65,8 +65,8 @@ class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
             $text = new Text();
             $doc  = new WikiDoc();
 
-            $doc->setName($text->generateText(\mt_rand(1, 3)));
-            $doc->setDoc($text->generateText(\mt_rand(100, 500)));
+            $doc->name = $text->generateText(\mt_rand(1, 3));
+            $doc->doc = $text->generateText(\mt_rand(100, 500));
             $doc->setStatus(WikiStatus::ACTIVE);
             $doc->setCategory(new NullWikiCategory(\mt_rand(1, 9)));
             $doc->setLanguage('en');

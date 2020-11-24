@@ -57,7 +57,7 @@ class WikiCategoryL11n implements \JsonSerializable, ArrayableInterface
      * @var string
      * @since 1.0.0
      */
-    private string $name = '';
+    public string $name = '';
 
     /**
      * Constructor.
@@ -146,20 +146,6 @@ class WikiCategoryL11n implements \JsonSerializable, ArrayableInterface
     public function getName() : string
     {
         return $this->name;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name Name
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setName(string $name) : void
-    {
-        $this->name = $name;
     }
 
     /**

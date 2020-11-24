@@ -43,9 +43,9 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
     {
         self::assertEquals(0, $this->doc->getId());
         self::assertEquals(0, $this->doc->getApp()->getId());
-        self::assertEquals('', $this->doc->getName());
-        self::assertEquals('', $this->doc->getDoc());
-        self::assertEquals('', $this->doc->getDocRaw());
+        self::assertEquals('', $this->doc->name);
+        self::assertEquals('', $this->doc->doc);
+        self::assertEquals('', $this->doc->docRaw);
         self::assertEquals(WikiStatus::ACTIVE, $this->doc->getStatus());
         self::assertEquals(0, $this->doc->getCategory()->getId());
         self::assertEquals('en', $this->doc->getLanguage());
@@ -70,8 +70,8 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testNameInputOutput() : void
     {
-        $this->doc->setName('Test name');
-        self::assertEquals('Test name', $this->doc->getName());
+        $this->doc->name = 'Test name';
+        self::assertEquals('Test name', $this->doc->name);
     }
 
     /**
@@ -81,8 +81,8 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testDocInputOutput() : void
     {
-        $this->doc->setDoc('Test content');
-        self::assertEquals('Test content', $this->doc->getDoc());
+        $this->doc->doc = 'Test content';
+        self::assertEquals('Test content', $this->doc->doc);
     }
 
     /**
@@ -92,8 +92,8 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testDocRawInputOutput() : void
     {
-        $this->doc->setDocRaw('Test content');
-        self::assertEquals('Test content', $this->doc->getDocRaw());
+        $this->doc->docRaw = 'Test content';
+        self::assertEquals('Test content', $this->doc->docRaw);
     }
 
     /**

@@ -34,14 +34,14 @@ class WikiAppMapperTest extends \PHPUnit\Framework\TestCase
     {
         $app = new WikiApp();
 
-        $app->setName('Test Category');
+        $app->name = 'Test Category';
 
         $id = WikiAppMapper::create($app);
         self::assertGreaterThan(0, $app->getId());
         self::assertEquals($id, $app->getId());
 
         $appR = WikiAppMapper::get($app->getId());
-        self::assertEquals($app->getName(), $appR->getName());
+        self::assertEquals($app->name, $appR->name);
     }
 
     /**
@@ -55,7 +55,7 @@ class WikiAppMapperTest extends \PHPUnit\Framework\TestCase
             $text = new Text();
             $app  = new WikiApp();
 
-            $app->setName($text->generateText(\mt_rand(1, 3)));
+            $app->name = $text->generateText(\mt_rand(1, 3));
 
             $id = WikiAppMapper::create($app);
         }

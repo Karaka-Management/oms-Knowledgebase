@@ -65,14 +65,14 @@ final class ApiController extends Controller
     public function apiWikiDocCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         if (!empty($val = $this->validateWikiDocCreate($request))) {
-            $response->set($request->getUri()->__toString(), new FormValidation($val));
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
+            $response->set($request->uri->__toString(), new FormValidation($val));
+            $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
         $doc = $this->createWikiDocFromRequest($request, $response, $data);
-        $this->createModel($request->getHeader()->getAccount(), $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
+        $this->createModel($request->header->account, $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Wiki', 'Wiki successfully created.', $doc);
     }
 
@@ -90,9 +90,9 @@ final class ApiController extends Controller
     public function createWikiDocFromRequest(RequestAbstract $request, ResponseAbstract $response, $data = null) : WikiDoc
     {
         $doc = new WikiDoc();
-        $doc->setName((string) $request->getData('title'));
-        $doc->setDoc(Markdown::parse((string) ($request->getData('plain') ?? '')));
-        $doc->setDocRaw((string) ($request->getData('plain') ?? ''));
+        $doc->name = (string) $request->getData('title');
+        $doc->doc = Markdown::parse((string) ($request->getData('plain') ?? ''));
+        $doc->docRaw = (string) ($request->getData('plain') ?? '');
         $doc->setCategory(new NullWikiCategory((int) ($request->getData('category') ?? 1)));
         $doc->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
         $doc->setStatus((int) ($request->getData('status') ?? WikiStatus::INACTIVE));
@@ -107,7 +107,7 @@ final class ApiController extends Controller
 
                     $internalResponse = new HttpResponse();
                     $this->app->moduleManager->get('Tag')->apiTagCreate($request, $internalResponse, $data);
-                    $doc->addTag($internalResponse->get($request->getUri()->__toString())['response']);
+                    $doc->addTag($internalResponse->get($request->uri->__toString())['response']);
                 } else {
                     $doc->addTag(new NullTag((int) $tag['id']));
                 }
@@ -180,13 +180,13 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateWikiCategoryL11nCreate($request))) {
             $response->set('wiki_category_l11n_create', new FormValidation($val));
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
+            $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
         $l11nWikiCategory = $this->createWikiCategoryL11nFromRequest($request);
-        $this->createModel($request->getHeader()->getAccount(), $l11nWikiCategory, WikiCategoryL11nMapper::class, 'wiki_category_l11n', $request->getOrigin());
+        $this->createModel($request->header->account, $l11nWikiCategory, WikiCategoryL11nMapper::class, 'wiki_category_l11n', $request->getOrigin());
 
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Category localization successfully created', $l11nWikiCategory);
     }
@@ -207,7 +207,7 @@ final class ApiController extends Controller
         $l11nWikiCategory->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
-        $l11nWikiCategory->setName((string) ($request->getData('name') ?? ''));
+        $l11nWikiCategory->name = (string) ($request->getData('name') ?? '');
 
         return $l11nWikiCategory;
     }
@@ -248,7 +248,7 @@ final class ApiController extends Controller
     {
         $old = clone WikiDocMapper::get((int) $request->getData('id'));
         $new = $this->updateDocFromRequest($request);
-        $this->updateModel($request->getHeader()->getAccount(), $old, $new, WikiDocMapper::class, 'doc', $request->getOrigin());
+        $this->updateModel($request->header->account, $old, $new, WikiDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Doc', 'Doc successfully updated', $new);
     }
 
@@ -285,7 +285,7 @@ final class ApiController extends Controller
     public function apiWikiDocDelete(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         $doc = WikiDocMapper::get((int) $request->getData('id'));
-        $this->deleteModel($request->getHeader()->getAccount(), $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
+        $this->deleteModel($request->header->account, $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Doc', 'Doc successfully deleted', $doc);
     }
 
@@ -305,22 +305,22 @@ final class ApiController extends Controller
     public function apiWikiCategoryCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         if (!empty($val = $this->validateWikiCategoryCreate($request))) {
-            $response->set($request->getUri()->__toString(), new FormValidation($val));
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
+            $response->set($request->uri->__toString(), new FormValidation($val));
+            $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
         $category = $this->createWikiCategoryFromRequest($request);
-        $this->createModel($request->getHeader()->getAccount(), $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
+        $this->createModel($request->header->account, $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
 
-        $l11nRequest = new HttpRequest($request->getUri());
+        $l11nRequest = new HttpRequest($request->uri);
         $l11nRequest->setData('category', $category->getId());
         $l11nRequest->setData('name', $request->getData('name'));
         $l11nRequest->setData('language', $request->getData('language'));
 
         $l11nWikiCategory = $this->createWikiCategoryL11nFromRequest($l11nRequest);
-        $this->createModel($request->getHeader()->getAccount(), $l11nWikiCategory, WikiCategoryL11nMapper::class, 'tag_l11n', $request->getOrigin());
+        $this->createModel($request->header->account, $l11nWikiCategory, WikiCategoryL11nMapper::class, 'tag_l11n', $request->getOrigin());
 
         $category->setName($l11nWikiCategory);
 
@@ -342,7 +342,7 @@ final class ApiController extends Controller
         $category->setApp(new NullWikiApp((int) ($request->getData('app') ?? 1)));
 
         if ($request->getData('parent') !== null) {
-            $category->setParent(new NullWikiCategory((int) $request->getData('parent')));
+            $category->parent = new NullWikiCategory((int) $request->getData('parent'));
         }
 
         return $category;
@@ -403,7 +403,7 @@ final class ApiController extends Controller
     {
         $old = clone WikiCategoryMapper::get((int) $request->getData('id'));
         $new = $this->updateCategoryFromRequest($request);
-        $this->updateModel($request->getHeader()->getAccount(), $old, $new, WikiCategoryMapper::class, 'category', $request->getOrigin());
+        $this->updateModel($request->header->account, $old, $new, WikiCategoryMapper::class, 'category', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Category', 'Category successfully updated', $new);
     }
 
@@ -439,7 +439,7 @@ final class ApiController extends Controller
     public function apiWikiCategoryDelete(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         $category = WikiCategoryMapper::get((int) $request->getData('id'));
-        $this->deleteModel($request->getHeader()->getAccount(), $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
+        $this->deleteModel($request->header->account, $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Category', 'Category successfully deleted', $category);
     }
 
@@ -459,14 +459,14 @@ final class ApiController extends Controller
     public function apiWikiAppCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         if (!empty($val = $this->validateWikiAppCreate($request))) {
-            $response->set($request->getUri()->__toString(), new FormValidation($val));
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
+            $response->set($request->uri->__toString(), new FormValidation($val));
+            $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
         $app = $this->createWikiAppFromRequest($request);
-        $this->createModel($request->getHeader()->getAccount(), $app, WikiAppMapper::class, 'app', $request->getOrigin());
+        $this->createModel($request->header->account, $app, WikiAppMapper::class, 'app', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'App', 'App successfully created.', $app);
     }
 
@@ -482,7 +482,7 @@ final class ApiController extends Controller
     public function createWikiAppFromRequest(RequestAbstract $request) : WikiApp
     {
         $app = new WikiApp();
-        $app->setName((string) $request->getData('name'));
+        $app->name = (string) $request->getData('name');
 
         return $app;
     }
@@ -542,7 +542,7 @@ final class ApiController extends Controller
     {
         $old = clone WikiAppMapper::get((int) $request->getData('id'));
         $new = $this->updateAppFromRequest($request);
-        $this->updateModel($request->getHeader()->getAccount(), $old, $new, WikiAppMapper::class, 'app', $request->getOrigin());
+        $this->updateModel($request->header->account, $old, $new, WikiAppMapper::class, 'app', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'App', 'App successfully updated', $new);
     }
 
@@ -579,7 +579,7 @@ final class ApiController extends Controller
     public function apiWikiAppDelete(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         $app = WikiAppMapper::get((int) $request->getData('id'));
-        $this->deleteModel($request->getHeader()->getAccount(), $app, WikiAppMapper::class, 'app', $request->getOrigin());
+        $this->deleteModel($request->header->account, $app, WikiAppMapper::class, 'app', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'App', 'App successfully deleted', $app);
     }
 }

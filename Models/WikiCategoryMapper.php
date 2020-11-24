@@ -36,6 +36,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
     protected static array $columns = [
         'wiki_category_id'     => ['name' => 'wiki_category_id',     'type' => 'int',    'internal' => 'id'],
         'wiki_category_app'    => ['name' => 'wiki_category_app',    'type' => 'int',    'internal' => 'app'],
+        'wiki_category_virtual'    => ['name' => 'wiki_category_virtual',    'type' => 'string',    'internal' => 'virtualPath'],
         'wiki_category_parent' => ['name' => 'wiki_category_parent', 'type' => 'int',    'internal' => 'parent'],
     ];
 

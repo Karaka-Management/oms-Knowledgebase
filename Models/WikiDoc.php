@@ -50,7 +50,7 @@ class WikiDoc implements \JsonSerializable
      * @var string
      * @since 1.0.0
      */
-    private string $name = '';
+    public string $name = '';
 
     /**
      * Article status.
@@ -66,7 +66,7 @@ class WikiDoc implements \JsonSerializable
      * @var string
      * @since 1.0.0
      */
-    private string $doc = '';
+    public string $doc = '';
 
     /**
      * Document raw content.
@@ -74,7 +74,7 @@ class WikiDoc implements \JsonSerializable
      * @var string
      * @since 1.0.0
      */
-    private string $docRaw = '';
+    public string $docRaw = '';
 
     /**
      * Category.
@@ -162,84 +162,6 @@ class WikiDoc implements \JsonSerializable
     public function setLanguage(string $language) : void
     {
         $this->language = $language;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getName() : string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name Name
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setName(string $name) : void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getDoc() : string
-    {
-        return $this->doc;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $doc Document content
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setDoc(string $doc) : void
-    {
-        $this->doc = $doc;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getDocRaw() : string
-    {
-        return $this->docRaw;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $doc Document content
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setDocRaw(string $doc) : void
-    {
-        $this->docRaw = $doc;
     }
 
     /**

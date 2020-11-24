@@ -37,9 +37,9 @@ echo $this->getData('nav')->render();
 <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-9">
         <section class="portlet">
-            <div class="portlet-head"><?= $this->printHtml($doc->getName()); ?></div>
+            <div class="portlet-head"><?= $this->printHtml($doc->name); ?></div>
             <div class="portlet-body">
-                <article><?= $doc->getDoc(); ?></article>
+                <article><?= $doc->doc; ?></article>
             </div>
             <?php if ($editable || !empty($tags)) : ?>
             <div class="portlet-foot">

@@ -58,7 +58,7 @@ class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
     public function testChildCR() : void
     {
         $this->category->setName('Test Category2');
-        $this->category->setParent(new NullWikiCategory(1));
+        $this->category->parent = new NullWikiCategory(1);
 
         $id = WikiCategoryMapper::create($this->category);
         self::assertGreaterThan(0, $this->category->getId());
@@ -66,7 +66,7 @@ class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
 
         $categoryR = WikiCategoryMapper::get($this->category->getId());
         self::assertEquals($this->category->getName(), $categoryR->getName());
-        self::assertEquals($this->category->getParent()->getId(), $categoryR->getParent()->getId());
+        self::assertEquals($this->category->parent->getId(), $categoryR->parent->getId());
     }
 
     /**

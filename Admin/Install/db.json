@@ -35,6 +35,11 @@
                 "foreignTable": "wiki_category",
                 "foreignKey": "wiki_category_id"
             },
+            "wiki_category_virtual": {
+                "name": "wiki_category_virtual",
+                "type": "VARCHAR(255)",
+                "null": false
+            },
             "wiki_category_app": {
                 "name": "wiki_category_app",
                 "type": "INT",

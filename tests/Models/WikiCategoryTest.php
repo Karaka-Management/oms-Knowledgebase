@@ -42,8 +42,8 @@ class WikiCategoryTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(0, $this->category->getId());
         self::assertEquals(0, $this->category->getApp()->getId());
         self::assertEquals('', $this->category->getName());
-        self::assertEquals('/', $this->category->getPath());
-        self::assertEquals(0, $this->category->getParent()->getId());
+        self::assertEquals('/', $this->category->getVirtualPath());
+        self::assertEquals(0, $this->category->parent->getId());
     }
 
     /**
@@ -75,8 +75,8 @@ class WikiCategoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testPathInputOutput() : void
     {
-        $this->category->setPath('/test/path');
-        self::assertEquals('/test/path', $this->category->getPath());
+        $this->category->setVirtualPath('/test/path');
+        self::assertEquals('/test/path', $this->category->getVirtualPath());
     }
 
     /**
@@ -86,7 +86,7 @@ class WikiCategoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testParentInputOutput() : void
     {
-        $this->category->setParent(new NullWikiCategory(2));
-        self::assertEquals(2, $this->category->getParent()->getId());
+        $this->category->parent = new NullWikiCategory(2);
+        self::assertEquals(2, $this->category->parent->getId());
     }
 }

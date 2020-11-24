@@ -287,13 +287,13 @@ final class BackendController extends Controller
         $lang = $response->getLanguage();
 
         $document  = WikiDocMapper::withConditional('language', $lang)::get((int) $request->getData('id'));
-        $accountId = $request->getHeader()->getAccount();
+        $accountId = $request->header->account;
 
         if (!$this->app->accountManager->get($accountId)->hasPermission(
                 PermissionType::READ, $this->app->orgId, $this->app->appName, self::MODULE_NAME, PermissionState::WIKI, $document->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_403);
+            $response->header->status = RequestStatusCode::R_403;
             return $view;
         }
 
