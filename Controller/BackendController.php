@@ -188,7 +188,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $list = WikiCategoryMapper::getByApp($app, 2);
+        $list = WikiCategoryMapper::withConditional('language', $response->getLanguage())::getByApp($app, 2);
         $view->setData('categories', $list);
 
         return $view;
