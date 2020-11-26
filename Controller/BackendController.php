@@ -36,10 +36,6 @@ use phpOMS\Views\View;
  * @license OMS License 1.0
  * @link    https://orange-management.org
  * @since   1.0.0
- *
- * @todo Orange-Management/Modules#79
- *  Add category management
- *  Categories cannot get managed right (created and edited). Categories need to have a language component.
  */
 final class BackendController extends Controller
 {
