@@ -85,10 +85,10 @@ final class ApiController extends Controller
      */
     public function createWikiDocFromRequest(RequestAbstract $request, ResponseAbstract $response, $data = null) : WikiDoc
     {
-        $doc         = new WikiDoc();
-        $doc->name   = (string) $request->getData('title');
-        $doc->doc    = Markdown::parse((string) ($request->getData('plain') ?? ''));
-        $doc->docRaw = (string) ($request->getData('plain') ?? '');
+        $doc           = new WikiDoc();
+        $doc->name     = (string) $request->getData('title');
+        $doc->doc      = Markdown::parse((string) ($request->getData('plain') ?? ''));
+        $doc->docRaw   = (string) ($request->getData('plain') ?? '');
         $doc->category = new NullWikiCategory((int) ($request->getData('category') ?? 1));
         $doc->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
         $doc->setStatus((int) ($request->getData('status') ?? WikiStatus::INACTIVE));
@@ -334,7 +334,7 @@ final class ApiController extends Controller
      */
     public function createWikiCategoryFromRequest(RequestAbstract $request) : WikiCategory
     {
-        $category = new WikiCategory();
+        $category      = new WikiCategory();
         $category->app = new NullWikiApp((int) ($request->getData('app') ?? 1));
 
         if ($request->getData('parent') !== null) {

@@ -113,7 +113,7 @@ final class WikiDocMapper extends DataMapperAbstract
     {
         $query ??= self::getQuery(null, [], $relations, $depth);
 
-        $query->where(static::$table . '_' . $depth . '.' . 'wiki_article_app', '=', $app)
+        $query->where(static::$table . '_' . $depth . '.wiki_article_app', '=', $app)
             ->limit($limit);
 
         if (!empty(static::$createdAt)) {
