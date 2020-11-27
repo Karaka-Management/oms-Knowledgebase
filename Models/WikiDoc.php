@@ -42,7 +42,7 @@ class WikiDoc implements \JsonSerializable
      * @var null|WikiApp
      * @since 1.0.0
      */
-    private ?WikiApp $app = null;
+    public ?WikiApp $app = null;
 
     /**
      * Name.
@@ -82,7 +82,7 @@ class WikiDoc implements \JsonSerializable
      * @var null|WikiCategory
      * @since 1.0.0
      */
-    private ?WikiCategory $category = null;
+    public ?WikiCategory $category = null;
 
     /**
      * Language.
@@ -110,32 +110,6 @@ class WikiDoc implements \JsonSerializable
     public function getId() : int
     {
         return $this->id;
-    }
-
-    /**
-     * Get app
-     *
-     * @return WikiApp
-     *
-     * @since 1.0.0
-     */
-    public function getApp() : WikiApp
-    {
-        return $this->app ?? new NullWikiApp();
-    }
-
-    /**
-     * Set app
-     *
-     * @param null|WikiApp $app App
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setApp(?WikiApp $app) : void
-    {
-        $this->app = $app;
     }
 
     /**
@@ -188,32 +162,6 @@ class WikiDoc implements \JsonSerializable
     public function setStatus(int $status) : void
     {
         $this->status = $status;
-    }
-
-    /**
-     * Get category
-     *
-     * @return WikiCategory
-     *
-     * @since 1.0.0
-     */
-    public function getCategory() : WikiCategory
-    {
-        return $this->category ?? new NullWikiCategory();
-    }
-
-    /**
-     * Set cateogry
-     *
-     * @param null|WikiCategory $category Category
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setCategory(?WikiCategory $category) : void
-    {
-        $this->category = $category;
     }
 
     /**

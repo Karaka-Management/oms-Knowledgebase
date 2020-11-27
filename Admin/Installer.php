@@ -48,7 +48,7 @@ final class Installer extends InstallerAbstract
         $id = WikiAppMapper::create($app);
 
         $category = new WikiCategory();
-        $category->setApp(new NullWikiApp($id));
+        $category->app = new NullWikiApp($id);
         $category->setName('Default');
 
         WikiCategoryMapper::create($category);
@@ -62,7 +62,7 @@ final class Installer extends InstallerAbstract
             $id = WikiAppMapper::create($app);
 
             $category = new WikiCategory();
-            $category->setApp(new NullWikiApp($id));
+            $category->app = new NullWikiApp($id);
             $category->setName('Default');
         }
     }

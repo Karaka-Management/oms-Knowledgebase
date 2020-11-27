@@ -89,10 +89,10 @@ final class ApiController extends Controller
         $doc->name   = (string) $request->getData('title');
         $doc->doc    = Markdown::parse((string) ($request->getData('plain') ?? ''));
         $doc->docRaw = (string) ($request->getData('plain') ?? '');
-        $doc->setCategory(new NullWikiCategory((int) ($request->getData('category') ?? 1)));
+        $doc->category = new NullWikiCategory((int) ($request->getData('category') ?? 1));
         $doc->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
         $doc->setStatus((int) ($request->getData('status') ?? WikiStatus::INACTIVE));
-        $doc->setApp(new NullWikiApp((int) ($request->getData('app') ?? 1)));
+        $doc->app = new NullWikiApp((int) ($request->getData('app') ?? 1));
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -335,7 +335,7 @@ final class ApiController extends Controller
     public function createWikiCategoryFromRequest(RequestAbstract $request) : WikiCategory
     {
         $category = new WikiCategory();
-        $category->setApp(new NullWikiApp((int) ($request->getData('app') ?? 1)));
+        $category->app = new NullWikiApp((int) ($request->getData('app') ?? 1));
 
         if ($request->getData('parent') !== null) {
             $category->parent = new NullWikiCategory((int) $request->getData('parent'));

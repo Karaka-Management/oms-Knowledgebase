@@ -42,7 +42,7 @@ class WikiCategory implements \JsonSerializable
      * @var WikiApp
      * @since 1.0.0
      */
-    private WikiApp $app;
+    public WikiApp $app;
 
     /**
      * Name.
@@ -92,32 +92,6 @@ class WikiCategory implements \JsonSerializable
     }
 
     /**
-     * Get app
-     *
-     * @return WikiApp
-     *
-     * @since 1.0.0
-     */
-    public function getApp() : WikiApp
-    {
-        return $this->app ?? new NullWikiApp();
-    }
-
-    /**
-     * Set app
-     *
-     * @param null|WikiApp $app App
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setApp(?WikiApp $app) : void
-    {
-        $this->app = $app;
-    }
-
-    /**
      * Get name
      *
      * @return string
@@ -132,7 +106,7 @@ class WikiCategory implements \JsonSerializable
     /**
      * Set name
      *
-     * @param string|TagL11n $name Tag article name
+     * @param string|WikiCategoryL11n $name Tag article name
      *
      * @return void
      *
