@@ -40,7 +40,7 @@ class WikiCategoryTest extends \PHPUnit\Framework\TestCase
     public function testDefault() : void
     {
         self::assertEquals(0, $this->category->getId());
-        self::assertEquals(0, $this->category->getApp()->getId());
+        self::assertEquals(0, $this->category->app->getId());
         self::assertEquals('', $this->category->getName());
         self::assertEquals('/', $this->category->getVirtualPath());
         self::assertEquals(0, $this->category->parent->getId());
@@ -53,8 +53,8 @@ class WikiCategoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testAppInputOutput() : void
     {
-        $this->category->setApp(new NullWikiApp(2));
-        self::assertEquals(2, $this->category->getApp()->getId());
+        $this->category->app = new NullWikiApp(2);
+        self::assertEquals(2, $this->category->app->getId());
     }
 
     /**

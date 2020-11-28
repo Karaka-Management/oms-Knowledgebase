@@ -42,12 +42,12 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
     public function testDefault() : void
     {
         self::assertEquals(0, $this->doc->getId());
-        self::assertEquals(0, $this->doc->getApp()->getId());
+        self::assertEquals(null, $this->doc->app);
         self::assertEquals('', $this->doc->name);
         self::assertEquals('', $this->doc->doc);
         self::assertEquals('', $this->doc->docRaw);
         self::assertEquals(WikiStatus::ACTIVE, $this->doc->getStatus());
-        self::assertEquals(0, $this->doc->getCategory()->getId());
+        self::assertEquals(null, $this->doc->category);
         self::assertEquals('en', $this->doc->getLanguage());
         self::assertEquals([], $this->doc->getTags());
     }
@@ -59,8 +59,8 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
      */
     public function tesAppInputOutput() : void
     {
-        $this->doc->setApp(new NullWikiApp(2));
-        self::assertEquals(2, $this->doc->getApp()->getId());
+        $this->doc->app = new NullWikiApp(2);
+        self::assertEquals(2, $this->doc->app->getId());
     }
 
     /**
@@ -114,8 +114,8 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testCategoryInputOutput() : void
     {
-        $this->doc->setCategory(new NullWikiCategory(3));
-        self::assertEquals(3, $this->doc->getCategory()->getId());
+        $this->doc->category = new NullWikiCategory(3);
+        self::assertEquals(3, $this->doc->category->getId());
     }
 
     /**
