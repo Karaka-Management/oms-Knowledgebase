@@ -41,7 +41,7 @@ echo $this->getData('nav')->render(); ?>
                     <div class="portlet-foot">
                         <div class="overflowfix">
                             <?php $tags = $doc->getTags(); foreach ($tags as $tag) : ?>
-                                <span class="tag" style="background: <?= $this->printHtml($tag->getColor()); ?>"><?= $this->printHtml($tag->getTitle()); ?></span>
+                                <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= $tag->icon !== null ? '<i class="' . $this->printHtml($tag->icon ?? '') . '"></i>' : ''; ?><?= $this->printHtml($tag->getTitle()); ?></span>
                             <?php endforeach; ?>
                             <a href="<?= $url; ?>" class="button floatRight">More</a>
                         </div>
