@@ -51,7 +51,7 @@ echo $this->getData('nav')->render();
                     </div>
                     <?php if ($editable) : ?>
                     <div class="col-xs-6 rightText">
-                        <a tabindex="0" class="button" href="<?= \phpOMS\Uri\UriFactory::build('{/prefix}wiki/doc/edit?id=' . $doc->getId()); ?>">Edit</a>
+                        <a tabindex="0" class="button" href="<?= \phpOMS\Uri\UriFactory::build('{/prefix}wiki/doc/edit?id=' . $doc->getId()); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -62,7 +62,7 @@ echo $this->getData('nav')->render();
 
     <div class="col-xs-12 col-md-4 col-lg-3">
         <section class="portlet">
-            <div class="portlet-head">Categories</div>
+            <div class="portlet-head"><?= $this->getHtml('Categories'); ?></div>
             <div class="portlet-body">
                 <ul>
                     <?php foreach ($categories as $category) : ?>

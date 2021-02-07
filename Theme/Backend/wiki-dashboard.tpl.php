@@ -43,7 +43,7 @@ echo $this->getData('nav')->render(); ?>
                             <?php $tags = $doc->getTags(); foreach ($tags as $tag) : ?>
                                 <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= $tag->icon !== null ? '<i class="' . $this->printHtml($tag->icon ?? '') . '"></i>' : ''; ?><?= $this->printHtml($tag->getTitle()); ?></span>
                             <?php endforeach; ?>
-                            <a href="<?= $url; ?>" class="button floatRight">More</a>
+                            <a href="<?= $url; ?>" class="button floatRight"><?= $this->getHtml('More', '0', '0'); ?></a>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ echo $this->getData('nav')->render(); ?>
 
     <div class="col-xs-12 col-md-4 col-lg-3">
         <section class="portlet">
-            <div class="portlet-head">App</div>
+            <div class="portlet-head"><?= $this->getHtml('App'); ?></div>
             <div class="portlet-body">
                 <form>
                     <select>
@@ -67,7 +67,7 @@ echo $this->getData('nav')->render(); ?>
         </section>
 
         <section class="portlet">
-            <div class="portlet-head">Categories</div>
+            <div class="portlet-head"><?= $this->getHtml('Categories'); ?></div>
             <div class="portlet-body">
                 <ul>
                     <?php foreach ($categories as $category) : ?>
