@@ -42,12 +42,12 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
     public function testDefault() : void
     {
         self::assertEquals(0, $this->doc->getId());
-        self::assertEquals(null, $this->doc->app);
+        self::assertNull($this->doc->app);
         self::assertEquals('', $this->doc->name);
         self::assertEquals('', $this->doc->doc);
         self::assertEquals('', $this->doc->docRaw);
         self::assertEquals(WikiStatus::ACTIVE, $this->doc->getStatus());
-        self::assertEquals(null, $this->doc->category);
+        self::assertNull($this->doc->category);
         self::assertEquals('en', $this->doc->getLanguage());
         self::assertEquals([], $this->doc->getTags());
     }
