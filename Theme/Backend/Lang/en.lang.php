@@ -20,6 +20,6 @@ return ['Knowledgebase' => [
     'Language'   => 'Language',
     'Name'       => 'Name',
     'Parent'     => 'Parent',
-    'Wiki'       => 'Wiki',
     'Status'     => 'Status',
+    'Wiki'       => 'Wiki',
 ]];
