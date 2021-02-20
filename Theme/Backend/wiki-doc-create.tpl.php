@@ -29,7 +29,7 @@ echo $this->getData('nav')->render(); ?>
         <div id="testEditor" class="m-editor">
             <section class="portlet">
                 <div class="portlet-body">
-                    <input id="iTitle" type="text" name="title" form="docForm" value="<?= $wiki->getName(); ?>">
+                    <input id="iTitle" type="text" name="title" form="docForm" value="<?= $wiki->name; ?>">
                 </div>
             </section>
 
@@ -40,7 +40,7 @@ echo $this->getData('nav')->render(); ?>
             </section>
 
             <div class="box wf-100">
-            <?= $this->getData('editor')->getData('text')->render('iWiki', 'plain', 'docForm', $wiki->getDocRaw(), $wiki->getDoc()); ?>
+            <?= $this->getData('editor')->getData('text')->render('iWiki', 'plain', 'docForm', $wiki->docRaw, $wiki->doc); ?>
             </div>
         </div>
     </div>
@@ -53,8 +53,8 @@ echo $this->getData('nav')->render(); ?>
                     <table class="layout wf-100">
                         <tr><td>
                                 <select name="status" id="iStatus">
-                                    <option value="<?= $this->printHtml(WikiStatus::DRAFT); ?>"<?= $wiki->getStatus() === WikiStatus::DRAFT ? ' selected' : ''; ?>><?= $this->getHtml('Draft'); ?>
-                                    <option value="<?= $this->printHtml(WikiStatus::ACTIVE); ?>"<?= $wiki->getStatus() === WikiStatus::ACTIVE ? ' selected' : ''; ?>><?= $this->getHtml('Active'); ?>
+                                    <option value="<?= $this->printHtml((string) WikiStatus::DRAFT); ?>"<?= $wiki->getStatus() === WikiStatus::DRAFT ? ' selected' : ''; ?>><?= $this->getHtml('Draft'); ?>
+                                    <option value="<?= $this->printHtml((string) WikiStatus::ACTIVE); ?>"<?= $wiki->getStatus() === WikiStatus::ACTIVE ? ' selected' : ''; ?>><?= $this->getHtml('Active'); ?>
                                 </select>
                         <tr><td><label for="iLanguages"><?= $this->getHtml('Language'); ?></label>
                         <tr><td>
