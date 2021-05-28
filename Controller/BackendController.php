@@ -299,6 +299,9 @@ final class BackendController extends Controller
         $categories = WikiCategoryMapper::with('language', $lang)::getByParentAndApp($request->hasData('category') ? (int) $request->getData('category') : null, $app, 2);
         $view->setData('categories', $categories);
         $view->setData('document', $document);
+        $view->addData('editable', $this->app->accountManager->get($accountId)->hasPermission(
+            PermissionType::MODIFY, $this->app->orgId, $this->app->appName, self::MODULE_NAME, PermissionState::WIKI, $document->getId())
+        );
 
         return $view;
     }
@@ -329,6 +332,39 @@ final class BackendController extends Controller
         $view->addData('tagSelector', $tagSelector);
 
         $view->setData('doc', new NullWikiDoc());
+
+        return $view;
+    }
+
+    /**
+     * Routing end-point for application behaviour.
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return RenderableInterface
+     *
+     * @since 1.0.0
+     * @codeCoverageIgnore
+     */
+    public function viewKnowledgebaseDocEdit(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    {
+        $view = new View($this->app->l11nManager, $request, $response);
+
+        $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-create');
+        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1000601001, $request, $response));
+
+        $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
+        $view->addData('editor', $editor);
+
+        $accGrpSelector = new \Modules\Profile\Theme\Backend\Components\AccountGroupSelector\BaseView($this->app->l11nManager, $request, $response);
+        $view->addData('accGrpSelector', $accGrpSelector);
+
+        $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
+        $view->addData('tagSelector', $tagSelector);
+
+        $view->addData('doc', WikiDocMapper::get((int) ($request->getData('id') ?? 0)));
 
         return $view;
     }

@@ -83,6 +83,17 @@ return [
             ],
         ],
     ],
+    '^.*/wiki/doc/edit.*$' => [
+        [
+            'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseDocEdit',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::MODULE_NAME,
+                'type'   => PermissionType::MODIFY,
+                'state'  => PermissionState::WIKI,
+            ],
+        ],
+    ],
     '^.*/wiki/doc/list.*$' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseDocList',
