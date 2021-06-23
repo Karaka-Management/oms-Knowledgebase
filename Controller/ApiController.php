@@ -26,7 +26,6 @@ use Modules\Knowledgebase\Models\WikiDoc;
 use Modules\Knowledgebase\Models\WikiDocMapper;
 use Modules\Knowledgebase\Models\WikiStatus;
 use Modules\Tag\Models\NullTag;
-use phpOMS\Message\Http\HttpRequest;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
