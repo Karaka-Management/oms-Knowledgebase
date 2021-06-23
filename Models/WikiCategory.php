@@ -98,9 +98,9 @@ class WikiCategory implements \JsonSerializable
      *
      * @since 1.0.0
      */
-    public function getName() : string
+    public function getL11n() : string
     {
-        return $this->name instanceof WikiCategoryL11n ? $this->name->getName() : $this->name;
+        return $this->name instanceof WikiCategoryL11n ? $this->name->name : $this->name;
     }
 
     /**
@@ -112,7 +112,7 @@ class WikiCategory implements \JsonSerializable
      *
      * @since 1.0.0
      */
-    public function setName($name, string $lang = ISO639x1Enum::_EN) : void
+    public function setL11n($name, string $lang = ISO639x1Enum::_EN) : void
     {
         if ($name instanceof WikiCategoryL11n) {
             $this->name = $name;

@@ -309,17 +309,8 @@ final class ApiController extends Controller
         }
 
         $category = $this->createWikiCategoryFromRequest($request);
+        $category->setL11n($request->getData('name'), $request->getData('language') ?? $request->getLanguage());
         $this->createModel($request->header->account, $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
-
-        $l11nRequest = new HttpRequest($request->uri);
-        $l11nRequest->setData('category', $category->getId());
-        $l11nRequest->setData('name', $request->getData('name'));
-        $l11nRequest->setData('language', $request->getData('language'));
-
-        $l11nWikiCategory = $this->createWikiCategoryL11nFromRequest($l11nRequest);
-        $this->createModel($request->header->account, $l11nWikiCategory, WikiCategoryL11nMapper::class, 'tag_l11n', $request->getOrigin());
-
-        $category->setName($l11nWikiCategory);
 
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Category', 'Category successfully created.', $category);
     }

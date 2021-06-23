@@ -14,7 +14,8 @@ declare(strict_types=1);
 
 use phpOMS\Uri\UriFactory;
 
-$categories = $this->getData('categories');
+/** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
+$categories = $this->getData('categories') ?? [];
 
 /** @var \phpOMS\Views\View $this */
 echo $this->getData('nav')->render();
@@ -35,8 +36,8 @@ echo $this->getData('nav')->render();
                         $url = UriFactory::build('{/prefix}admin/account/settings?{?}&id=' . $value->getId()); ?>
                 <tr tabindex="0" data-href="<?= $url; ?>">
                     <td data-label="<?= $this->getHtml('ID', '0', '0'); ?>"><a href="<?= $url; ?>"><?= $value->getId(); ?></a>
-                    <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getName()); ?></a>
-                    <td data-label="<?= $this->getHtml('Parent'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->parent !== null ? $value->parent->getName() : ''); ?></a>
+                    <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getL11n()); ?></a>
+                    <td data-label="<?= $this->getHtml('Parent'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->parent !== null ? $value->parent->getL11n() : ''); ?></a>
                 <?php endforeach; ?>
                 <?php if (empty($categories)) : ?>
                 <tr><td colspan="3" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
