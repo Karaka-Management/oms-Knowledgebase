@@ -113,13 +113,13 @@ final class WikiDocMapper extends DataMapperAbstract
     {
         $query ??= self::getQuery(null, [], $relations, $depth);
 
-        $query->where(static::$table . '_' . $depth . '.wiki_article_app', '=', $app)
+        $query->where(static::$table . '_d' . $depth . '.wiki_article_app', '=', $app)
             ->limit($limit);
 
         if (!empty(static::$createdAt)) {
-            $query->orderBy(static::$table  . '_' . $depth . '.' . static::$columns[static::$createdAt]['name'], 'DESC');
+            $query->orderBy(static::$table  . '_d' . $depth . '.' . static::$columns[static::$createdAt]['name'], 'DESC');
         } else {
-            $query->orderBy(static::$table  . '_' . $depth . '.' . static::$columns[static::$primaryField]['name'], 'DESC');
+            $query->orderBy(static::$table  . '_d' . $depth . '.' . static::$columns[static::$primaryField]['name'], 'DESC');
         }
 
         return self::getAllByQuery($query, $relations, $depth);

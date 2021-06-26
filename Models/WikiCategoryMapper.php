@@ -112,8 +112,8 @@ final class WikiCategoryMapper extends DataMapperAbstract
     public static function getByParentAndApp($value, int $app = 1, int $depth = 3) : array
     {
         $query = self::getQuery();
-        $query->where(static::$table . '_' . $depth . '.' . static::$parent, '=', $value)
-            ->andWhere(static::$table . '_' . $depth . '.wiki_category_app', '=', $app);
+        $query->where(static::$table . '_d' . $depth . '.' . static::$parent, '=', $value)
+            ->andWhere(static::$table . '_d' . $depth . '.wiki_category_app', '=', $app);
 
         return self::getAllByQuery($query, RelationType::ALL, $depth);
     }
@@ -131,7 +131,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
     public static function getByApp(int $app, int $depth = 3) : array
     {
         $query = self::getQuery();
-        $query->where(static::$table . '_' . $depth . '.wiki_category_app', '=', $app);
+        $query->where(static::$table . '_d' . $depth . '.wiki_category_app', '=', $app);
 
         return self::getAllByQuery($query, RelationType::ALL, $depth);
     }
