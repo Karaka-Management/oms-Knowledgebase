@@ -112,7 +112,7 @@ class WikiCategory implements \JsonSerializable
      *
      * @since 1.0.0
      */
-    public function setL11n(string|WikiCategoryL11n $name, string $lang = ISO639x1Enum::_EN) : void
+    public function setL11n(string | WikiCategoryL11n $name, string $lang = ISO639x1Enum::_EN) : void
     {
         if ($name instanceof WikiCategoryL11n) {
             $this->name = $name;
