@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Modules\Knowledgebase\Models;
 
 /**
- * Task class.
+ * Null model class.
  *
  * @package Modules\Knowledgebase\Models
  * @license OMS License 1.0

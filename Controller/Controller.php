@@ -17,7 +17,7 @@ namespace Modules\Knowledgebase\Controller;
 use phpOMS\Module\ModuleAbstract;
 
 /**
- * Task class.
+ * Knowledgebase controller class.
  *
  * @package Modules\Knowledgebase
  * @license OMS License 1.0
