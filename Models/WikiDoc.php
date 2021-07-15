@@ -101,6 +101,14 @@ class WikiDoc implements \JsonSerializable
     private array $tags = [];
 
     /**
+     * Media files
+     *
+     * @var array
+     * @since 1.0.0
+     */
+    protected array $media = [];
+
+    /**
      * Get id.
      *
      * @return int Model id
@@ -188,6 +196,32 @@ class WikiDoc implements \JsonSerializable
     public function addTag(Tag $tag) : void
     {
         $this->tags[] = $tag;
+    }
+
+    /**
+     * Get all media
+     *
+     * @return Media[]
+     *
+     * @since 1.0.0
+     */
+    public function getMedia() : array
+    {
+        return $this->media;
+    }
+
+    /**
+     * Add media
+     *
+     * @param Media $media Media to add
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
+    public function addMedia(Media $media) : void
+    {
+        $this->media[] = $media;
     }
 
     /**

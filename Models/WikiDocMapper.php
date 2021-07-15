@@ -18,6 +18,7 @@ use Modules\Tag\Models\TagMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
 use phpOMS\DataStorage\Database\Query\Builder;
 use phpOMS\DataStorage\Database\RelationType;
+use Modules\Media\Models\MediaMapper;
 
 /**
  * Mapper class.
@@ -58,6 +59,12 @@ final class WikiDocMapper extends DataMapperAbstract
             'table'    => 'wiki_tag',
             'self'     => 'wiki_tag_dst',
             'external' => 'wiki_tag_src',
+        ],
+        'media'        => [
+            'mapper'   => MediaMapper::class,
+            'table'    => 'wiki_article_media',
+            'external' => 'wiki_article_media_dst',
+            'self'     => 'wiki_article_media_src',
         ],
     ];
 
