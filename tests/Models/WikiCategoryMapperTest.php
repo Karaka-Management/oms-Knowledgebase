@@ -40,14 +40,14 @@ class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
      */
     public function testCR() : void
     {
-        $this->category->setName('Test Category');
+        $this->category->setL11n('Test Category');
 
         $id = WikiCategoryMapper::create($this->category);
         self::assertGreaterThan(0, $this->category->getId());
         self::assertEquals($id, $this->category->getId());
 
         $categoryR = WikiCategoryMapper::get($this->category->getId());
-        self::assertEquals($this->category->getName(), $categoryR->getName());
+        self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
     }
 
     /**
@@ -57,7 +57,7 @@ class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
      */
     public function testChildCR() : void
     {
-        $this->category->setName('Test Category2');
+        $this->category->setL11n('Test Category2');
         $this->category->parent = new NullWikiCategory(1);
 
         $id = WikiCategoryMapper::create($this->category);
@@ -65,7 +65,7 @@ class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($id, $this->category->getId());
 
         $categoryR = WikiCategoryMapper::get($this->category->getId());
-        self::assertEquals($this->category->getName(), $categoryR->getName());
+        self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
         self::assertEquals($this->category->parent->getId(), $categoryR->parent->getId());
     }
 
@@ -80,7 +80,7 @@ class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
             $text     = new Text();
             $category = new WikiCategory();
 
-            $category->setName($text->generateText(\mt_rand(1, 3)));
+            $category->setL11n($text->generateText(\mt_rand(1, 3)));
 
             $id = WikiCategoryMapper::create($category);
         }

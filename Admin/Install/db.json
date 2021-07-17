@@ -135,25 +135,25 @@
             }
         }
     },
-    "wiki_article": {
-        "name": "wiki_article",
+    "wiki_article_media": {
+        "name": "wiki_article_media",
         "fields": {
-            "wiki_article_id": {
-                "name": "wiki_article_id",
+            "wiki_article_media_id": {
+                "name": "wiki_article_media_id",
                 "type": "INT",
                 "null": false,
                 "primary": true,
                 "autoincrement": true
             },
-            "wiki_article_src": {
-                "name": "wiki_article_src",
+            "wiki_article_media_src": {
+                "name": "wiki_article_media_src",
                 "type": "INT",
                 "null": false,
-                "foreignTable": "wiki_article",
-                "foreignKey": "wiki_article_id"
+                "foreignTable": "wiki_article_media",
+                "foreignKey": "wiki_article_media_id"
             },
-            "wiki_article_dst": {
-                "name": "wiki_article_dst",
+            "wiki_article_media_dst": {
+                "name": "wiki_article_media_dst",
                 "type": "INT",
                 "null": false,
                 "foreignTable": "media",
