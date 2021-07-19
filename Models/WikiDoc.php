@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
-use Modules\Tag\Models\Tag;
 use Modules\Media\Models\Media;
+use Modules\Tag\Models\Tag;
 
 /**
  * Wiki document class.
