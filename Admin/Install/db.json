@@ -149,8 +149,8 @@
                 "name": "wiki_article_media_src",
                 "type": "INT",
                 "null": false,
-                "foreignTable": "wiki_article_media",
-                "foreignKey": "wiki_article_media_id"
+                "foreignTable": "wiki_article",
+                "foreignKey": "wiki_article_id"
             },
             "wiki_article_media_dst": {
                 "name": "wiki_article_media_dst",
