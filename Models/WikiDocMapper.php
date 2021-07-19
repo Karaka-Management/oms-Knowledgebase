@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
+use Modules\Media\Models\MediaMapper;
 use Modules\Tag\Models\TagMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
 use phpOMS\DataStorage\Database\Query\Builder;
 use phpOMS\DataStorage\Database\RelationType;
-use Modules\Media\Models\MediaMapper;
 
 /**
  * Mapper class.
