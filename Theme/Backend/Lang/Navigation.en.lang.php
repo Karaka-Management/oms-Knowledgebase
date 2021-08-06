@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 return ['Navigation' => [
     'Wiki'       => 'Wiki',
+    'Dashboard'       => 'Dashboard',
     'Categories' => 'Categories',
     'Apps'       => 'Apps',
 ]];
