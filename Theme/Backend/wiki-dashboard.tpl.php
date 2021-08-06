@@ -49,6 +49,9 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </div>
             <?php endforeach; ?>
+            <?php if (empty($documents)) : ?>
+            <div class="emptyPage"></div>
+            <?php endif; ?>
         </div>
     </div>
 
