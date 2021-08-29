@@ -17,7 +17,7 @@ namespace Modules\Knowledgebase\Models;
 use phpOMS\Stdlib\Base\Enum;
 
 /**
- * Task status enum.
+ * Wiki status enum.
  *
  * @package Modules\Knowledgebase\Models
  * @license OMS License 1.0

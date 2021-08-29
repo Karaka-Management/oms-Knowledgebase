@@ -29,6 +29,9 @@ class WikiDocTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiDoc $doc;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp() : void
     {
         $this->doc = new WikiDoc();

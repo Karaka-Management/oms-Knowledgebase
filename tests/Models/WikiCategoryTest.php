@@ -27,6 +27,9 @@ class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiCategory $category;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp() : void
     {
         $this->category = new WikiCategory();

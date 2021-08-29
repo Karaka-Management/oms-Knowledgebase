@@ -25,6 +25,9 @@ class WikiAppTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiApp $app;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp() : void
     {
         $this->app = new WikiApp();
