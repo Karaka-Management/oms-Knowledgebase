@@ -52,18 +52,5 @@ final class Installer extends InstallerAbstract
         $category->setL11n('Default');
 
         WikiCategoryMapper::create($category);
-
-        // @todo: create hook for when a new unit is created
-        $units = UnitMapper::getAll();
-        foreach ($units as $unit) {
-            $app       = new WikiApp();
-            $app->name = $unit->name;
-
-            $id = WikiAppMapper::create($app);
-
-            $category      = new WikiCategory();
-            $category->app = new NullWikiApp($id);
-            $category->setL11n('Default');
-        }
     }
 }
