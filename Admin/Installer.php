@@ -19,7 +19,6 @@ use Modules\Knowledgebase\Models\WikiApp;
 use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\WikiCategory;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
-use Modules\Organization\Models\UnitMapper;
 use phpOMS\Config\SettingsInterface;
 use phpOMS\DataStorage\Database\DatabasePool;
 use phpOMS\Module\InstallerAbstract;
