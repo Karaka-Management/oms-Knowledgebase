@@ -19,7 +19,7 @@ namespace Modules\Knowledgebase\tests\Admin;
  */
 class AdminTest extends \PHPUnit\Framework\TestCase
 {
-    protected const MODULE_NAME = 'Knowledgebase';
+    protected const NAME = 'Knowledgebase';
 
     protected const URI_LOAD = 'http://127.0.0.1/en/backend/wiki';
 
