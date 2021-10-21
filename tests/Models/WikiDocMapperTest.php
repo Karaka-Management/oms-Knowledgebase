@@ -25,7 +25,7 @@ use phpOMS\Utils\RnG\Text;
  *
  * @internal
  */
-class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
+final class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @testdox The model can be created and read from the database

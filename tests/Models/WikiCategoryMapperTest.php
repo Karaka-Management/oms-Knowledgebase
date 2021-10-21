@@ -24,7 +24,7 @@ use phpOMS\Utils\RnG\Text;
  *
  * @internal
  */
-class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
+final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiCategory $category;
 

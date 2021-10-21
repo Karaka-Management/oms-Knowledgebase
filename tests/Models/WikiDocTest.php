@@ -25,7 +25,7 @@ use Modules\Tag\Models\NullTag;
  *
  * @internal
  */
-class WikiDocTest extends \PHPUnit\Framework\TestCase
+final class WikiDocTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiDoc $doc;
 

@@ -21,7 +21,7 @@ use Modules\Knowledgebase\Models\WikiApp;
  *
  * @internal
  */
-class WikiAppTest extends \PHPUnit\Framework\TestCase
+final class WikiAppTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiApp $app;
 

@@ -23,7 +23,7 @@ use Modules\Knowledgebase\Models\WikiCategory;
  *
  * @internal
  */
-class WikiCategoryTest extends \PHPUnit\Framework\TestCase
+final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiCategory $category;
 
