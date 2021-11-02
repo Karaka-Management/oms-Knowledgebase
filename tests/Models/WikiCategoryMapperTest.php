@@ -38,7 +38,7 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The model can be created and read from the database
-     * @covers Modules\Knowledgebase\Models\WikiAppMapper
+     * @covers Modules\Knowledgebase\Models\WikiCategoryMapper
      * @group module
      */
     public function testCR() : void
@@ -51,11 +51,13 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
 
         $categoryR = WikiCategoryMapper::get($this->category->getId());
         self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
+
+        self::assertGreaterThan(0, \count(WikiCategoryMapper::getByApp(1)));
     }
 
     /**
      * @testdox The model can be created and read from the database with a parent category
-     * @covers Modules\Knowledgebase\Models\WikiAppMapper
+     * @covers Modules\Knowledgebase\Models\WikiCategoryMapper
      * @group module
      */
     public function testChildCR() : void
@@ -70,22 +72,7 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
         $categoryR = WikiCategoryMapper::get($this->category->getId());
         self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
         self::assertEquals($this->category->parent->getId(), $categoryR->parent->getId());
-    }
 
-    /**
-     * @group volume
-     * @group module
-     * @coversNothing
-     */
-    public function testVolume() : void
-    {
-        for ($i = 1; $i < 30; ++$i) {
-            $text     = new Text();
-            $category = new WikiCategory();
-
-            $category->setL11n($text->generateText(\mt_rand(1, 3)));
-
-            $id = WikiCategoryMapper::create($category);
-        }
+        self::assertGreaterThan(0, \count(WikiCategoryMapper::getByParentAndApp(1, 1)));
     }
 }

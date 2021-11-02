@@ -221,7 +221,7 @@ final class ApiController extends Controller
     private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : WikiCategoryL11n
     {
         $l11nWikiCategory = new WikiCategoryL11n();
-        $l11nWikiCategory->setCategory((int) ($request->getData('category') ?? 0));
+        $l11nWikiCategory->category = (int) ($request->getData('category') ?? 0);
         $l11nWikiCategory->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
@@ -282,7 +282,7 @@ final class ApiController extends Controller
     private function updateDocFromRequest(RequestAbstract $request) : WikiDoc
     {
         $doc = WikiDocMapper::get((int) $request->getData('id'));
-        $doc->setName((string) ($request->getData('title') ?? $doc->getName()));
+        $doc->name = (string) ($request->getData('title') ?? $doc->name);
 
         return $doc;
     }
@@ -330,7 +330,6 @@ final class ApiController extends Controller
         }
 
         $category = $this->createWikiCategoryFromRequest($request);
-        $category->setL11n($request->getData('name'), $request->getData('language') ?? $request->getLanguage());
         $this->createModel($request->header->account, $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
 
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Category', 'Category successfully created.', $category);
@@ -349,6 +348,7 @@ final class ApiController extends Controller
     {
         $category      = new WikiCategory();
         $category->app = new NullWikiApp((int) ($request->getData('app') ?? 1));
+        $category->setL11n($request->getData('name'), $request->getData('language') ?? $request->getLanguage());
 
         if ($request->getData('parent') !== null) {
             $category->parent = new NullWikiCategory((int) $request->getData('parent'));
@@ -428,6 +428,7 @@ final class ApiController extends Controller
     private function updateCategoryFromRequest(RequestAbstract $request) : WikiCategory
     {
         $category = WikiCategoryMapper::get((int) $request->getData('id'));
+        $category->setL11n($request->getData('name') ?? $category->getL11n(), $request->getData('language') ?? $request->getLanguage());
 
         return $category;
     }
@@ -567,7 +568,7 @@ final class ApiController extends Controller
     private function updateAppFromRequest(RequestAbstract $request) : WikiApp
     {
         $app = WikiAppMapper::get((int) $request->getData('id'));
-        $app->setName((string) ($request->getData('title') ?? $app->getName()));
+        $app->name = (string) ($request->getData('name') ?? $app->name);
 
         return $app;
     }

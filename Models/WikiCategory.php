@@ -66,7 +66,7 @@ class WikiCategory implements \JsonSerializable
      * @var string
      * @since 1.0.0
      */
-    private string $virtualPath = '/';
+    public string $virtualPath = '/';
 
     /**
      * Cosntructor
@@ -77,6 +77,7 @@ class WikiCategory implements \JsonSerializable
     {
         $this->app    = new NullWikiApp();
         $this->parent = new NullWikiCategory();
+        $this->setL11n('');
     }
 
     /**
@@ -126,32 +127,6 @@ class WikiCategory implements \JsonSerializable
     }
 
     /**
-     * Get the path
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getVirtualPath() : string
-    {
-        return $this->virtualPath;
-    }
-
-    /**
-     * Set the path if file
-     *
-     * @param string $path Path to file
-     *
-     * @return mixed
-     *
-     * @since 1.0.0
-     */
-    public function setVirtualPath(string $path)
-    {
-        $this->virtualPath = $path;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function toArray() : array
@@ -159,7 +134,7 @@ class WikiCategory implements \JsonSerializable
         return [
             'id'   => $this->id,
             'app'  => $this->app,
-            'name' => $this->name,
+            'virtualPath' => $this->virtualPath,
         ];
     }
 

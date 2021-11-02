@@ -41,7 +41,7 @@ class WikiCategoryL11n implements \JsonSerializable, ArrayableInterface
      * @var int
      * @since 1.0.0
      */
-    protected int $category = 0;
+    public int $category = 0;
 
     /**
      * Language.
@@ -82,32 +82,6 @@ class WikiCategoryL11n implements \JsonSerializable, ArrayableInterface
     public function getId() : int
     {
         return $this->id;
-    }
-
-    /**
-     * Set category.
-     *
-     * @param int $category Category id
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setCategory(int $category) : void
-    {
-        $this->category = $category;
-    }
-
-    /**
-     * Get category
-     *
-     * @return int
-     *
-     * @since 1.0.0
-     */
-    public function getCategory() : int
-    {
-        return $this->category;
     }
 
     /**

@@ -101,7 +101,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
     /**
      * Get by parent.
      *
-     * @param mixed $value Parent value id
+     * @param int   $value Parent value id
      * @param int   $app   App
      * @param int   $depth Relation depth
      *
@@ -109,7 +109,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
      *
      * @since 1.0.0
      */
-    public static function getByParentAndApp($value, int $app = 1, int $depth = 3) : array
+    public static function getByParentAndApp(int $value, int $app = 1, int $depth = 3) : array
     {
         $query = self::getQuery();
         $query->where(static::$table . '_d' . $depth . '.' . static::$parent, '=', $value)

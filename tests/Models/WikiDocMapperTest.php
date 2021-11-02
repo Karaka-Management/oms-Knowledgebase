@@ -52,26 +52,7 @@ final class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($doc->getStatus(), $docR->getStatus());
         self::assertEquals($doc->getLanguage(), $docR->getLanguage());
         self::assertEquals($doc->category->getId(), $docR->category->getId());
-    }
 
-    /**
-     * @group volume
-     * @group module
-     * @coversNothing
-     */
-    public function testVolume() : void
-    {
-        for ($i = 1; $i < 30; ++$i) {
-            $text = new Text();
-            $doc  = new WikiDoc();
-
-            $doc->name = $text->generateText(\mt_rand(1, 3));
-            $doc->doc  = $text->generateText(\mt_rand(100, 500));
-            $doc->setStatus(WikiStatus::ACTIVE);
-            $doc->category = new NullWikiCategory(\mt_rand(1, 9));
-            $doc->setLanguage('en');
-
-            $id = WikiDocMapper::create($doc);
-        }
+        self::assertGreaterThan(0, \count(WikiDocMapper::getNewestByApp(1)));
     }
 }

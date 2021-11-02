@@ -54,4 +54,23 @@ final class WikiAppTest extends \PHPUnit\Framework\TestCase
         $this->app->name = 'Test name';
         self::assertEquals('Test name', $this->app->name);
     }
+
+    /**
+     * @covers Modules\Knowledgebase\Models\WikiApp
+     * @group module
+     */
+    public function testSerialize() : void
+    {
+        $this->app->name = 'Title';
+
+        $serialized = $this->app->jsonSerialize();
+
+        self::assertEquals(
+            [
+                'id'       => 0,
+                'name'       => 'Title',
+            ],
+            $serialized
+        );
+    }
 }

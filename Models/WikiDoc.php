@@ -16,6 +16,8 @@ namespace Modules\Knowledgebase\Models;
 
 use Modules\Media\Models\Media;
 use Modules\Tag\Models\Tag;
+use phpOMS\Localization\ISO639x1Enum;
+
 
 /**
  * Wiki document class.
@@ -91,7 +93,7 @@ class WikiDoc implements \JsonSerializable
      * @var string
      * @since 1.0.0
      */
-    private string $language = 'en';
+    private string $language = ISO639x1Enum::_EN;
 
     /**
      * Tags.
@@ -228,8 +230,26 @@ class WikiDoc implements \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize() : array
+    public function toArray() : array
     {
-        return [];
+        return [
+            'id'   => $this->id,
+            'app'  => $this->app,
+            'name'  => $this->name,
+            'status'  => $this->status,
+            'doc'  => $this->doc,
+            'docRaw'  => $this->docRaw,
+            'language'  => $this->language,
+            'tags'  => $this->tags,
+            'media' => $this->media,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }

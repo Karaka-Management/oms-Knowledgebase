@@ -43,21 +43,4 @@ final class WikiAppMapperTest extends \PHPUnit\Framework\TestCase
         $appR = WikiAppMapper::get($app->getId());
         self::assertEquals($app->name, $appR->name);
     }
-
-    /**
-     * @group volume
-     * @group module
-     * @coversNothing
-     */
-    public function testVolume() : void
-    {
-        for ($i = 1; $i < 3; ++$i) {
-            $text = new Text();
-            $app  = new WikiApp();
-
-            $app->name = $text->generateText(\mt_rand(1, 3));
-
-            $id = WikiAppMapper::create($app);
-        }
-    }
 }
