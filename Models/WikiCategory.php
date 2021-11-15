@@ -132,8 +132,8 @@ class WikiCategory implements \JsonSerializable
     public function toArray() : array
     {
         return [
-            'id'   => $this->id,
-            'app'  => $this->app,
+            'id'          => $this->id,
+            'app'         => $this->app,
             'virtualPath' => $this->virtualPath,
         ];
     }

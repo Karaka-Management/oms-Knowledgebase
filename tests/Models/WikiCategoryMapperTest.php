@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\tests\Models;
 
+use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiCategory;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
-use phpOMS\Utils\RnG\Text;
 
 /**
  * @testdox Modules\tests\Knowledgebase\Models\WikiCategoryMapperTest: Wiki category mapper
@@ -62,6 +62,7 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
      */
     public function testChildCR() : void
     {
+        $this->category->app = new NullWikiApp(1);
         $this->category->setL11n('Test Category2');
         $this->category->parent = new NullWikiCategory(1);
 

@@ -16,7 +16,6 @@ namespace Modules\Knowledgebase\tests\Models;
 
 use Modules\Knowledgebase\Models\WikiApp;
 use Modules\Knowledgebase\Models\WikiAppMapper;
-use phpOMS\Utils\RnG\Text;
 
 /**
  * @testdox Modules\tests\Knowledgebase\Models\WikiAppMapperTest: Wiki application mapper

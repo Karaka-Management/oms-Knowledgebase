@@ -101,9 +101,9 @@ final class WikiCategoryMapper extends DataMapperAbstract
     /**
      * Get by parent.
      *
-     * @param int   $value Parent value id
-     * @param int   $app   App
-     * @param int   $depth Relation depth
+     * @param int $value Parent value id
+     * @param int $app   App
+     * @param int $depth Relation depth
      *
      * @return array
      *

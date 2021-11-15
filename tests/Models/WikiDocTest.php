@@ -18,8 +18,8 @@ use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiDoc;
 use Modules\Knowledgebase\Models\WikiStatus;
-use Modules\Tag\Models\NullTag;
 use Modules\Media\Models\Media;
+use Modules\Tag\Models\NullTag;
 use phpOMS\Localization\ISO639x1Enum;
 
 /**
@@ -161,25 +161,25 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testSerialize() : void
     {
-        $this->doc->app = new NullWikiApp(1);
+        $this->doc->app  = new NullWikiApp(1);
         $this->doc->name = '/test/path';
         $this->doc->setStatus(WikiStatus::DRAFT);
-        $this->doc->doc = 'TestDoc';
+        $this->doc->doc    = 'TestDoc';
         $this->doc->docRaw = 'TestDocRaw';
 
         $serialized = $this->doc->jsonSerialize();
 
         self::assertEquals(
             [
-                'id'       => 0,
-                'app'       => $this->doc->app,
+                'id'         => 0,
+                'app'        => $this->doc->app,
                 'name'       => '/test/path',
-                'status'  => WikiStatus::DRAFT,
-                'doc'  => 'TestDoc',
-                'docRaw'  => 'TestDocRaw',
-                'language'  => ISO639x1Enum::_EN,
-                'tags'  => [],
-                'media' => [],
+                'status'     => WikiStatus::DRAFT,
+                'doc'        => 'TestDoc',
+                'docRaw'     => 'TestDocRaw',
+                'language'   => ISO639x1Enum::_EN,
+                'tags'       => [],
+                'media'      => [],
             ],
             $serialized
         );

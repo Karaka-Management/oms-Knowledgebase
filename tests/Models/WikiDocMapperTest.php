@@ -18,7 +18,6 @@ use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiDoc;
 use Modules\Knowledgebase\Models\WikiDocMapper;
 use Modules\Knowledgebase\Models\WikiStatus;
-use phpOMS\Utils\RnG\Text;
 
 /**
  * @testdox Modules\tests\Knowledgebase\Models\WikiDocMapperTest: Wiki document mapper

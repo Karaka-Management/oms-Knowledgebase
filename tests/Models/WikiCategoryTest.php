@@ -103,15 +103,15 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testSerialize() : void
     {
-        $this->category->app = new NullWikiApp(1);
+        $this->category->app         = new NullWikiApp(1);
         $this->category->virtualPath = '/test/path';
 
         $serialized = $this->category->jsonSerialize();
 
         self::assertEquals(
             [
-                'id'       => 0,
-                'app'       => $this->category->app,
+                'id'                => 0,
+                'app'               => $this->category->app,
                 'virtualPath'       => '/test/path',
             ],
             $serialized

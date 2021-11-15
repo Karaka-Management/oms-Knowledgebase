@@ -18,7 +18,6 @@ use Modules\Media\Models\Media;
 use Modules\Tag\Models\Tag;
 use phpOMS\Localization\ISO639x1Enum;
 
-
 /**
  * Wiki document class.
  *
@@ -233,15 +232,15 @@ class WikiDoc implements \JsonSerializable
     public function toArray() : array
     {
         return [
-            'id'   => $this->id,
-            'app'  => $this->app,
-            'name'  => $this->name,
-            'status'  => $this->status,
-            'doc'  => $this->doc,
-            'docRaw'  => $this->docRaw,
+            'id'        => $this->id,
+            'app'       => $this->app,
+            'name'      => $this->name,
+            'status'    => $this->status,
+            'doc'       => $this->doc,
+            'docRaw'    => $this->docRaw,
             'language'  => $this->language,
-            'tags'  => $this->tags,
-            'media' => $this->media,
+            'tags'      => $this->tags,
+            'media'     => $this->media,
         ];
     }
 

@@ -220,7 +220,7 @@ final class ApiController extends Controller
      */
     private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : WikiCategoryL11n
     {
-        $l11nWikiCategory = new WikiCategoryL11n();
+        $l11nWikiCategory           = new WikiCategoryL11n();
         $l11nWikiCategory->category = (int) ($request->getData('category') ?? 0);
         $l11nWikiCategory->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
@@ -281,7 +281,7 @@ final class ApiController extends Controller
      */
     private function updateDocFromRequest(RequestAbstract $request) : WikiDoc
     {
-        $doc = WikiDocMapper::get((int) $request->getData('id'));
+        $doc       = WikiDocMapper::get((int) $request->getData('id'));
         $doc->name = (string) ($request->getData('title') ?? $doc->name);
 
         return $doc;
@@ -567,7 +567,7 @@ final class ApiController extends Controller
      */
     private function updateAppFromRequest(RequestAbstract $request) : WikiApp
     {
-        $app = WikiAppMapper::get((int) $request->getData('id'));
+        $app       = WikiAppMapper::get((int) $request->getData('id'));
         $app->name = (string) ($request->getData('name') ?? $app->name);
 
         return $app;
