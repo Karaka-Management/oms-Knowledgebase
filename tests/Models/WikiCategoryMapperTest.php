@@ -18,6 +18,7 @@ use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiCategory;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
+use phpOMS\Localization\ISO639x1Enum;
 
 /**
  * @testdox Modules\tests\Knowledgebase\Models\WikiCategoryMapperTest: Wiki category mapper
@@ -45,14 +46,14 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
     {
         $this->category->setL11n('Test Category');
 
-        $id = WikiCategoryMapper::create($this->category);
+        $id = WikiCategoryMapper::create()->execute($this->category);
         self::assertGreaterThan(0, $this->category->getId());
         self::assertEquals($id, $this->category->getId());
 
-        $categoryR = WikiCategoryMapper::get($this->category->getId());
+        $categoryR = WikiCategoryMapper::get()->with('name')->where('id', $this->category->getId())->where('name/language', ISO639x1Enum::_EN)->execute();
         self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
 
-        self::assertGreaterThan(0, \count(WikiCategoryMapper::getByApp(1)));
+        self::assertGreaterThan(0, \count(WikiCategoryMapper::getAll()->where('app', 1)->execute()));
     }
 
     /**
@@ -66,14 +67,28 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
         $this->category->setL11n('Test Category2');
         $this->category->parent = new NullWikiCategory(1);
 
-        $id = WikiCategoryMapper::create($this->category);
+        $id = WikiCategoryMapper::create()->execute($this->category);
         self::assertGreaterThan(0, $this->category->getId());
         self::assertEquals($id, $this->category->getId());
 
-        $categoryR = WikiCategoryMapper::get($this->category->getId());
+        $categoryR = WikiCategoryMapper::get()
+            ->with('name')
+            ->where('id', $this->category->getId())
+            ->where('name/language', ISO639x1Enum::_EN)
+            ->execute();
+
         self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
         self::assertEquals($this->category->parent->getId(), $categoryR->parent->getId());
 
-        self::assertGreaterThan(0, \count(WikiCategoryMapper::getByParentAndApp(1, 1)));
+        self::assertGreaterThan(0,
+            \count(
+                WikiCategoryMapper::getAll()
+                    ->with('name')
+                    ->where('parent', 1)
+                    ->where('app', 1)
+                    ->where('name/language', ISO639x1Enum::_EN)
+                    ->execute()
+            )
+        );
     }
 }

@@ -52,12 +52,12 @@ final class Installer extends InstallerAbstract
         $app       = new WikiApp();
         $app->name = 'Default';
 
-        $id = WikiAppMapper::create($app);
+        $id = WikiAppMapper::create()->execute($app);
 
         $category      = new WikiCategory();
         $category->app = new NullWikiApp($id);
         $category->setL11n('Default');
 
-        WikiCategoryMapper::create($category);
+        WikiCategoryMapper::create()->execute($category);
     }
 }

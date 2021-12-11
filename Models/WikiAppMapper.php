@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
-use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
  * Mapper class.
@@ -24,7 +24,7 @@ use phpOMS\DataStorage\Database\DataMapperAbstract;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class WikiAppMapper extends DataMapperAbstract
+final class WikiAppMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -32,7 +32,7 @@ final class WikiAppMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'wiki_app_id'   => ['name' => 'wiki_app_id',   'type' => 'int',    'internal' => 'id'],
         'wiki_app_name' => ['name' => 'wiki_app_name', 'type' => 'string', 'internal' => 'name'],
     ];
@@ -43,7 +43,7 @@ final class WikiAppMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'wiki_app';
+    public const TABLE = 'wiki_app';
 
     /**
      * Primary field name.
@@ -51,5 +51,5 @@ final class WikiAppMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'wiki_app_id';
+    public const PRIMARYFIELD ='wiki_app_id';
 }

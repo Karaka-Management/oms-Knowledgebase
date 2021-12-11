@@ -18,6 +18,7 @@ use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiDoc;
 use Modules\Knowledgebase\Models\WikiDocMapper;
 use Modules\Knowledgebase\Models\WikiStatus;
+use phpOMS\DataStorage\Database\Query\OrderType;
 
 /**
  * @testdox Modules\tests\Knowledgebase\Models\WikiDocMapperTest: Wiki document mapper
@@ -41,17 +42,21 @@ final class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
         $doc->category = new NullWikiCategory(1);
         $doc->setLanguage('en');
 
-        $id = WikiDocMapper::create($doc);
+        $id = WikiDocMapper::create()->execute($doc);
         self::assertGreaterThan(0, $doc->getId());
         self::assertEquals($id, $doc->getId());
 
-        $docR = WikiDocMapper::get($doc->getId());
+        $docR = WikiDocMapper::get()->where('id', $doc->getId())->execute();
         self::assertEquals($doc->name, $docR->name);
         self::assertEquals($doc->doc, $docR->doc);
         self::assertEquals($doc->getStatus(), $docR->getStatus());
         self::assertEquals($doc->getLanguage(), $docR->getLanguage());
         self::assertEquals($doc->category->getId(), $docR->category->getId());
 
-        self::assertGreaterThan(0, \count(WikiDocMapper::getNewestByApp(1)));
+        self::assertGreaterThan(0,
+            \count(
+                WikiDocMapper::getAll()->where('app', 1)->sort('id', OrderType::DESC)->execute()
+            )
+        );
     }
 }

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
-use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
  * Category mapper class.
@@ -24,7 +24,7 @@ use phpOMS\DataStorage\Database\DataMapperAbstract;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class WikiCategoryL11nMapper extends DataMapperAbstract
+final class WikiCategoryL11nMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -32,7 +32,7 @@ final class WikiCategoryL11nMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'wiki_category_l11n_id'            => ['name' => 'wiki_category_l11n_id',       'type' => 'int',    'internal' => 'id'],
         'wiki_category_l11n_name'          => ['name' => 'wiki_category_l11n_name',    'type' => 'string', 'internal' => 'name', 'autocomplete' => true],
         'wiki_category_l11n_category'      => ['name' => 'wiki_category_l11n_category',      'type' => 'int',    'internal' => 'category'],
@@ -45,7 +45,7 @@ final class WikiCategoryL11nMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'wiki_category_l11n';
+    public const TABLE = 'wiki_category_l11n';
 
     /**
      * Primary field name.
@@ -53,5 +53,5 @@ final class WikiCategoryL11nMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'wiki_category_l11n_id';
+    public const PRIMARYFIELD ='wiki_category_l11n_id';
 }

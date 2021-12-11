@@ -16,9 +16,8 @@ namespace Modules\Knowledgebase\Models;
 
 use Modules\Media\Models\MediaMapper;
 use Modules\Tag\Models\TagMapper;
-use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 use phpOMS\DataStorage\Database\Query\Builder;
-use phpOMS\DataStorage\Database\RelationType;
 
 /**
  * Mapper class.
@@ -28,7 +27,7 @@ use phpOMS\DataStorage\Database\RelationType;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class WikiDocMapper extends DataMapperAbstract
+final class WikiDocMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -36,7 +35,7 @@ final class WikiDocMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'wiki_article_id'          => ['name' => 'wiki_article_id',       'type' => 'int',    'internal' => 'id'],
         'wiki_article_app'         => ['name' => 'wiki_article_app',      'type' => 'int',    'internal' => 'app'],
         'wiki_article_title'       => ['name' => 'wiki_article_title',    'type' => 'string', 'internal' => 'name'],
@@ -53,7 +52,7 @@ final class WikiDocMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, table:string, self?:?string, external?:?string, column?:string}>
      * @since 1.0.0
      */
-    protected static array $hasMany = [
+    public const HAS_MANY = [
         'tags' => [
             'mapper'   => TagMapper::class,
             'table'    => 'wiki_tag',
@@ -74,7 +73,7 @@ final class WikiDocMapper extends DataMapperAbstract
      * @var array<string, array<string, null|string>>
      * @since 1.0.0
      */
-    protected static array $belongsTo = [
+    public const BELONGS_TO = [
         'category' => [
             'mapper'     => WikiCategoryMapper::class,
             'external'   => 'wiki_article_category',
@@ -91,7 +90,7 @@ final class WikiDocMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'wiki_article';
+    public const TABLE = 'wiki_article';
 
     /**
      * Primary field name.
@@ -99,36 +98,5 @@ final class WikiDocMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'wiki_article_id';
-
-    /**
-     * Get newest.
-     *
-     * This will fall back to the insert id if no datetime column is present.
-     *
-     * @param int     $app       App
-     * @param int     $limit     Newest limit
-     * @param Builder $query     Pre-defined query
-     * @param int     $relations Load relations
-     * @param int     $depth     Relation depth
-     *
-     * @return array
-     *
-     * @since 1.0.0
-     */
-    public static function getNewestByApp(int $app, int $limit = 1, Builder $query = null, int $relations = RelationType::ALL, int $depth = 3) : array
-    {
-        $query ??= self::getQuery(null, [], $relations, $depth);
-
-        $query->where(static::$table . '_d' . $depth . '.wiki_article_app', '=', $app)
-            ->limit($limit);
-
-        if (!empty(static::$createdAt)) {
-            $query->orderBy(static::$table  . '_d' . $depth . '.' . static::$columns[static::$createdAt]['name'], 'DESC');
-        } else {
-            $query->orderBy(static::$table  . '_d' . $depth . '.' . static::$columns[static::$primaryField]['name'], 'DESC');
-        }
-
-        return self::getAllByQuery($query, $relations, $depth);
-    }
+    public const PRIMARYFIELD ='wiki_article_id';
 }

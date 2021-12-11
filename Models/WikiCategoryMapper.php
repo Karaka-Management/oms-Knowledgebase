@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
-use phpOMS\DataStorage\Database\DataMapperAbstract;
-use phpOMS\DataStorage\Database\RelationType;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
+use phpOMS\DataStorage\Database\Mapper\ReadMapper;
 
 /**
  * Mapper class.
@@ -25,7 +25,7 @@ use phpOMS\DataStorage\Database\RelationType;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class WikiCategoryMapper extends DataMapperAbstract
+final class WikiCategoryMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -33,7 +33,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'wiki_category_id'         => ['name' => 'wiki_category_id',     'type' => 'int',    'internal' => 'id'],
         'wiki_category_app'        => ['name' => 'wiki_category_app',    'type' => 'int',    'internal' => 'app'],
         'wiki_category_virtual'    => ['name' => 'wiki_category_virtual',    'type' => 'string',    'internal' => 'virtualPath'],
@@ -46,13 +46,12 @@ final class WikiCategoryMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, table:string, self?:?string, external?:?string, column?:string}>
      * @since 1.0.0
      */
-    protected static array $hasMany = [
+    public const HAS_MANY = [
         'name' => [
             'mapper'            => WikiCategoryL11nMapper::class,
             'table'             => 'wiki_category_l11n',
             'self'              => 'wiki_category_l11n_category',
             'column'            => 'name',
-            'conditional'       => true,
             'external'          => null,
         ],
     ];
@@ -63,7 +62,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
      * @var array<string, array<string, null|string>>
      * @since 1.0.0
      */
-    protected static array $belongsTo = [
+    public const BELONGS_TO = [
         'parent' => [
             'mapper'     => self::class,
             'external'   => 'wiki_category_parent',
@@ -80,7 +79,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'wiki_category';
+    public const TABLE = 'wiki_category';
 
     /**
      * Primary field name.
@@ -88,7 +87,7 @@ final class WikiCategoryMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'wiki_category_id';
+    public const PRIMARYFIELD ='wiki_category_id';
 
     /**
      * Parent field name.
@@ -103,36 +102,16 @@ final class WikiCategoryMapper extends DataMapperAbstract
      *
      * @param null|int $value Parent value id
      * @param int $app   App
-     * @param int $depth Relation depth
      *
-     * @return array
-     *
-     * @since 1.0.0
-     */
-    public static function getByParentAndApp(int $value = null, int $app = 1, int $depth = 3) : array
-    {
-        $query = self::getQuery();
-        $query->where(static::$table . '_d' . $depth . '.' . static::$parent, '=', $value)
-            ->andWhere(static::$table . '_d' . $depth . '.wiki_category_app', '=', $app);
-
-        return self::getAllByQuery($query, RelationType::ALL, $depth);
-    }
-
-    /**
-     * Get by app.
-     *
-     * @param int $app   App
-     * @param int $depth Relation depth
-     *
-     * @return array
+     * @return ReadMapper
      *
      * @since 1.0.0
      */
-    public static function getByApp(int $app, int $depth = 3) : array
+    public static function getByParentAndApp(int $value = null, int $app = 1) : ReadMapper
     {
-        $query = self::getQuery();
-        $query->where(static::$table . '_d' . $depth . '.wiki_category_app', '=', $app);
-
-        return self::getAllByQuery($query, RelationType::ALL, $depth);
+        return self::getAll()
+            ->with('name')
+            ->where('parent', $value)
+            ->where('app', $app);
     }
 }
