@@ -17,7 +17,6 @@ namespace Modules\Knowledgebase\Models;
 use Modules\Media\Models\MediaMapper;
 use Modules\Tag\Models\TagMapper;
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
-use phpOMS\DataStorage\Database\Query\Builder;
 
 /**
  * Mapper class.

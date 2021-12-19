@@ -186,7 +186,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $list = WikiCategoryMapper::getByApp($app)->where('name/language', $response->getLanguage())->execute();
+        $list = WikiCategoryMapper::getAll()->with('name')->where('app', $app)->where('name/language', $response->getLanguage())->execute();
         $view->setData('categories', $list);
 
         return $view;
@@ -298,7 +298,14 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-single');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $categories = WikiCategoryMapper::getByParentAndApp($request->hasData('category') ? (int) $request->getData('category') : null, $app)->where('name/language', $response->getLanguage())->execute();;
+        $categories = WikiCategoryMapper::getByParentAndApp(
+            $request->hasData('category')
+                ? (int) $request->getData('category')
+                : null,
+                $app)
+            ->where('name/language', $response->getLanguage())
+            ->execute();
+
         $view->setData('categories', $categories);
         $view->setData('document', $document);
         $view->addData('editable', $this->app->accountManager->get($accountId)->hasPermission(

@@ -34,10 +34,10 @@ final class WikiCategoryMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const COLUMNS = [
-        'wiki_category_id'         => ['name' => 'wiki_category_id',     'type' => 'int',    'internal' => 'id'],
-        'wiki_category_app'        => ['name' => 'wiki_category_app',    'type' => 'int',    'internal' => 'app'],
-        'wiki_category_virtual'    => ['name' => 'wiki_category_virtual',    'type' => 'string',    'internal' => 'virtualPath'],
-        'wiki_category_parent'     => ['name' => 'wiki_category_parent', 'type' => 'int',    'internal' => 'parent'],
+        'wiki_category_id'      => ['name' => 'wiki_category_id',      'type' => 'int',    'internal' => 'id'],
+        'wiki_category_app'     => ['name' => 'wiki_category_app',     'type' => 'int',    'internal' => 'app'],
+        'wiki_category_virtual' => ['name' => 'wiki_category_virtual', 'type' => 'string', 'internal' => 'virtualPath'],
+        'wiki_category_parent'  => ['name' => 'wiki_category_parent',  'type' => 'int',    'internal' => 'parent'],
     ];
 
     /**
@@ -48,11 +48,11 @@ final class WikiCategoryMapper extends DataMapperFactory
      */
     public const HAS_MANY = [
         'name' => [
-            'mapper'            => WikiCategoryL11nMapper::class,
-            'table'             => 'wiki_category_l11n',
-            'self'              => 'wiki_category_l11n_category',
-            'column'            => 'name',
-            'external'          => null,
+            'mapper'   => WikiCategoryL11nMapper::class,
+            'table'    => 'wiki_category_l11n',
+            'self'     => 'wiki_category_l11n_category',
+            'column'   => 'name',
+            'external' => null,
         ],
     ];
 
@@ -64,12 +64,12 @@ final class WikiCategoryMapper extends DataMapperFactory
      */
     public const BELONGS_TO = [
         'parent' => [
-            'mapper'     => self::class,
-            'external'   => 'wiki_category_parent',
+            'mapper'   => self::class,
+            'external' => 'wiki_category_parent',
         ],
         'app' => [
-            'mapper'     => WikiAppMapper::class,
-            'external'   => 'wiki_category_app',
+            'mapper'   => WikiAppMapper::class,
+            'external' => 'wiki_category_app',
         ],
     ];
 
@@ -101,7 +101,7 @@ final class WikiCategoryMapper extends DataMapperFactory
      * Get by parent.
      *
      * @param null|int $value Parent value id
-     * @param int $app   App
+     * @param int      $app   App
      *
      * @return ReadMapper
      *
