@@ -96,22 +96,4 @@ final class WikiCategoryMapper extends DataMapperFactory
      * @since 1.0.0
      */
     protected static string $parent = 'wiki_category_parent';
-
-    /**
-     * Get by parent.
-     *
-     * @param null|int $value Parent value id
-     * @param int      $app   App
-     *
-     * @return ReadMapper
-     *
-     * @since 1.0.0
-     */
-    public static function getByParentAndApp(int $value = null, int $app = 1) : ReadMapper
-    {
-        return self::getAll()
-            ->with('name')
-            ->where('parent', $value)
-            ->where('app', $app);
-    }
 }

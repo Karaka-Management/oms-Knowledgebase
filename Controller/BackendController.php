@@ -75,15 +75,30 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $app = (int) ($request->getData('app') ?? $this->app->orgId);
+        // @todo: assign default org app to wiki app and default flag, load the wiki app based on org id and with a default flag set. Use this app in the following line instead of the hardcoded "1"
+        $app = (int) ($request->getData('app') ?? 1);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $categories = WikiCategoryMapper::getByParentAndApp($request->hasData('category') ? (int) $request->getData('category') : null, $app)->where('name/language', $response->getLanguage())->execute();
+        $categories = WikiCategoryMapper::getAll()
+            ->with('name')
+            ->where('parent', $request->hasData('category') ? (int) $request->getData('category') : null)
+            ->where('app', $app)
+            ->where('name/language', $response->getLanguage())
+            ->execute();
+
         $view->setData('categories', $categories);
 
-        $documents = WikiDocMapper::getAll()->where('app', $app)->where('language', $response->getLanguage())->limit(25)->sort('createdAt', OrderType::DESC)->execute();
+        $documents = WikiDocMapper::getAll()
+            ->with('tags')
+            ->with('tags/title')
+            ->where('app', $app)
+            ->where('language', $response->getLanguage())
+            ->where('tags/title/language', $response->getLanguage())
+            ->limit(25)->sort('createdAt', OrderType::DESC)
+            ->execute();
+
         $view->setData('docs', $documents);
 
         $apps = WikiAppMapper::getAll()->execute();
@@ -282,9 +297,16 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $app  = (int) ($request->getData('app') ?? $this->app->orgId);
-        $lang = $response->getLanguage();
 
-        $document  = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->where('language', $request->getLanguage())->execute();
+        $document = WikiDocMapper::get()
+            ->with('tags')
+            ->with('tags/title')
+            ->with('media')
+            ->where('id', (int) $request->getData('id'))
+            ->where('language', $request->getLanguage())
+            ->where('tags/title/language', $response->getLanguage())
+            ->execute();
+
         $accountId = $request->header->account;
 
         if (!$this->app->accountManager->get($accountId)->hasPermission(
@@ -298,11 +320,10 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-single');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
-        $categories = WikiCategoryMapper::getByParentAndApp(
-            $request->hasData('category')
-                ? (int) $request->getData('category')
-                : null,
-                $app)
+        $categories = WikiCategoryMapper::getAll()
+            ->with('name')
+            ->where('parent', $request->hasData('category') ? (int) $request->getData('category') : null)
+            ->where('app', $app)
             ->where('name/language', $response->getLanguage())
             ->execute();
 
