@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 return ['Knowledgebase' => [
     'Active'     => 'Ενεργός',
-    'App'        => 'App',
-    'Categories' => 'Κατηγορίες',
+    'App'        => 'Εφαρμογή',
+    'Categories' => 'Κατηγορία',
     'Category'   => 'Κατηγορία',
     'Draft'      => 'Προσχέδιο',
     'Language'   => 'Γλώσσα',

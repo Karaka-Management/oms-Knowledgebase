@@ -13,8 +13,8 @@
 declare(strict_types=1);
 
 return ['Navigation' => [
-    'Apps'       => 'Apps',
-    'Categories' => 'Categories',
-    'Dashboard'  => 'Dashboard',
+    'Apps'       => 'Apps.',
+    'Categories' => 'Kategorie',
+    'Dashboard'  => 'Přístrojová deska',
     'Wiki'       => 'Wiki',
 ]];

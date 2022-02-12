@@ -14,13 +14,13 @@ declare(strict_types=1);
 
 return ['Knowledgebase' => [
     'Active'     => 'Aktywny',
-    'App'        => 'App',
+    'App'        => 'Aplikacja',
     'Categories' => 'Kategorie',
     'Category'   => 'Kategoria',
-    'Draft'      => 'Wersja robocza',
+    'Draft'      => 'Projekt',
     'Language'   => 'Język',
     'Name'       => 'Nazwa',
     'Parent'     => 'Rodzic',
     'Status'     => 'Status',
-    'Wiki'       => 'Wiki',
+    'Wiki'       => 'Wiki.',
 ]];

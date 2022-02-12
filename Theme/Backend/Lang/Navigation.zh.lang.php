@@ -12,15 +12,9 @@
  */
 declare(strict_types=1);
 
-return ['Knowledgebase' => [
-    'Active'     => '积极的',
-    'App'        => '应用程序',
+return ['Navigation' => [
+    'Apps'       => '应用',
     'Categories' => '类别',
-    'Category'   => '类别',
-    'Draft'      => '草稿',
-    'Language'   => '语',
-    'Name'       => '名称',
-    'Parent'     => '父母',
-    'Status'     => '地位',
+    'Dashboard'  => '仪表板',
     'Wiki'       => 'Wiki.',
 ]];

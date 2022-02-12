@@ -14,13 +14,13 @@ declare(strict_types=1);
 
 return ['Knowledgebase' => [
     'Active'     => 'คล่องแคล่ว',
-    'App'        => 'App',
+    'App'        => 'แอป',
     'Categories' => 'หมวดหมู่',
-    'Category'   => 'ประเภท',
+    'Category'   => 'หมวดหมู่',
     'Draft'      => 'ร่าง',
     'Language'   => 'ภาษา',
     'Name'       => 'ชื่อ',
-    'Parent'     => 'ผู้ปกครอง',
+    'Parent'     => 'พ่อแม่',
     'Status'     => 'สถานะ',
-    'Wiki'       => 'วิกิพีเดีย',
+    'Wiki'       => 'วิกิ',
 ]];

@@ -13,7 +13,7 @@
 declare(strict_types=1);
 
 return ['Knowledgebase' => [
-    'Active'     => '유효한',
+    'Active'     => '활동적인',
     'App'        => '앱',
     'Categories' => '카테고리',
     'Category'   => '범주',

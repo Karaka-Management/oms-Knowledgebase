@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 return ['Knowledgebase' => [
     'Active'     => 'Aktív',
-    'App'        => 'App',
+    'App'        => 'Alkalmazás',
     'Categories' => 'Kategóriák',
     'Category'   => 'Kategória',
-    'Draft'      => 'vázlat',
+    'Draft'      => 'Tervezet',
     'Language'   => 'Nyelv',
     'Name'       => 'Név',
     'Parent'     => 'Szülő',
