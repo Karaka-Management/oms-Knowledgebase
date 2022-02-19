@@ -1,6 +1,6 @@
 <?php
 /**
- * Orange Management
+ * Karaka
  *
  * PHP Version 8.0
  *
@@ -8,7 +8,7 @@
  * @copyright Dennis Eichhorn
  * @license   OMS License 1.0
  * @version   1.0.0
- * @link      https://orange-management.org
+ * @link      https://karaka.app
  */
 declare(strict_types=1);
 
@@ -47,7 +47,7 @@ use phpOMS\Utils\Parser\Markdown\Markdown;
  *
  * @package Modules\Knowledgebase
  * @license OMS License 1.0
- * @link    https://orange-management.org
+ * @link    https://karaka.app
  * @since   1.0.0
  */
 final class ApiController extends Controller
@@ -110,7 +110,7 @@ final class ApiController extends Controller
                 $ref = new Reference();
                 $ref->source = new NullMedia($media->getId());
                 $ref->createdBy = new NullAccount($request->header->account);
-                $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Knowledgebase/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId());
+                $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Knowledgebase/' . $doc->category->getId() . '/' . $doc->getId());
 
                 ReferenceMapper::create()->execute($ref);
 
@@ -119,7 +119,7 @@ final class ApiController extends Controller
                         '/Modules/Media/Files',
                         $accountPath,
                         $request->header->account,
-                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->getId() . '/Knowledgebase/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId()
+                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->getId() . '/Knowledgebase/' . $doc->category->getId() . '/' . $doc->getId()
                     );
                 }
 
@@ -157,9 +157,7 @@ final class ApiController extends Controller
     private function createWikiDir(WikiDoc $doc) : string
     {
         return '/Modules/Knowledgebase/'
-            . $doc->createdAt->format('Y') . '/'
-            . $doc->createdAt->format('m') . '/'
-            . $doc->createdAt->format('d') . '/'
+            . $doc->category->getId() . '/'
             . $doc->getId();
     }
 
