@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
+use Modules\Admin\Models\Account;
+use Modules\Admin\Models\NullAccount;
 use Modules\Media\Models\Media;
 use Modules\Tag\Models\Tag;
 use phpOMS\Localization\ISO639x1Enum;
@@ -35,6 +37,14 @@ class WikiDoc implements \JsonSerializable
      * @since 1.0.0
      */
     protected int $id = 0;
+
+    /**
+     * Version.
+     *
+     * @var string
+     * @since 1.0.0
+     */
+    public string $version = '';
 
     /**
      * App id.
@@ -109,6 +119,41 @@ class WikiDoc implements \JsonSerializable
      * @since 1.0.0
      */
     protected array $media = [];
+
+    /**
+     * Is versioned
+     *
+     * @var bool
+     * @since 1.0.0
+     */
+    public bool $isVersioned = false;
+
+    /**
+     * Created.
+     *
+     * @var \DateTimeImmutable
+     * @since 1.0.0
+     */
+    public \DateTimeImmutable $createdAt;
+
+    /**
+     * Creator.
+     *
+     * @var Account
+     * @since 1.0.0
+     */
+    public Account $createdBy;
+
+    /**
+     * Constructor.
+     *
+     * @since 1.0.0
+     */
+    public function __construct()
+    {
+        $this->createdBy = new NullAccount();
+        $this->createdAt = new \DateTimeImmutable('now');
+    }
 
     /**
      * Get id.
@@ -241,6 +286,8 @@ class WikiDoc implements \JsonSerializable
             'language'  => $this->language,
             'tags'      => $this->tags,
             'media'     => $this->media,
+            'createdAt' => $this->createdAt,
+            'createdBy' => $this->createdBy,
         ];
     }
 

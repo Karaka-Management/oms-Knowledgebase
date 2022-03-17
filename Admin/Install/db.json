@@ -117,6 +117,16 @@
                 "type": "TEXT",
                 "null": false
             },
+            "wiki_article_versioned": {
+                "name": "wiki_article_versioned",
+                "type": "TINYINT",
+                "null": false
+            },
+            "wiki_article_version": {
+                "name": "wiki_article_version",
+                "type": "VARCHAR(50)",
+                "null": false
+            },
             "wiki_article_category": {
                 "name": "wiki_article_category",
                 "type": "INT",
@@ -132,6 +142,18 @@
                 "null": true,
                 "foreignTable": "wiki_app",
                 "foreignKey": "wiki_app_id"
+            },
+            "wiki_article_created_by": {
+                "name": "wiki_article_created_by",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "account",
+                "foreignKey": "account_id"
+            },
+            "wiki_article_created_at": {
+                "name": "wiki_article_created_at",
+                "type": "DATETIME",
+                "null": false
             }
         }
     },
@@ -184,6 +206,62 @@
                 "null": false,
                 "foreignTable": "tag",
                 "foreignKey": "tag_id"
+            }
+        }
+    },
+    "wiki_article_versioned": {
+        "name": "wiki_article_versioned",
+        "fields": {
+            "wiki_article_versioned_id": {
+                "name": "wiki_article_versioned_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "wiki_article_versioned_title": {
+                "name": "wiki_article_versioned_title",
+                "type": "VARCHAR(255)",
+                "null": false
+            },
+            "wiki_article_versioned_version": {
+                "name": "wiki_article_versioned_version",
+                "type": "VARCHAR(50)",
+                "null": false
+            },
+            "wiki_article_versioned_language": {
+                "name": "wiki_article_versioned_language",
+                "type": "VARCHAR(3)",
+                "null": false
+            },
+            "wiki_article_versioned_doc": {
+                "name": "wiki_article_versioned_doc",
+                "type": "TEXT",
+                "null": false
+            },
+            "wiki_article_versioned_docraw": {
+                "name": "wiki_article_versioned_docraw",
+                "type": "TEXT",
+                "null": false
+            },
+            "wiki_article_versioned_article": {
+                "name": "wiki_article_versioned_article",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "wiki_article",
+                "foreignKey": "wiki_article_id"
+            },
+            "wiki_article_versioned_at": {
+                "name": "wiki_article_versioned_at",
+                "type": "DATETIME",
+                "null": false
+            },
+            "wiki_article_versioned_by": {
+                "name": "wiki_article_versioned_by",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "account",
+                "foreignKey": "account_id"
             }
         }
     }

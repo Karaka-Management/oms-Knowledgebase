@@ -16,6 +16,7 @@ namespace Modules\Knowledgebase\Controller;
 
 use Modules\Admin\Models\AccountMapper;
 use Modules\Admin\Models\NullAccount;
+use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiApp;
@@ -25,6 +26,7 @@ use Modules\Knowledgebase\Models\WikiCategoryL11n;
 use Modules\Knowledgebase\Models\WikiCategoryL11nMapper;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use Modules\Knowledgebase\Models\WikiDoc;
+use Modules\Knowledgebase\Models\WikiDocHistory;
 use Modules\Knowledgebase\Models\WikiDocMapper;
 use Modules\Knowledgebase\Models\WikiStatus;
 use Modules\Media\Models\CollectionMapper;
@@ -81,6 +83,11 @@ final class ApiController extends Controller
             || !empty($request->getDataJson('media') ?? [])
         ) {
             $this->createWikiMedia($doc, $request);
+        }
+
+        if ($doc->isVersioned) {
+            $history = $this->createHistory($doc);
+            $this->createModel($request->header->account, $history, EditorDocHistoryMapper::class, 'doc_history', $request->getOrigin());
         }
 
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Wiki', 'Wiki successfully created.', $doc);
@@ -178,10 +185,12 @@ final class ApiController extends Controller
         $doc->name     = (string) $request->getData('title');
         $doc->doc      = Markdown::parse((string) ($request->getData('plain') ?? ''));
         $doc->docRaw   = (string) ($request->getData('plain') ?? '');
+        $doc->isVersioned   = (bool) ($request->getData('versioned') ?? false);
         $doc->category = new NullWikiCategory((int) ($request->getData('category') ?? 1));
         $doc->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
         $doc->setStatus((int) ($request->getData('status') ?? WikiStatus::INACTIVE));
         $doc->app = new NullWikiApp((int) ($request->getData('app') ?? 1));
+        $doc->version   = (string) ($request->getData('version') ?? '');
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -201,6 +210,13 @@ final class ApiController extends Controller
         }
 
         return $doc;
+    }
+
+    private function createHistory(WikiDoc $doc) : WikiDocHistory
+    {
+        $history = WikiDocHistory::createFromDoc($doc);
+
+        return $history;
     }
 
     /**
@@ -335,6 +351,16 @@ final class ApiController extends Controller
         $old = clone WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $new = $this->updateDocFromRequest($request);
         $this->updateModel($request->header->account, $old, $new, WikiDocMapper::class, 'doc', $request->getOrigin());
+
+        if ($new->isVersioned
+            && ($old->docRaw !== $new->docRaw
+                || $old->name !== $new->name
+            )
+        ) {
+            $history = $this->createHistory($new);
+            $this->createModel($request->header->account, $history, EditorDocHistoryMapper::class, 'doc_history', $request->getOrigin());
+        }
+
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Doc', 'Doc successfully updated', $new);
     }
 
@@ -349,8 +375,13 @@ final class ApiController extends Controller
      */
     private function updateDocFromRequest(RequestAbstract $request) : WikiDoc
     {
+        /** @var WikiDoc $doc */
         $doc       = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $doc->isVersioned = (bool) ($request->getData('versioned') ?? $doc->isVersioned);
         $doc->name = (string) ($request->getData('title') ?? $doc->name);
+        $doc->docRaw = (string) ($request->getData('plain') ?? $doc->docRaw);
+        $doc->doc    = Markdown::parse((string) ($request->getData('plain') ?? $doc->docRaw));
+        $doc->version = (string) ($request->getData('version') ?? $doc->version);
 
         return $doc;
     }
