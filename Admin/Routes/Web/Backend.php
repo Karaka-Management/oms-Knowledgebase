@@ -13,7 +13,7 @@
 declare(strict_types=1);
 
 use Modules\Knowledgebase\Controller\BackendController;
-use Modules\Knowledgebase\Models\PermissionState;
+use Modules\Knowledgebase\Models\PermissionCategory;
 use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
@@ -25,7 +25,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
     ],
@@ -36,7 +36,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
     ],
@@ -47,7 +47,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::CATEGORY,
+                'state'  => PermissionCategory::CATEGORY,
             ],
         ],
     ],
@@ -58,7 +58,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::CATEGORY,
+                'state'  => PermissionCategory::CATEGORY,
             ],
         ],
     ],
@@ -69,7 +69,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
-                'state'  => PermissionState::CATEGORY,
+                'state'  => PermissionCategory::CATEGORY,
             ],
         ],
     ],
@@ -80,7 +80,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
     ],
@@ -91,7 +91,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
     ],
@@ -102,7 +102,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::MODIFY,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
     ],
@@ -113,7 +113,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
     ],

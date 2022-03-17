@@ -13,7 +13,7 @@
 declare(strict_types=1);
 
 use Modules\Knowledgebase\Controller\ApiController;
-use Modules\Knowledgebase\Models\PermissionState;
+use Modules\Knowledgebase\Models\PermissionCategory;
 use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
@@ -25,7 +25,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::CREATE,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
         [
@@ -34,7 +34,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::MODIFY,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
         [
@@ -43,7 +43,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
         [
@@ -52,7 +52,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
-                'state'  => PermissionState::WIKI,
+                'state'  => PermissionCategory::WIKI,
             ],
         ],
     ],
@@ -64,7 +64,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::CREATE,
-                'state'  => PermissionState::CATEGORY,
+                'state'  => PermissionCategory::CATEGORY,
             ],
         ],
         [
@@ -73,7 +73,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::MODIFY,
-                'state'  => PermissionState::CATEGORY,
+                'state'  => PermissionCategory::CATEGORY,
             ],
         ],
         [
@@ -82,7 +82,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::CATEGORY,
+                'state'  => PermissionCategory::CATEGORY,
             ],
         ],
         [
@@ -91,7 +91,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
-                'state'  => PermissionState::CATEGORY,
+                'state'  => PermissionCategory::CATEGORY,
             ],
         ],
     ],
@@ -103,7 +103,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::CREATE,
-                'state'  => PermissionState::APP,
+                'state'  => PermissionCategory::APP,
             ],
         ],
         [
@@ -112,7 +112,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::MODIFY,
-                'state'  => PermissionState::APP,
+                'state'  => PermissionCategory::APP,
             ],
         ],
         [
@@ -121,7 +121,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::APP,
+                'state'  => PermissionCategory::APP,
             ],
         ],
         [
@@ -130,7 +130,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
-                'state'  => PermissionState::APP,
+                'state'  => PermissionCategory::APP,
             ],
         ],
     ],
