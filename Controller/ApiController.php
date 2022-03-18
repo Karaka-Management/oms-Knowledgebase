@@ -182,6 +182,7 @@ final class ApiController extends Controller
     public function createWikiDocFromRequest(RequestAbstract $request, ResponseAbstract $response, $data = null) : WikiDoc
     {
         $doc           = new WikiDoc();
+        $doc->createdBy = new NullAccount($request->header->account);
         $doc->name     = (string) $request->getData('title');
         $doc->doc      = Markdown::parse((string) ($request->getData('plain') ?? ''));
         $doc->docRaw   = (string) ($request->getData('plain') ?? '');
