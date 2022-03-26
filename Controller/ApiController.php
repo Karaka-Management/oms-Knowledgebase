@@ -115,6 +115,7 @@ final class ApiController extends Controller
                 WikiDocMapper::writer()->createRelationTable('media', [$media->getId()], $doc->getId());
 
                 $ref = new Reference();
+                $ref->name = $media->name;
                 $ref->source = new NullMedia($media->getId());
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Knowledgebase/' . $doc->category->getId() . '/' . $doc->getId());
