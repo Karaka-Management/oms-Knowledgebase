@@ -93,9 +93,19 @@ final class ApiController extends Controller
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Wiki', 'Wiki successfully created.', $doc);
     }
 
+    /**
+     * Create media files for wiki document
+     *
+     * @param WikiDoc         $doc     Wiki document
+     * @param RequestAbstract $request Request incl. media do upload
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
     private function createWikiMedia(WikiDoc $doc, RequestAbstract $request) : void
     {
-        $path = $this->createWikiDir($doc);
+        $path    = $this->createWikiDir($doc);
         $account = AccountMapper::get()->where('id', $request->header->account)->execute();
 
         if (!empty($uploadedFiles = $request->getFiles() ?? [])) {
@@ -114,20 +124,21 @@ final class ApiController extends Controller
                 MediaMapper::create()->execute($media);
                 WikiDocMapper::writer()->createRelationTable('media', [$media->getId()], $doc->getId());
 
-                $ref = new Reference();
-                $ref->name = $media->name;
-                $ref->source = new NullMedia($media->getId());
+                $accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Knowledgebase/' . ($doc->category?->getId() ?? '0') . '/' . $doc->getId();
+
+                $ref            = new Reference();
+                $ref->name      = $media->name;
+                $ref->source    = new NullMedia($media->getId());
                 $ref->createdBy = new NullAccount($request->header->account);
-                $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Knowledgebase/' . $doc->category->getId() . '/' . $doc->getId());
+                $ref->setVirtualPath($accountPath);
 
                 ReferenceMapper::create()->execute($ref);
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                        '/Modules/Media/Files',
                         $accountPath,
                         $request->header->account,
-                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->getId() . '/Knowledgebase/' . $doc->category->getId() . '/' . $doc->getId()
+                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->getId() . '/Knowledgebase/' . ($doc->category?->getId() ?? '0') . '/' . $doc->getId()
                     );
                 }
 
@@ -141,8 +152,8 @@ final class ApiController extends Controller
             foreach ($mediaFiles as $media) {
                 WikiDocMapper::writer()->createRelationTable('media', [(int) $media], $doc->getId());
 
-                $ref = new Reference();
-                $ref->source = new NullMedia((int) $media);
+                $ref            = new Reference();
+                $ref->source    = new NullMedia((int) $media);
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($path);
 
@@ -150,7 +161,6 @@ final class ApiController extends Controller
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                        '/Modules/Media/Files',
                         $path,
                         $request->header->account,
                         __DIR__ . '/../../../Modules/Media/Files' . $path
@@ -162,10 +172,19 @@ final class ApiController extends Controller
         }
     }
 
+    /**
+     * Create media directory path
+     *
+     * @param WikiDoc $doc Doc
+     *
+     * @return string
+     *
+     * @since 1.0.0
+     */
     private function createWikiDir(WikiDoc $doc) : string
     {
         return '/Modules/Knowledgebase/'
-            . $doc->category->getId() . '/'
+            . ($doc->category?->getId() ?? '0') . '/'
             . $doc->getId();
     }
 
@@ -182,17 +201,17 @@ final class ApiController extends Controller
      */
     public function createWikiDocFromRequest(RequestAbstract $request, ResponseAbstract $response, $data = null) : WikiDoc
     {
-        $doc           = new WikiDoc();
-        $doc->createdBy = new NullAccount($request->header->account);
-        $doc->name     = (string) $request->getData('title');
-        $doc->doc      = Markdown::parse((string) ($request->getData('plain') ?? ''));
-        $doc->docRaw   = (string) ($request->getData('plain') ?? '');
-        $doc->isVersioned   = (bool) ($request->getData('versioned') ?? false);
-        $doc->category = new NullWikiCategory((int) ($request->getData('category') ?? 1));
+        $doc              = new WikiDoc();
+        $doc->createdBy   = new NullAccount($request->header->account);
+        $doc->name        = (string) $request->getData('title');
+        $doc->doc         = Markdown::parse((string) ($request->getData('plain') ?? ''));
+        $doc->docRaw      = (string) ($request->getData('plain') ?? '');
+        $doc->isVersioned = (bool) ($request->getData('versioned') ?? false);
+        $doc->category    = new NullWikiCategory((int) ($request->getData('category') ?? 1));
+        $doc->app         = new NullWikiApp((int) ($request->getData('app') ?? 1));
+        $doc->version     = (string) ($request->getData('version') ?? '');
         $doc->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
         $doc->setStatus((int) ($request->getData('status') ?? WikiStatus::INACTIVE));
-        $doc->app = new NullWikiApp((int) ($request->getData('app') ?? 1));
-        $doc->version   = (string) ($request->getData('version') ?? '');
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -214,6 +233,15 @@ final class ApiController extends Controller
         return $doc;
     }
 
+    /**
+     * Create history from document
+     *
+     * @param WikiDoc $doc Document
+     *
+     * @return WikiDocHistory
+     *
+     * @since 1.0.0
+     */
     private function createHistory(WikiDoc $doc) : WikiDocHistory
     {
         $history = WikiDocHistory::createFromDoc($doc);
@@ -378,12 +406,12 @@ final class ApiController extends Controller
     private function updateDocFromRequest(RequestAbstract $request) : WikiDoc
     {
         /** @var WikiDoc $doc */
-        $doc       = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $doc              = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $doc->isVersioned = (bool) ($request->getData('versioned') ?? $doc->isVersioned);
-        $doc->name = (string) ($request->getData('title') ?? $doc->name);
-        $doc->docRaw = (string) ($request->getData('plain') ?? $doc->docRaw);
-        $doc->doc    = Markdown::parse((string) ($request->getData('plain') ?? $doc->docRaw));
-        $doc->version = (string) ($request->getData('version') ?? $doc->version);
+        $doc->name        = (string) ($request->getData('title') ?? $doc->name);
+        $doc->docRaw      = (string) ($request->getData('plain') ?? $doc->docRaw);
+        $doc->doc         = Markdown::parse((string) ($request->getData('plain') ?? $doc->docRaw));
+        $doc->version     = (string) ($request->getData('version') ?? $doc->version);
 
         return $doc;
     }

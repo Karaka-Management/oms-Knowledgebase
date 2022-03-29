@@ -296,7 +296,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $app  = (int) ($request->getData('app') ?? $this->app->orgId);
+        $app = (int) ($request->getData('app') ?? $this->app->orgId);
 
         $document = WikiDocMapper::get()
             ->with('tags')

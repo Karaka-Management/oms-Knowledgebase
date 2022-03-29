@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
+use Modules\Admin\Models\Account;
+use Modules\Admin\Models\NullAccount;
 use phpOMS\Localization\ISO639x1Enum;
 
 /**
@@ -75,6 +77,22 @@ class WikiDocHistory implements \JsonSerializable
     public string $docRaw = '';
 
     /**
+     * Created.
+     *
+     * @var \DateTimeImmutable
+     * @since 1.0.0
+     */
+    public \DateTimeImmutable $createdAt;
+
+    /**
+     * Creator.
+     *
+     * @var Account
+     * @since 1.0.0
+     */
+    public Account $createdBy;
+
+    /**
      * Language.
      *
      * @var string
@@ -82,15 +100,35 @@ class WikiDocHistory implements \JsonSerializable
      */
     private string $language = ISO639x1Enum::_EN;
 
+    /**
+     * Constructor.
+     *
+     * @since 1.0.0
+     */
+    public function __construct()
+    {
+        $this->createdBy = new NullAccount();
+        $this->createdAt = new \DateTimeImmutable('now');
+    }
+
+    /**
+     * Create history form model
+     *
+     * @param WikiDoc $doc Document
+     *
+     * @return self
+     *
+     * @since 1.0.0
+     */
     public static function createFromDoc(WikiDoc $doc) : self
     {
-        $hist = new self();
-        $hist->article = $doc->getId();
+        $hist            = new self();
+        $hist->article   = $doc->getId();
         $hist->createdBy = $doc->createdBy;
-        $hist->name = $doc->name;
-        $hist->doc = $doc->doc;
-        $hist->docRaw = $doc->docRaw;
-        $hist->version = $doc->version;
+        $hist->name      = $doc->name;
+        $hist->doc       = $doc->doc;
+        $hist->docRaw    = $doc->docRaw;
+        $hist->version   = $doc->version;
 
         return $hist;
     }
