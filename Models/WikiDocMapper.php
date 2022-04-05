@@ -74,7 +74,7 @@ final class WikiDocMapper extends DataMapperFactory
     /**
      * Has owns one relation.
      *
-     * @var array<string, array<string, null|string>>
+     * @var array<string, array{mapper:string, external:string}>
      * @since 1.0.0
      */
     public const BELONGS_TO = [

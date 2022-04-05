@@ -79,8 +79,8 @@ final class ApiController extends Controller
         $doc = $this->createWikiDocFromRequest($request, $response, $data);
         $this->createModel($request->header->account, $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
 
-        if (!empty($request->getFiles() ?? [])
-            || !empty($request->getDataJson('media') ?? [])
+        if (!empty($request->getFiles())
+            || !empty($request->getDataJson('media'))
         ) {
             $this->createWikiMedia($doc, $request);
         }
@@ -108,7 +108,7 @@ final class ApiController extends Controller
         $path    = $this->createWikiDir($doc);
         $account = AccountMapper::get()->where('id', $request->header->account)->execute();
 
-        if (!empty($uploadedFiles = $request->getFiles() ?? [])) {
+        if (!empty($uploadedFiles = $request->getFiles())) {
             $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
                 [],
                 [],
@@ -146,7 +146,7 @@ final class ApiController extends Controller
             }
         }
 
-        if (!empty($mediaFiles = $request->getDataJson('media') ?? [])) {
+        if (!empty($mediaFiles = $request->getDataJson('media'))) {
             $collection = null;
 
             foreach ($mediaFiles as $media) {
