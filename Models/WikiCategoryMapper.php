@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Modules\Knowledgebase\Models;
 
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
-use phpOMS\DataStorage\Database\Mapper\ReadMapper;
 
 /**
  * Mapper class.
