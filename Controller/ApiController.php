@@ -67,7 +67,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiDocCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiDocCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateWikiDocCreate($request))) {
             $response->set($request->uri->__toString(), new FormValidation($val));
@@ -308,7 +308,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryL11nCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiCategoryL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateWikiCategoryL11nCreate($request))) {
             $response->set('wiki_category_l11n_create', new FormValidation($val));
@@ -357,7 +357,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiDocGet(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiDocGet(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $doc = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Doc', 'Doc successfully returned', $doc);
@@ -376,7 +376,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiDocUpdate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiDocUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $old = clone WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $new = $this->updateDocFromRequest($request);
@@ -429,7 +429,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiDocDelete(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiDocDelete(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $doc = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->deleteModel($request->header->account, $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
@@ -449,7 +449,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiCategoryCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateWikiCategoryCreate($request))) {
             $response->set($request->uri->__toString(), new FormValidation($val));
@@ -518,7 +518,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryGet(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiCategoryGet(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $category = WikiCategoryMapper::get()
             ->with('name')
@@ -542,7 +542,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryUpdate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiCategoryUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $old = clone WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $new = $this->updateCategoryFromRequest($request);
@@ -580,7 +580,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryDelete(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiCategoryDelete(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $category = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->deleteModel($request->header->account, $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
@@ -600,7 +600,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiAppCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiAppCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateWikiAppCreate($request))) {
             $response->set($request->uri->__toString(), new FormValidation($val));
@@ -663,7 +663,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiAppGet(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiAppGet(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $app = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'App', 'App successfully returned', $app);
@@ -682,7 +682,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiAppUpdate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiAppUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $old = clone WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $new = $this->updateAppFromRequest($request);
@@ -720,7 +720,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiAppDelete(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiWikiAppDelete(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $app = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->deleteModel($request->header->account, $app, WikiAppMapper::class, 'app', $request->getOrigin());

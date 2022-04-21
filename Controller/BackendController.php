@@ -53,7 +53,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function setUpBackend(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function setUpBackend(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $head = $response->get('Content')->getData('head');
         $head->addAsset(AssetType::CSS, '/Modules/Knowledgebase/Theme/Backend/styles.css');
@@ -71,7 +71,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseDashboard(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseDashboard(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
@@ -81,6 +81,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
+        /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
             ->where('parent', $request->hasData('category') ? (int) $request->getData('category') : null)
@@ -90,6 +91,7 @@ final class BackendController extends Controller
 
         $view->setData('categories', $categories);
 
+        /** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
         $documents = WikiDocMapper::getAll()
             ->with('tags')
             ->with('tags/title')
@@ -101,6 +103,7 @@ final class BackendController extends Controller
 
         $view->setData('docs', $documents);
 
+        /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
         $apps = WikiAppMapper::getAll()->execute();
         $view->setData('apps', $apps);
 
@@ -119,13 +122,14 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseAppList(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseAppList(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
+        /** @var \Modules\Knowledgebase\Models\WikiApp[] $list */
         $list = WikiAppMapper::getAll()->execute();
         $view->setData('apps', $list);
 
@@ -144,13 +148,14 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseApp(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseApp(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-single');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
+        /** @var \Modules\Knowledgebase\Models\WikiApp $app */
         $app = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $view->setData('app', $app);
 
@@ -169,7 +174,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseAppCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseAppCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-single');
@@ -192,7 +197,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseCategoryList(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseCategoryList(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
@@ -201,6 +206,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
+        /** @var \Modules\Knowledgebase\Models\WikiCategory[] $list */
         $list = WikiCategoryMapper::getAll()->with('name')->where('app', $app)->where('name/language', $response->getLanguage())->execute();
         $view->setData('categories', $list);
 
@@ -219,13 +225,14 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseCategory(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseCategory(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-single');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
+        /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
         $category = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $view->setData('category', $category);
 
@@ -244,7 +251,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseCategoryCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseCategoryCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-single');
@@ -267,13 +274,14 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseDocList(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseDocList(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
+        /** @var \Modules\Knowledgebase\Models\WikiDoc[] $list */
         $list = WikiDocMapper::getAll()->limit(25)->execute();
         $view->setData('docs', $list);
 
@@ -292,12 +300,13 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseDoc(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseDoc(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
         $app = (int) ($request->getData('app') ?? $this->app->orgId);
 
+        /** @var \Modules\Knowledgebase\Models\WikiDoc $document */
         $document = WikiDocMapper::get()
             ->with('tags')
             ->with('tags/title')
@@ -320,6 +329,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-single');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
+        /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
             ->where('parent', $request->hasData('category') ? (int) $request->getData('category') : null)
@@ -348,7 +358,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseDocCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseDocCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
@@ -378,7 +388,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewKnowledgebaseDocEdit(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewKnowledgebaseDocEdit(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
