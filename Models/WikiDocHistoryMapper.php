@@ -25,7 +25,7 @@ use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
  * @link    https://karaka.app
  * @since   1.0.0
  */
-final class WikiDocMapper extends DataMapperFactory
+final class WikiDocHistoryMapper extends DataMapperFactory
 {
     /**
      * Columns.
