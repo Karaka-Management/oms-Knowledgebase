@@ -40,7 +40,7 @@ final class WikiDocHistoryMapper extends DataMapperFactory
         'wiki_article_versioned_language'      => ['name' => 'wiki_article_versioned_language', 'type' => 'string', 'internal' => 'language'],
         'wiki_article_versioned_doc'           => ['name' => 'wiki_article_versioned_doc',      'type' => 'string', 'internal' => 'doc'],
         'wiki_article_versioned_docraw'        => ['name' => 'wiki_article_versioned_docraw',      'type' => 'string', 'internal' => 'docRaw'],
-        'wiki_article_versioned_article'       => ['name' => 'wiki_article_versioned_article', 'type' => 'DateTimeImmutable', 'internal' => 'article'],
+        'wiki_article_versioned_article'       => ['name' => 'wiki_article_versioned_article', 'type' => 'int', 'internal' => 'article'],
         'wiki_article_versioned_at'            => ['name' => 'wiki_article_versioned_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt'],
         'wiki_article_versioned_by'            => ['name' => 'wiki_article_versioned_by', 'type' => 'int',               'internal' => 'createdBy'],
     ];
