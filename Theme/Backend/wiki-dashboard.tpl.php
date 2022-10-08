@@ -60,7 +60,7 @@ echo $this->getData('nav')->render(); ?>
             <div class="portlet-head"><?= $this->getHtml('App'); ?></div>
             <div class="portlet-body">
                 <form>
-                    <select>
+                    <select name="app">
                         <?php foreach ($apps as $app) : ?>
                             <option><?= $this->printHtml($app->name); ?>
                         <?php endforeach; ?>
