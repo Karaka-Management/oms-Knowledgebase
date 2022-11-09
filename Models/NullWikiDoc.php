@@ -35,4 +35,12 @@ final class NullWikiDoc extends WikiDoc
     {
         $this->id = $id;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize() : mixed
+    {
+        return ['id' => $this->id];
+    }
 }
