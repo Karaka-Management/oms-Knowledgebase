@@ -180,6 +180,8 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
                 'language'   => ISO639x1Enum::_EN,
                 'tags'       => [],
                 'media'      => [],
+                'createdAt'  => $this->doc->createdAt,
+                'createdBy'  => $this->doc->createdBy,
             ],
             $serialized
         );

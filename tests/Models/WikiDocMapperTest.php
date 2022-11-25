@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\tests\Models;
 
+use Modules\Admin\Models\NullAccount;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiDoc;
 use Modules\Knowledgebase\Models\WikiDocMapper;
@@ -41,6 +42,7 @@ final class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
         $doc->setStatus(WikiStatus::DRAFT);
         $doc->category = new NullWikiCategory(1);
         $doc->setLanguage('en');
+        $doc->createdBy = new NullAccount(1);
 
         $id = WikiDocMapper::create()->execute($doc);
         self::assertGreaterThan(0, $doc->getId());
