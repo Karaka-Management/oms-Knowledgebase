@@ -50,7 +50,7 @@ echo $this->getData('nav')->render();
                         <?php endforeach; ?>
 
                         <?php $files = $doc->getMedia(); foreach ($files as $file) : ?>
-                             <span><a class="content" href="<?= UriFactory::build('media/single?id=' . $file->getId());?>"><?= $file->name; ?></a></span>
+                             <span><a class="content" href="<?= UriFactory::build('{/lang}/{/app}/media/single?id=' . $file->getId());?>"><?= $file->name; ?></a></span>
                         <?php endforeach; ?>
                     </div>
                     <?php if ($editable) : ?>
@@ -70,7 +70,7 @@ echo $this->getData('nav')->render();
             <div class="portlet-body">
                 <ul>
                     <?php foreach ($categories as $category) : ?>
-                        <li><a href="<?= UriFactory::build('wiki/doc/list?{?}&id=' . $category->getId()); ?>"><?= $this->printHtml($category->getL11n()); ?></a>
+                        <li><a href="<?= UriFactory::build('{/lang}/{/app}/wiki/doc/list?{?}&id=' . $category->getId()); ?>"><?= $this->printHtml($category->getL11n()); ?></a>
                     <?php endforeach; ?>
                 </ul>
             </div>

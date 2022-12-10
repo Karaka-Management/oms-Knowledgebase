@@ -70,7 +70,7 @@ echo $this->getData('nav')->render(); ?>
                         <tr>
                             <td>
                                 <?php if ($isNewDoc) : ?>
-                                    <a href="<?= UriFactory::build('/wiki/dashboard'); ?>" class="button"><?= $this->getHtml('Delete', '0', '0'); ?></a>
+                                    <a href="<?= UriFactory::build('{/lang}/{/app}//wiki/dashboard'); ?>" class="button"><?= $this->getHtml('Delete', '0', '0'); ?></a>
                                 <?php else : ?>
                                     <input type="submit" name="deleteButton" id="iDeleteButton" value="<?= $this->getHtml('Delete', '0', '0'); ?>">
                                 <?php endif; ?>

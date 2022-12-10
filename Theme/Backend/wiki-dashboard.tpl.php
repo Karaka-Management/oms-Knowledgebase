@@ -29,7 +29,7 @@ echo $this->getData('nav')->render(); ?>
 <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-9">
         <div class="row">
-            <?php foreach ($documents as $doc) : $url = UriFactory::build('wiki/doc/single?id=' . $doc->getId()); ?>
+            <?php foreach ($documents as $doc) : $url = UriFactory::build('{/lang}/{/app}/wiki/doc/single?id=' . $doc->getId()); ?>
             <div class="col-xs-12 plain-grid">
                 <div class="portlet">
                     <div class="portlet-head"><a href="<?= $url; ?>"><?= $this->printHtml($doc->name); ?></a></div>
@@ -74,7 +74,7 @@ echo $this->getData('nav')->render(); ?>
             <div class="portlet-body">
                 <ul>
                     <?php foreach ($categories as $category) : ?>
-                        <li><a href="<?= UriFactory::build('wiki/doc/list?{?}&id=' . $category->getId()); ?>"><?= $this->printHtml($category->getL11n()); ?></a>
+                        <li><a href="<?= UriFactory::build('{/lang}/{/app}/wiki/doc/list?{?}&id=' . $category->getId()); ?>"><?= $this->printHtml($category->getL11n()); ?></a>
                     <?php endforeach; ?>
                 </ul>
             </div>
