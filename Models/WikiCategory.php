@@ -50,7 +50,7 @@ class WikiCategory implements \JsonSerializable
      * @var string|WikiCategoryL11n
      * @since 1.0.0
      */
-    private $name = '';
+    private string | WikiCategoryL11n $name = '';
 
     /**
      * Parent category.
@@ -117,7 +117,7 @@ class WikiCategory implements \JsonSerializable
     {
         if ($name instanceof WikiCategoryL11n) {
             $this->name = $name;
-        } elseif (isset($this->name) && $this->name instanceof WikiCategoryL11n) {
+        } elseif ($this->name instanceof WikiCategoryL11n) {
             $this->name->name = $name;
         } else {
             $this->name       = new WikiCategoryL11n();
