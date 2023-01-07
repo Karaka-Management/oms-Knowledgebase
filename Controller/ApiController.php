@@ -22,7 +22,6 @@ use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiApp;
 use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\WikiCategory;
-use phpOMS\Localization\BaseStringL11n;
 use Modules\Knowledgebase\Models\WikiCategoryL11nMapper;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use Modules\Knowledgebase\Models\WikiDoc;
@@ -35,6 +34,7 @@ use Modules\Media\Models\NullMedia;
 use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
 use Modules\Tag\Models\NullTag;
+use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
@@ -342,7 +342,7 @@ final class ApiController extends Controller
     private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $l11nWikiCategory           = new BaseStringL11n();
-        $l11nWikiCategory->ref = (int) ($request->getData('category') ?? 0);
+        $l11nWikiCategory->ref      = (int) ($request->getData('category') ?? 0);
         $l11nWikiCategory->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));

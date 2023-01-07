@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Models;
 
-use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Localization\BaseStringL11n;
+use phpOMS\Localization\ISO639x1Enum;
 
 /**
  * Wiki category class.
@@ -121,7 +121,7 @@ class WikiCategory implements \JsonSerializable
         } elseif ($this->name instanceof BaseStringL11n) {
             $this->name->content = $name;
         } else {
-            $this->name       = new BaseStringL11n();
+            $this->name          = new BaseStringL11n();
             $this->name->content = $name;
             $this->name->setLanguage($lang);
         }
