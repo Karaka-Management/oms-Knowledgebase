@@ -14,6 +14,14 @@
                 "name": "wiki_app_name",
                 "type": "VARCHAR(255)",
                 "null": false
+            },
+            "wiki_app_unit": {
+                "name": "wiki_app_unit",
+                "type": "INT",
+                "default": null,
+                "null": true,
+                "foreignTable": "organization_unit",
+                "foreignKey": "organization_unit_id"
             }
         }
     },

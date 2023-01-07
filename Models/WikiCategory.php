@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Modules\Knowledgebase\Models;
 
 use phpOMS\Localization\ISO639x1Enum;
+use phpOMS\Localization\BaseStringL11n;
 
 /**
  * Wiki category class.
@@ -47,10 +48,10 @@ class WikiCategory implements \JsonSerializable
     /**
      * Name.
      *
-     * @var string|WikiCategoryL11n
+     * @var string|BaseStringL11n
      * @since 1.0.0
      */
-    private string | WikiCategoryL11n $name = '';
+    private string | BaseStringL11n $name = '';
 
     /**
      * Parent category.
@@ -101,27 +102,27 @@ class WikiCategory implements \JsonSerializable
      */
     public function getL11n() : string
     {
-        return $this->name instanceof WikiCategoryL11n ? $this->name->name : $this->name;
+        return $this->name instanceof BaseStringL11n ? $this->name->content : $this->name;
     }
 
     /**
      * Set name
      *
-     * @param string|WikiCategoryL11n $name Tag article name
+     * @param string|BaseStringL11n $name Tag article name
      *
      * @return void
      *
      * @since 1.0.0
      */
-    public function setL11n(string | WikiCategoryL11n $name, string $lang = ISO639x1Enum::_EN) : void
+    public function setL11n(string | BaseStringL11n $name, string $lang = ISO639x1Enum::_EN) : void
     {
-        if ($name instanceof WikiCategoryL11n) {
+        if ($name instanceof BaseStringL11n) {
             $this->name = $name;
-        } elseif ($this->name instanceof WikiCategoryL11n) {
-            $this->name->name = $name;
+        } elseif ($this->name instanceof BaseStringL11n) {
+            $this->name->content = $name;
         } else {
-            $this->name       = new WikiCategoryL11n();
-            $this->name->name = $name;
+            $this->name       = new BaseStringL11n();
+            $this->name->content = $name;
             $this->name->setLanguage($lang);
         }
     }

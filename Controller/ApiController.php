@@ -22,7 +22,7 @@ use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiApp;
 use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\WikiCategory;
-use Modules\Knowledgebase\Models\WikiCategoryL11n;
+use phpOMS\Localization\BaseStringL11n;
 use Modules\Knowledgebase\Models\WikiCategoryL11nMapper;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use Modules\Knowledgebase\Models\WikiDoc;
@@ -335,18 +335,18 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return WikiCategoryL11n
+     * @return BaseStringL11n
      *
      * @since 1.0.0
      */
-    private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : WikiCategoryL11n
+    private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $l11nWikiCategory           = new WikiCategoryL11n();
-        $l11nWikiCategory->category = (int) ($request->getData('category') ?? 0);
+        $l11nWikiCategory           = new BaseStringL11n();
+        $l11nWikiCategory->ref = (int) ($request->getData('category') ?? 0);
         $l11nWikiCategory->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
-        $l11nWikiCategory->name = (string) ($request->getData('name') ?? '');
+        $l11nWikiCategory->content = (string) ($request->getData('name') ?? '');
 
         return $l11nWikiCategory;
     }
@@ -647,6 +647,7 @@ final class ApiController extends Controller
     {
         $app       = new WikiApp();
         $app->name = (string) $request->getData('name');
+        $app->unit = $request->getData('unit', 'int');
 
         return $app;
     }

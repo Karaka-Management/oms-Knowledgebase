@@ -34,6 +34,7 @@ final class WikiAppMapper extends DataMapperFactory
      */
     public const COLUMNS = [
         'wiki_app_id'   => ['name' => 'wiki_app_id',   'type' => 'int',    'internal' => 'id'],
+        'wiki_app_unit' => ['name' => 'wiki_app_unit', 'type' => 'int', 'internal' => 'unit'],
         'wiki_app_name' => ['name' => 'wiki_app_name', 'type' => 'string', 'internal' => 'name'],
     ];
 

@@ -84,7 +84,7 @@ final class BackendController extends Controller
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
-            ->where('parent', $request->hasData('category') ? (int) $request->getData('category') : null)
+            ->where('parent', $request->getData('category', 'int'))
             ->where('app', $app)
             ->where('name/language', $response->getLanguage())
             ->execute();
@@ -332,7 +332,7 @@ final class BackendController extends Controller
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
-            ->where('parent', $request->hasData('category') ? (int) $request->getData('category') : null)
+            ->where('parent', $request->getData('category', 'int'))
             ->where('app', $app)
             ->where('name/language', $response->getLanguage())
             ->execute();

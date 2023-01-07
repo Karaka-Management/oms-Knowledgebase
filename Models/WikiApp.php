@@ -33,6 +33,14 @@ class WikiApp implements \JsonSerializable
     protected int $id = 0;
 
     /**
+     * Unit
+     *
+     * @var null|int
+     * @since 1.0.0
+     */
+    public ?int $unit = null;
+
+    /**
      * Application name.
      *
      * @var string

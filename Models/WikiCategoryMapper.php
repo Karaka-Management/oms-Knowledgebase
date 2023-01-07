@@ -50,7 +50,7 @@ final class WikiCategoryMapper extends DataMapperFactory
             'mapper'   => WikiCategoryL11nMapper::class,
             'table'    => 'wiki_category_l11n',
             'self'     => 'wiki_category_l11n_category',
-            'column'   => 'name',
+            'column'   => 'content',
             'external' => null,
         ],
     ];

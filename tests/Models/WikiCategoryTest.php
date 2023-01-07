@@ -17,7 +17,7 @@ namespace Modules\Knowledgebase\tests\Models;
 use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiCategory;
-use Modules\Knowledgebase\Models\WikiCategoryL11n;
+use phpOMS\Localization\BaseStringL11n;
 
 /**
  * @testdox Modules\tests\Knowledgebase\Models\WikiCateboryTest: Wiki category
@@ -71,7 +71,7 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
         $this->category->setL11n('Test');
         self::assertEquals('Test', $this->category->getL11n());
 
-        $this->category->setL11n(new WikiCategoryL11n('NewTest'));
+        $this->category->setL11n(new BaseStringL11n('NewTest'));
         self::assertEquals('NewTest', $this->category->getL11n());
     }
 
