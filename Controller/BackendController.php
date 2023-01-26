@@ -201,7 +201,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $app = (int) ($request->getData('app') ?? $this->app->orgId);
+        $app = (int) ($request->getData('app') ?? $this->app->unitId);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
@@ -304,7 +304,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $app = (int) ($request->getData('app') ?? $this->app->orgId);
+        $app = (int) ($request->getData('app') ?? $this->app->unitId);
 
         /** @var \Modules\Knowledgebase\Models\WikiDoc $document */
         $document = WikiDocMapper::get()
@@ -319,7 +319,7 @@ final class BackendController extends Controller
         $accountId = $request->header->account;
 
         if (!$this->app->accountManager->get($accountId)->hasPermission(
-                PermissionType::READ, $this->app->orgId, $this->app->appName, self::NAME, PermissionCategory::WIKI, $document->getId())
+                PermissionType::READ, $this->app->unitId, $this->app->appName, self::NAME, PermissionCategory::WIKI, $document->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
             $response->header->status = RequestStatusCode::R_403;
@@ -340,7 +340,7 @@ final class BackendController extends Controller
         $view->setData('categories', $categories);
         $view->setData('document', $document);
         $view->addData('editable', $this->app->accountManager->get($accountId)->hasPermission(
-            PermissionType::MODIFY, $this->app->orgId, $this->app->appName, self::NAME, PermissionCategory::WIKI, $document->getId())
+            PermissionType::MODIFY, $this->app->unitId, $this->app->appName, self::NAME, PermissionCategory::WIKI, $document->getId())
         );
 
         return $view;
