@@ -341,8 +341,8 @@ final class ApiController extends Controller
      */
     private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $l11nWikiCategory           = new BaseStringL11n();
-        $l11nWikiCategory->ref      = (int) ($request->getData('category') ?? 0);
+        $l11nWikiCategory      = new BaseStringL11n();
+        $l11nWikiCategory->ref = (int) ($request->getData('category') ?? 0);
         $l11nWikiCategory->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
