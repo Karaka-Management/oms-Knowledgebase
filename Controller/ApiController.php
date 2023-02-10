@@ -121,12 +121,20 @@ final class ApiController extends Controller
             );
 
             $collection = null;
-
             foreach ($uploaded as $media) {
-                MediaMapper::create()->execute($media);
-                WikiDocMapper::writer()->createRelationTable('media', [$media->getId()], $doc->getId());
+                $this->createModelRelation(
+                    $request->header->account,
+                    $doc->getId(),
+                    $media->getId(),
+                    WikiDocMapper::class,
+                    'media',
+                    '',
+                    $request->getOrigin()
+                );
 
-                $accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Knowledgebase/' . ($doc->category?->getId() ?? '0') . '/' . $doc->getId();
+                $accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login
+                    . '/Knowledgebase/' . ($doc->category?->getId() ?? '0')
+                    . '/' . $doc->getId();
 
                 $ref            = new Reference();
                 $ref->name      = $media->name;
@@ -134,7 +142,7 @@ final class ApiController extends Controller
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($accountPath);
 
-                ReferenceMapper::create()->execute($ref);
+                $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
@@ -144,22 +152,41 @@ final class ApiController extends Controller
                     );
                 }
 
-                CollectionMapper::writer()->createRelationTable('sources', [$ref->getId()], $collection->getId());
+                $this->createModelRelation(
+                    $request->header->account,
+                    $collection->getId(),
+                    $ref->getId(),
+                    CollectionMapper::class,
+                    'sources',
+                    '',
+                    $request->getOrigin()
+                );
             }
         }
 
         if (!empty($mediaFiles = $request->getDataJson('media'))) {
             $collection = null;
 
-            foreach ($mediaFiles as $media) {
-                WikiDocMapper::writer()->createRelationTable('media', [(int) $media], $doc->getId());
+            foreach ($mediaFiles as $file) {
+                /** @var \Modules\Media\Models\Media $media */
+                $media = MediaMapper::get()->where('id', (int) $file)->limit(1)->execute();
+                $this->createModelRelation(
+                    $request->header->account,
+                    $doc->getId(),
+                    $media->getId(),
+                    WikiDocMapper::class,
+                    'media',
+                    '',
+                    $request->getOrigin()
+                );
 
                 $ref            = new Reference();
-                $ref->source    = new NullMedia((int) $media);
+                $ref->name      = $media->name;
+                $ref->source    = new NullMedia($media->getId());
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($path);
 
-                ReferenceMapper::create()->execute($ref);
+                $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
@@ -169,7 +196,15 @@ final class ApiController extends Controller
                     );
                 }
 
-                CollectionMapper::writer()->createRelationTable('sources', [$ref->getId()], $collection->getId());
+                $this->createModelRelation(
+                    $request->header->account,
+                    $collection->getId(),
+                    $ref->getId(),
+                    CollectionMapper::class,
+                    'sources',
+                    '',
+                    $request->getOrigin()
+                );
             }
         }
     }
