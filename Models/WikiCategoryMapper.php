@@ -86,7 +86,7 @@ final class WikiCategoryMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='wiki_category_id';
+    public const PRIMARYFIELD = 'wiki_category_id';
 
     /**
      * Parent field name.

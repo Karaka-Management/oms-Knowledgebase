@@ -52,5 +52,5 @@ final class WikiAppMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='wiki_app_id';
+    public const PRIMARYFIELD = 'wiki_app_id';
 }

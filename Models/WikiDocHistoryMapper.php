@@ -72,5 +72,5 @@ final class WikiDocHistoryMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='wiki_article_versioned_id';
+    public const PRIMARYFIELD = 'wiki_article_versioned_id';
 }

@@ -106,5 +106,5 @@ final class WikiDocMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='wiki_article_id';
+    public const PRIMARYFIELD = 'wiki_article_id';
 }
