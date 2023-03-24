@@ -6,7 +6,7 @@
  *
  * @package   Modules\Knowledgebase
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @link      https://jingga.app
  */
@@ -34,7 +34,7 @@ use phpOMS\Views\View;
  * Knowledgebase class.
  *
  * @package Modules\Knowledgebase
- * @license OMS License 1.0
+ * @license OMS License 2.0
  * @link    https://jingga.app
  * @since   1.0.0
  * @codeCoverageIgnore
@@ -76,7 +76,7 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         // @todo: assign default org app to wiki app and default flag, load the wiki app based on org id and with a default flag set. Use this app in the following line instead of the hardcoded "1"
-        $app = (int) ($request->getData('app') ?? 1);
+        $app = $request->getDataInt('app') ?? 1;
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
@@ -84,7 +84,7 @@ final class BackendController extends Controller
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
-            ->where('parent', $request->getData('category', 'int'))
+            ->where('parent', $request->getDataInt('category'))
             ->where('app', $app)
             ->where('name/language', $response->getLanguage())
             ->execute();
@@ -201,7 +201,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $app = (int) ($request->getData('app') ?? $this->app->unitId);
+        $app = $request->getDataInt('app') ?? $this->app->unitId;
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
@@ -304,7 +304,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $app = (int) ($request->getData('app') ?? $this->app->unitId);
+        $app = $request->getDataInt('app') ?? $this->app->unitId;
 
         /** @var \Modules\Knowledgebase\Models\WikiDoc $document */
         $document = WikiDocMapper::get()
@@ -332,7 +332,7 @@ final class BackendController extends Controller
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
-            ->where('parent', $request->getData('category', 'int'))
+            ->where('parent', $request->getDataInt('category'))
             ->where('app', $app)
             ->where('name/language', $response->getLanguage())
             ->execute();
@@ -404,7 +404,7 @@ final class BackendController extends Controller
         $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
         $view->addData('tagSelector', $tagSelector);
 
-        $view->addData('doc', WikiDocMapper::get()->where('id', (int) ($request->getData('id') ?? 0))->execute());
+        $view->addData('doc', WikiDocMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute());
 
         return $view;
     }

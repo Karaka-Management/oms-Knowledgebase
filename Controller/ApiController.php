@@ -6,7 +6,7 @@
  *
  * @package   Modules\Knowledgebase
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @link      https://jingga.app
  */
@@ -48,7 +48,7 @@ use phpOMS\Utils\Parser\Markdown\Markdown;
  * Knowledgebase class.
  *
  * @package Modules\Knowledgebase
- * @license OMS License 1.0
+ * @license OMS License 2.0
  * @link    https://jingga.app
  * @since   1.0.0
  */
@@ -241,14 +241,14 @@ final class ApiController extends Controller
         $doc              = new WikiDoc();
         $doc->createdBy   = new NullAccount($request->header->account);
         $doc->name        = (string) $request->getData('title');
-        $doc->doc         = Markdown::parse((string) ($request->getData('plain') ?? ''));
-        $doc->docRaw      = (string) ($request->getData('plain') ?? '');
-        $doc->isVersioned = (bool) ($request->getData('versioned') ?? false);
-        $doc->category    = new NullWikiCategory((int) ($request->getData('category') ?? 1));
-        $doc->app         = new NullWikiApp((int) ($request->getData('app') ?? 1));
-        $doc->version     = (string) ($request->getData('version') ?? '');
-        $doc->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
-        $doc->setStatus((int) ($request->getData('status') ?? WikiStatus::INACTIVE));
+        $doc->doc         = Markdown::parse($request->getDataString('plain') ?? '');
+        $doc->docRaw      = $request->getDataString('plain') ?? '';
+        $doc->isVersioned = $request->getDataBool('versioned') ?? false;
+        $doc->category    = new NullWikiCategory($request->getDataInt('category') ?? 1);
+        $doc->app         = new NullWikiApp($request->getDataInt('app') ?? 1);
+        $doc->version     = $request->getDataString('version') ?? '';
+        $doc->setLanguage((string) ($request->getDataString('language') ?? $request->getLanguage()));
+        $doc->setStatus($request->getDataInt('status') ?? WikiStatus::INACTIVE);
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -306,7 +306,7 @@ final class ApiController extends Controller
         if (($val['title'] = empty($request->getData('title')))
             || ($val['plain'] = empty($request->getData('plain')))
             || ($val['status'] = (
-                $request->getData('status') !== null
+                $request->hasData('status')
                 && !WikiStatus::isValidValue((int) $request->getData('status'))
             ))
         ) {
@@ -377,11 +377,11 @@ final class ApiController extends Controller
     private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $l11nWikiCategory      = new BaseStringL11n();
-        $l11nWikiCategory->ref = (int) ($request->getData('category') ?? 0);
-        $l11nWikiCategory->setLanguage((string) (
-            $request->getData('language') ?? $request->getLanguage()
-        ));
-        $l11nWikiCategory->content = (string) ($request->getData('name') ?? '');
+        $l11nWikiCategory->ref = $request->getDataInt('category') ?? 0;
+        $l11nWikiCategory->setLanguage(
+            $request->getDataString('language') ?? $request->getLanguage()
+        );
+        $l11nWikiCategory->content = $request->getDataString('name') ?? '';
 
         return $l11nWikiCategory;
     }
@@ -524,10 +524,13 @@ final class ApiController extends Controller
     public function createWikiCategoryFromRequest(RequestAbstract $request) : WikiCategory
     {
         $category      = new WikiCategory();
-        $category->app = new NullWikiApp((int) ($request->getData('app') ?? 1));
-        $category->setL11n($request->getData('name'), $request->getData('language') ?? $request->getLanguage());
+        $category->app = new NullWikiApp($request->getDataInt('app') ?? 1);
+        $category->setL11n(
+            $request->getDataString('name') ?? '',
+            $request->getDataString('language') ?? $request->getLanguage()
+        );
 
-        if ($request->getData('parent') !== null) {
+        if ($request->hasData('parent')) {
             $category->parent = new NullWikiCategory((int) $request->getData('parent'));
         }
 
@@ -615,7 +618,10 @@ final class ApiController extends Controller
         /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
         $category = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
 
-        $category->setL11n($request->getData('name') ?? $category->getL11n(), $request->getData('language') ?? $request->getLanguage());
+        $category->setL11n(
+            $request->getDataString('name') ?? $category->getL11n(),
+            $request->getDataString('language') ?? $request->getLanguage()
+        );
 
         return $category;
     }
@@ -682,7 +688,7 @@ final class ApiController extends Controller
     {
         $app       = new WikiApp();
         $app->name = (string) $request->getData('name');
-        $app->unit = $request->getData('unit', 'int');
+        $app->unit = $request->getDataInt('unit');
 
         return $app;
     }

@@ -6,7 +6,7 @@
  *
  * @package   Modules\Knowledgebase\Admin
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @link      https://jingga.app
  */
@@ -28,7 +28,7 @@ use phpOMS\Module\ModuleInfo;
  * Installer class.
  *
  * @package Modules\Knowledgebase\Admin
- * @license OMS License 1.0
+ * @license OMS License 2.0
  * @link    https://jingga.app
  * @since   1.0.0
  */
@@ -52,10 +52,10 @@ final class Installer extends InstallerAbstract
         $app       = new WikiApp();
         $app->name = 'Default';
 
-        $id = WikiAppMapper::create()->execute($app);
+        WikiAppMapper::create()->execute($app);
 
         $category      = new WikiCategory();
-        $category->app = new NullWikiApp($id);
+        $category->app = new NullWikiApp($app->getId());
         $category->setL11n('Default');
 
         WikiCategoryMapper::create()->execute($category);

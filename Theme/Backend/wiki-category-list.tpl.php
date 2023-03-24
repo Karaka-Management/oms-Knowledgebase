@@ -6,7 +6,7 @@
  *
  * @package   Modules\Knowledgebase
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @link      https://jingga.app
  */
@@ -34,7 +34,7 @@ echo $this->getData('nav')->render();
                     <td><?= $this->getHtml('Parent'); ?>
                 <tbody>
                 <?php foreach ($categories as $key => $value) :
-                        $url = UriFactory::build('{/lang}/{/app}/admin/account/settings?{?}&id=' . $value->getId()); ?>
+                        $url = UriFactory::build('{/base}/admin/account/settings?{?}&id=' . $value->getId()); ?>
                 <tr tabindex="0" data-href="<?= $url; ?>">
                     <td data-label="<?= $this->getHtml('ID', '0', '0'); ?>"><a href="<?= $url; ?>"><?= $value->getId(); ?></a>
                     <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getL11n()); ?></a>
