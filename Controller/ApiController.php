@@ -112,12 +112,12 @@ final class ApiController extends Controller
 
         if (!empty($uploadedFiles = $request->getFiles())) {
             $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
-                [],
-                [],
-                $uploadedFiles,
-                $request->header->account,
-                __DIR__ . '/../../../Modules/Media/Files' . $path,
-                $path,
+                names: [],
+                fileNames: [],
+                files: $uploadedFiles,
+                account: $request->header->account,
+                basePath: __DIR__ . '/../../../Modules/Media/Files' . $path,
+                virtualPath: $path,
             );
 
             $collection = null;
@@ -303,8 +303,8 @@ final class ApiController extends Controller
     private function validateWikiDocCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['title'] = empty($request->getData('title')))
-            || ($val['plain'] = empty($request->getData('plain')))
+        if (($val['title'] = !$request->hasData('title'))
+            || ($val['plain'] = !$request->hasData('plain'))
             || ($val['status'] = (
                 $request->hasData('status')
                 && !WikiStatus::isValidValue((int) $request->getData('status'))
@@ -328,8 +328,8 @@ final class ApiController extends Controller
     private function validateWikiCategoryL11nCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['name'] = empty($request->getData('name')))
-            || ($val['category'] = empty($request->getData('category')))
+        if (($val['name'] = !$request->hasData('name'))
+            || ($val['category'] = !$request->hasData('category'))
         ) {
             return $val;
         }
@@ -549,7 +549,7 @@ final class ApiController extends Controller
     private function validateWikiCategoryCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['name'] = empty($request->getData('name')))) {
+        if (($val['name'] = !$request->hasData('name'))) {
             return $val;
         }
 
@@ -705,7 +705,7 @@ final class ApiController extends Controller
     private function validateWikiAppCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['name'] = empty($request->getData('name')))) {
+        if (($val['name'] = !$request->hasData('name'))) {
             return $val;
         }
 

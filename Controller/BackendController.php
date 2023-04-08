@@ -319,7 +319,7 @@ final class BackendController extends Controller
         $accountId = $request->header->account;
 
         if (!$this->app->accountManager->get($accountId)->hasPermission(
-                PermissionType::READ, $this->app->unitId, $this->app->appName, self::NAME, PermissionCategory::WIKI, $document->getId())
+                PermissionType::READ, $this->app->unitId, $this->app->appId, self::NAME, PermissionCategory::WIKI, $document->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
             $response->header->status = RequestStatusCode::R_403;
@@ -340,7 +340,7 @@ final class BackendController extends Controller
         $view->setData('categories', $categories);
         $view->setData('document', $document);
         $view->addData('editable', $this->app->accountManager->get($accountId)->hasPermission(
-            PermissionType::MODIFY, $this->app->unitId, $this->app->appName, self::NAME, PermissionCategory::WIKI, $document->getId())
+            PermissionType::MODIFY, $this->app->unitId, $this->app->appId, self::NAME, PermissionCategory::WIKI, $document->getId())
         );
 
         return $view;
