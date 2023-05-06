@@ -34,7 +34,7 @@ class WikiDocHistory implements \JsonSerializable
      * @var int
      * @since 1.0.0
      */
-    protected int $id = 0;
+    public int $id = 0;
 
     /**
      * Article ID.
@@ -98,7 +98,7 @@ class WikiDocHistory implements \JsonSerializable
      * @var string
      * @since 1.0.0
      */
-    private string $language = ISO639x1Enum::_EN;
+    public string $language = ISO639x1Enum::_EN;
 
     /**
      * Constructor.
@@ -123,7 +123,7 @@ class WikiDocHistory implements \JsonSerializable
     public static function createFromDoc(WikiDoc $doc) : self
     {
         $hist            = new self();
-        $hist->article   = $doc->getId();
+        $hist->article   = $doc->id;
         $hist->createdBy = $doc->createdBy;
         $hist->name      = $doc->name;
         $hist->doc       = $doc->doc;

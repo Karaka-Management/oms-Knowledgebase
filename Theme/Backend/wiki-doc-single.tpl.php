@@ -50,12 +50,12 @@ echo $this->getData('nav')->render();
                         <?php endforeach; ?>
 
                         <?php $files = $doc->getMedia(); foreach ($files as $file) : ?>
-                             <span><a class="content" href="<?= UriFactory::build('{/base}/media/single?id=' . $file->getId());?>"><?= $file->name; ?></a></span>
+                             <span><a class="content" href="<?= UriFactory::build('{/base}/media/single?id=' . $file->id);?>"><?= $file->name; ?></a></span>
                         <?php endforeach; ?>
                     </div>
                     <?php if ($editable) : ?>
                     <div class="col-xs-6 rightText">
-                        <a tabindex="0" class="button" href="<?= \phpOMS\Uri\UriFactory::build('wiki/doc/edit?id=' . $doc->getId()); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
+                        <a tabindex="0" class="button" href="<?= \phpOMS\Uri\UriFactory::build('wiki/doc/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -70,7 +70,7 @@ echo $this->getData('nav')->render();
             <div class="portlet-body">
                 <ul>
                     <?php foreach ($categories as $category) : ?>
-                        <li><a href="<?= UriFactory::build('{/base}/wiki/doc/list?{?}&id=' . $category->getId()); ?>"><?= $this->printHtml($category->getL11n()); ?></a>
+                        <li><a href="<?= UriFactory::build('{/base}/wiki/doc/list?{?}&id=' . $category->id); ?>"><?= $this->printHtml($category->getL11n()); ?></a>
                     <?php endforeach; ?>
                 </ul>
             </div>

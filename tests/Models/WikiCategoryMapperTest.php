@@ -47,10 +47,10 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
         $this->category->setL11n('Test Category');
 
         $id = WikiCategoryMapper::create()->execute($this->category);
-        self::assertGreaterThan(0, $this->category->getId());
-        self::assertEquals($id, $this->category->getId());
+        self::assertGreaterThan(0, $this->category->id);
+        self::assertEquals($id, $this->category->id);
 
-        $categoryR = WikiCategoryMapper::get()->with('name')->where('id', $this->category->getId())->where('name/language', ISO639x1Enum::_EN)->execute();
+        $categoryR = WikiCategoryMapper::get()->with('name')->where('id', $this->category->id)->where('name/language', ISO639x1Enum::_EN)->execute();
         self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
 
         self::assertGreaterThan(0, \count(WikiCategoryMapper::getAll()->where('app', 1)->execute()));
@@ -68,17 +68,17 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
         $this->category->parent = new NullWikiCategory(1);
 
         $id = WikiCategoryMapper::create()->execute($this->category);
-        self::assertGreaterThan(0, $this->category->getId());
-        self::assertEquals($id, $this->category->getId());
+        self::assertGreaterThan(0, $this->category->id);
+        self::assertEquals($id, $this->category->id);
 
         $categoryR = WikiCategoryMapper::get()
             ->with('name')
-            ->where('id', $this->category->getId())
+            ->where('id', $this->category->id)
             ->where('name/language', ISO639x1Enum::_EN)
             ->execute();
 
         self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
-        self::assertEquals($this->category->parent->getId(), $categoryR->parent->getId());
+        self::assertEquals($this->category->parent->id, $categoryR->parent->id);
 
         self::assertGreaterThan(0,
             \count(

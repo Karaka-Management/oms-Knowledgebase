@@ -55,7 +55,7 @@ final class Installer extends InstallerAbstract
         WikiAppMapper::create()->execute($app);
 
         $category      = new WikiCategory();
-        $category->app = new NullWikiApp($app->getId());
+        $category->app = new NullWikiApp($app->id);
         $category->setL11n('Default');
 
         WikiCategoryMapper::create()->execute($category);

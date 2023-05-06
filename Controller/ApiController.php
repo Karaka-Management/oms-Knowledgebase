@@ -124,21 +124,21 @@ final class ApiController extends Controller
             foreach ($uploaded as $media) {
                 $this->createModelRelation(
                     $request->header->account,
-                    $doc->getId(),
-                    $media->getId(),
+                    $doc->id,
+                    $media->id,
                     WikiDocMapper::class,
                     'media',
                     '',
                     $request->getOrigin()
                 );
 
-                $accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login
-                    . '/Knowledgebase/' . ($doc->category?->getId() ?? '0')
-                    . '/' . $doc->getId();
+                $accountPath = '/Accounts/' . $account->id . ' ' . $account->login
+                    . '/Knowledgebase/' . ($doc->category?->id ?? '0')
+                    . '/' . $doc->id;
 
                 $ref            = new Reference();
                 $ref->name      = $media->name;
-                $ref->source    = new NullMedia($media->getId());
+                $ref->source    = new NullMedia($media->id);
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($accountPath);
 
@@ -148,14 +148,14 @@ final class ApiController extends Controller
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
                         $accountPath,
                         $request->header->account,
-                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->getId() . '/Knowledgebase/' . ($doc->category?->getId() ?? '0') . '/' . $doc->getId()
+                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->id . '/Knowledgebase/' . ($doc->category?->id ?? '0') . '/' . $doc->id
                     );
                 }
 
                 $this->createModelRelation(
                     $request->header->account,
-                    $collection->getId(),
-                    $ref->getId(),
+                    $collection->id,
+                    $ref->id,
                     CollectionMapper::class,
                     'sources',
                     '',
@@ -172,8 +172,8 @@ final class ApiController extends Controller
                 $media = MediaMapper::get()->where('id', (int) $file)->limit(1)->execute();
                 $this->createModelRelation(
                     $request->header->account,
-                    $doc->getId(),
-                    $media->getId(),
+                    $doc->id,
+                    $media->id,
                     WikiDocMapper::class,
                     'media',
                     '',
@@ -182,7 +182,7 @@ final class ApiController extends Controller
 
                 $ref            = new Reference();
                 $ref->name      = $media->name;
-                $ref->source    = new NullMedia($media->getId());
+                $ref->source    = new NullMedia($media->id);
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($path);
 
@@ -198,8 +198,8 @@ final class ApiController extends Controller
 
                 $this->createModelRelation(
                     $request->header->account,
-                    $collection->getId(),
-                    $ref->getId(),
+                    $collection->id,
+                    $ref->id,
                     CollectionMapper::class,
                     'sources',
                     '',
@@ -221,8 +221,8 @@ final class ApiController extends Controller
     private function createWikiDir(WikiDoc $doc) : string
     {
         return '/Modules/Knowledgebase/'
-            . ($doc->category?->getId() ?? '0') . '/'
-            . $doc->getId();
+            . ($doc->category?->id ?? '0') . '/'
+            . $doc->id;
     }
 
     /**

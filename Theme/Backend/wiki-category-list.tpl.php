@@ -34,9 +34,9 @@ echo $this->getData('nav')->render();
                     <td><?= $this->getHtml('Parent'); ?>
                 <tbody>
                 <?php foreach ($categories as $key => $value) :
-                        $url = UriFactory::build('{/base}/admin/account/settings?{?}&id=' . $value->getId()); ?>
+                        $url = UriFactory::build('{/base}/admin/account/settings?{?}&id=' . $value->id); ?>
                 <tr tabindex="0" data-href="<?= $url; ?>">
-                    <td data-label="<?= $this->getHtml('ID', '0', '0'); ?>"><a href="<?= $url; ?>"><?= $value->getId(); ?></a>
+                    <td data-label="<?= $this->getHtml('ID', '0', '0'); ?>"><a href="<?= $url; ?>"><?= $value->id; ?></a>
                     <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getL11n()); ?></a>
                     <td data-label="<?= $this->getHtml('Parent'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->parent !== null ? $value->parent->getL11n() : ''); ?></a>
                 <?php endforeach; ?>

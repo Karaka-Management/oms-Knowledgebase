@@ -45,15 +45,15 @@ final class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
         $doc->createdBy = new NullAccount(1);
 
         $id = WikiDocMapper::create()->execute($doc);
-        self::assertGreaterThan(0, $doc->getId());
-        self::assertEquals($id, $doc->getId());
+        self::assertGreaterThan(0, $doc->id);
+        self::assertEquals($id, $doc->id);
 
-        $docR = WikiDocMapper::get()->where('id', $doc->getId())->execute();
+        $docR = WikiDocMapper::get()->where('id', $doc->id)->execute();
         self::assertEquals($doc->name, $docR->name);
         self::assertEquals($doc->doc, $docR->doc);
         self::assertEquals($doc->getStatus(), $docR->getStatus());
         self::assertEquals($doc->getLanguage(), $docR->getLanguage());
-        self::assertEquals($doc->category->getId(), $docR->category->getId());
+        self::assertEquals($doc->category->id, $docR->category->id);
 
         self::assertGreaterThan(0,
             \count(

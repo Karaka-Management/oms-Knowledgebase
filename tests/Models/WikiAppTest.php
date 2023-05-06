@@ -40,7 +40,7 @@ final class WikiAppTest extends \PHPUnit\Framework\TestCase
      */
     public function testDefault() : void
     {
-        self::assertEquals(0, $this->app->getId());
+        self::assertEquals(0, $this->app->id);
         self::assertEquals('', $this->app->name);
     }
 

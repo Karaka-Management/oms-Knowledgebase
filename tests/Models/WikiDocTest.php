@@ -46,7 +46,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testDefault() : void
     {
-        self::assertEquals(0, $this->doc->getId());
+        self::assertEquals(0, $this->doc->id);
         self::assertNull($this->doc->app);
         self::assertEquals('', $this->doc->name);
         self::assertEquals('', $this->doc->doc);
@@ -65,7 +65,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
     public function tesAppInputOutput() : void
     {
         $this->doc->app = new NullWikiApp(2);
-        self::assertEquals(2, $this->doc->app->getId());
+        self::assertEquals(2, $this->doc->app->id);
     }
 
     /**
@@ -120,7 +120,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
     public function testCategoryInputOutput() : void
     {
         $this->doc->category = new NullWikiCategory(3);
-        self::assertEquals(3, $this->doc->category->getId());
+        self::assertEquals(3, $this->doc->category->id);
     }
 
     /**

@@ -36,7 +36,7 @@ class WikiDoc implements \JsonSerializable
      * @var int
      * @since 1.0.0
      */
-    protected int $id = 0;
+    public int $id = 0;
 
     /**
      * Version.
@@ -70,7 +70,7 @@ class WikiDoc implements \JsonSerializable
      * @var int
      * @since 1.0.0
      */
-    private int $status = WikiStatus::ACTIVE;
+    public int $status = WikiStatus::ACTIVE;
 
     /**
      * Document content.
@@ -102,7 +102,7 @@ class WikiDoc implements \JsonSerializable
      * @var string
      * @since 1.0.0
      */
-    private string $language = ISO639x1Enum::_EN;
+    public string $language = ISO639x1Enum::_EN;
 
     /**
      * Tags.

@@ -36,10 +36,10 @@ final class WikiAppMapperTest extends \PHPUnit\Framework\TestCase
         $app->name = 'Test Category';
 
         $id = WikiAppMapper::create()->execute($app);
-        self::assertGreaterThan(0, $app->getId());
-        self::assertEquals($id, $app->getId());
+        self::assertGreaterThan(0, $app->id);
+        self::assertEquals($id, $app->id);
 
-        $appR = WikiAppMapper::get()->where('id', $app->getId())->execute();
+        $appR = WikiAppMapper::get()->where('id', $app->id)->execute();
         self::assertEquals($app->name, $appR->name);
     }
 }

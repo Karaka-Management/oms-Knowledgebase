@@ -107,7 +107,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('name', 'Test App');
 
         $this->module->apiWikiAppCreate($request, $response);
-        self::assertGreaterThan(0, $aId = $response->get('')['response']->getId());
+        self::assertGreaterThan(0, $aId = $response->get('')['response']->id);
 
         //read
         $response = new HttpResponse();
@@ -162,7 +162,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('name', 'Test Category');
 
         $this->module->apiWikiCategoryCreate($request, $response);
-        self::assertGreaterThan(0, $cId = $response->get('')['response']->getId());
+        self::assertGreaterThan(0, $cId = $response->get('')['response']->id);
 
         //read
         $response = new HttpResponse();
@@ -216,7 +216,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('name', 'New Test Category');
 
         $this->module->apiWikiCategoryL11nCreate($request, $response);
-        self::assertGreaterThan(0, $response->get('')['response']->getId());
+        self::assertGreaterThan(0, $response->get('')['response']->id);
     }
 
     /**
@@ -267,7 +267,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('media', \json_encode([1]));
 
         $this->module->apiWikiDocCreate($request, $response);
-        self::assertGreaterThan(0, $cId = $response->get('')['response']->getId());
+        self::assertGreaterThan(0, $cId = $response->get('')['response']->id);
 
         //read
         $response = new HttpResponse();
