@@ -17,15 +17,15 @@ use phpOMS\Utils\Parser\Markdown\Markdown;
 
 /** @var \phpOMS\Views\View $this */
 /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
-$categories = $this->getData('categories') ?? [];
+$categories = $this->data['categories'] ?? [];
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
-$documents = $this->getData('docs') ?? [];
+$documents = $this->data['docs'] ?? [];
 
 /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
-$apps = $this->getData('apps') ?? [];
+$apps = $this->data['apps'] ?? [];
 
-echo $this->getData('nav')->render(); ?>
+echo $this->data['nav']->render(); ?>
 <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-9">
         <div class="row">
