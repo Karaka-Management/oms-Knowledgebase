@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-echo $this->getData('nav')->render();
+echo $this->data['nav']->render();
 ?>
 
 <div class="row">

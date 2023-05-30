@@ -55,7 +55,7 @@ final class BackendController extends Controller
      */
     public function setUpBackend(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
-        $head = $response->get('Content')->getData('head');
+        $head = $response->get('Content')->head;
         $head->addAsset(AssetType::CSS, '/Modules/Knowledgebase/Theme/Backend/styles.css?v=1.0.0');
     }
 
@@ -79,33 +79,33 @@ final class BackendController extends Controller
         $app = $request->getDataInt('app') ?? 1;
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
             ->where('parent', $request->getDataInt('category'))
             ->where('app', $app)
-            ->where('name/language', $response->getLanguage())
+            ->where('name/language', $response->header->l11n->language)
             ->execute();
 
-        $view->setData('categories', $categories);
+        $view->data['categories'] = $categories;
 
         /** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
         $documents = WikiDocMapper::getAll()
             ->with('tags')
             ->with('tags/title')
             ->where('app', $app)
-            ->where('language', $response->getLanguage())
-            ->where('tags/title/language', $response->getLanguage())
+            ->where('language', $response->header->l11n->language)
+            ->where('tags/title/language', $response->header->l11n->language)
             ->limit(25)->sort('createdAt', OrderType::DESC)
             ->execute();
 
-        $view->setData('docs', $documents);
+        $view->data['docs'] = $documents;
 
         /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
         $apps = WikiAppMapper::getAll()->execute();
-        $view->setData('apps', $apps);
+        $view->data['apps'] = $apps;
 
         return $view;
     }
@@ -127,11 +127,11 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-list');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiApp[] $list */
         $list = WikiAppMapper::getAll()->execute();
-        $view->setData('apps', $list);
+        $view->data['apps'] = $list;
 
         return $view;
     }
@@ -153,11 +153,11 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-single');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiApp $app */
         $app = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
-        $view->setData('app', $app);
+        $view->data['app'] = $app;
 
         return $view;
     }
@@ -178,9 +178,9 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-single');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        $view->setData('app', new NullWikiApp());
+        $view->data['app'] = new NullWikiApp();
 
         return $view;
     }
@@ -204,11 +204,11 @@ final class BackendController extends Controller
         $app = $request->getDataInt('app') ?? $this->app->unitId;
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $list */
-        $list = WikiCategoryMapper::getAll()->with('name')->where('app', $app)->where('name/language', $response->getLanguage())->execute();
-        $view->setData('categories', $list);
+        $list = WikiCategoryMapper::getAll()->with('name')->where('app', $app)->where('name/language', $response->header->l11n->language)->execute();
+        $view->data['categories'] = $list;
 
         return $view;
     }
@@ -230,11 +230,11 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-single');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
         $category = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
-        $view->setData('category', $category);
+        $view->data['category'] = $category;
 
         return $view;
     }
@@ -255,9 +255,9 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-single');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        $view->setData('category', new NullWikiCategory());
+        $view->data['category'] = new NullWikiCategory();
 
         return $view;
     }
@@ -279,11 +279,11 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-list');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiDoc[] $list */
         $list = WikiDocMapper::getAll()->limit(25)->execute();
-        $view->setData('docs', $list);
+        $view->data['docs'] = $list;
 
         return $view;
     }
@@ -312,8 +312,8 @@ final class BackendController extends Controller
             ->with('tags/title')
             ->with('media')
             ->where('id', (int) $request->getData('id'))
-            ->where('language', $request->getLanguage())
-            ->where('tags/title/language', $response->getLanguage())
+            ->where('language', $request->header->l11n->language)
+            ->where('tags/title/language', $response->header->l11n->language)
             ->execute();
 
         $accountId = $request->header->account;
@@ -327,21 +327,20 @@ final class BackendController extends Controller
         }
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-single');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
             ->where('parent', $request->getDataInt('category'))
             ->where('app', $app)
-            ->where('name/language', $response->getLanguage())
+            ->where('name/language', $response->header->l11n->language)
             ->execute();
 
-        $view->setData('categories', $categories);
-        $view->setData('document', $document);
-        $view->addData('editable', $this->app->accountManager->get($accountId)->hasPermission(
-            PermissionType::MODIFY, $this->app->unitId, $this->app->appId, self::NAME, PermissionCategory::WIKI, $document->id)
-        );
+        $view->data['categories'] = $categories;
+        $view->data['document'] = $document;
+        $view->['editable'] = $this->app->accountManager->get($accountId)->hasPermission(
+            PermissionType::MODIFY, $this->app->unitId, $this->app->appId, self::NAME, PermissionCategory::WIKI, $document->id);
 
         return $view;
     }
@@ -363,15 +362,15 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-create');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
-        $view->addData('editor', $editor);
+        $view->data['editor'] = $editor;
 
         $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
-        $view->addData('tagSelector', $tagSelector);
+        $view->data['tagSelector'] = $tagSelector;
 
-        $view->setData('doc', new NullWikiDoc());
+        $view->data['doc'] = new NullWikiDoc();
 
         return $view;
     }
@@ -393,18 +392,18 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-create');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1000601001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1000601001, $request, $response);
 
         $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
-        $view->addData('editor', $editor);
+        $view->data['editor'] = $editor;
 
         $accGrpSelector = new \Modules\Profile\Theme\Backend\Components\AccountGroupSelector\BaseView($this->app->l11nManager, $request, $response);
-        $view->addData('accGrpSelector', $accGrpSelector);
+        $view->data['accGrpSelector'] = $accGrpSelector;
 
         $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
-        $view->addData('tagSelector', $tagSelector);
+        $view->data['tagSelector'] = $tagSelector;
 
-        $view->addData('doc', WikiDocMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute());
+        $view->data['doc'] = WikiDocMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
 
         return $view;
     }

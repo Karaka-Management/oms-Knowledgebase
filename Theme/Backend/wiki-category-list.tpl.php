@@ -15,10 +15,10 @@ declare(strict_types=1);
 use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
-$categories = $this->getData('categories') ?? [];
+$categories = $this->data['categories'] ?? [];
 
 /** @var \phpOMS\Views\View $this */
-echo $this->getData('nav')->render();
+echo $this->data['nav']->render();
 ?>
 
 <div class="row">

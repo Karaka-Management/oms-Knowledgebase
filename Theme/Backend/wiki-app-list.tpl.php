@@ -12,7 +12,7 @@
  */
 declare(strict_types=1);
 
-$apps = $this->getData('apps');
+$apps = $this->data['apps'];
 
 /** @var \phpOMS\Views\View $this */
-echo $this->getData('nav')->render();
+echo $this->data['nav']->render();

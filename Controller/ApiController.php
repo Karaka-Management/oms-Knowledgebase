@@ -70,7 +70,7 @@ final class ApiController extends Controller
     public function apiWikiDocCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateWikiDocCreate($request))) {
-            $response->set($request->uri->__toString(), new FormValidation($val));
+            $response->data[$request->uri->__toString()] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -79,7 +79,7 @@ final class ApiController extends Controller
         $doc = $this->createWikiDocFromRequest($request, $response, $data);
         $this->createModel($request->header->account, $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
 
-        if (!empty($request->getFiles())
+        if (!empty($request->files)
             || !empty($request->getDataJson('media'))
         ) {
             $this->createWikiMedia($doc, $request);
@@ -110,7 +110,7 @@ final class ApiController extends Controller
         /** @var \Modules\Admin\Models\Account $account */
         $account = AccountMapper::get()->where('id', $request->header->account)->execute();
 
-        if (!empty($uploadedFiles = $request->getFiles())) {
+        if (!empty($uploadedFiles = $request->files)) {
             $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
                 names: [],
                 fileNames: [],
@@ -247,7 +247,7 @@ final class ApiController extends Controller
         $doc->category    = new NullWikiCategory($request->getDataInt('category') ?? 1);
         $doc->app         = new NullWikiApp($request->getDataInt('app') ?? 1);
         $doc->version     = $request->getDataString('version') ?? '';
-        $doc->setLanguage((string) ($request->getDataString('language') ?? $request->getLanguage()));
+        $doc->setLanguage((string) ($request->getDataString('language') ?? $request->header->l11n->language));
         $doc->setStatus($request->getDataInt('status') ?? WikiStatus::INACTIVE);
 
         if (!empty($tags = $request->getDataJson('tags'))) {
@@ -353,7 +353,7 @@ final class ApiController extends Controller
     public function apiWikiCategoryL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateWikiCategoryL11nCreate($request))) {
-            $response->set('wiki_category_l11n_create', new FormValidation($val));
+            $response->data['wiki_category_l11n_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -379,7 +379,7 @@ final class ApiController extends Controller
         $l11nWikiCategory      = new BaseStringL11n();
         $l11nWikiCategory->ref = $request->getDataInt('category') ?? 0;
         $l11nWikiCategory->setLanguage(
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
         $l11nWikiCategory->content = $request->getDataString('name') ?? '';
 
@@ -500,7 +500,7 @@ final class ApiController extends Controller
     public function apiWikiCategoryCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateWikiCategoryCreate($request))) {
-            $response->set($request->uri->__toString(), new FormValidation($val));
+            $response->data[$request->uri->__toString()] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -527,7 +527,7 @@ final class ApiController extends Controller
         $category->app = new NullWikiApp($request->getDataInt('app') ?? 1);
         $category->setL11n(
             $request->getDataString('name') ?? '',
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
 
         if ($request->hasData('parent')) {
@@ -620,7 +620,7 @@ final class ApiController extends Controller
 
         $category->setL11n(
             $request->getDataString('name') ?? $category->getL11n(),
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
 
         return $category;
@@ -664,7 +664,7 @@ final class ApiController extends Controller
     public function apiWikiAppCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateWikiAppCreate($request))) {
-            $response->set($request->uri->__toString(), new FormValidation($val));
+            $response->data[$request->uri->__toString()] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;

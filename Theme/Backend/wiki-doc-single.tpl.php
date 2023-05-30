@@ -19,7 +19,7 @@ use Modules\Knowledgebase\Models\NullWikiDoc;
  * @var \Modules\Knowledgebase\Models\WikiCategory[] $categories
  * @var \Modules\Knowledgebase\Models\WikiDoc        $doc
  */
-$categories = $this->getData('categories') ?? [];
+$categories = $this->data['categories'] ?? [];
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc $doc */
 $doc = $this->getData('document') ?? new NullWikiDoc();
@@ -28,10 +28,10 @@ $doc = $this->getData('document') ?? new NullWikiDoc();
 $tags = $doc->getTags();
 
 /** @var bool $editable */
-$editable = $this->getData('editable');
+$editable = $this->data['editable'];
 
 /** @var \phpOMS\Views\View $this */
-echo $this->getData('nav')->render();
+echo $this->data['nav']->render();
 ?>
 
 <div class="row">
