@@ -247,7 +247,7 @@ final class ApiController extends Controller
         $doc->category    = new NullWikiCategory($request->getDataInt('category') ?? 1);
         $doc->app         = new NullWikiApp($request->getDataInt('app') ?? 1);
         $doc->version     = $request->getDataString('version') ?? '';
-        $doc->setLanguage((string) ($request->getDataString('language') ?? $request->getLanguage()));
+        $doc->setLanguage((string) ($request->getDataString('language') ?? $request->header->l11n->language));
         $doc->setStatus($request->getDataInt('status') ?? WikiStatus::INACTIVE);
 
         if (!empty($tags = $request->getDataJson('tags'))) {
@@ -379,7 +379,7 @@ final class ApiController extends Controller
         $l11nWikiCategory      = new BaseStringL11n();
         $l11nWikiCategory->ref = $request->getDataInt('category') ?? 0;
         $l11nWikiCategory->setLanguage(
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
         $l11nWikiCategory->content = $request->getDataString('name') ?? '';
 
@@ -527,7 +527,7 @@ final class ApiController extends Controller
         $category->app = new NullWikiApp($request->getDataInt('app') ?? 1);
         $category->setL11n(
             $request->getDataString('name') ?? '',
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
 
         if ($request->hasData('parent')) {
@@ -620,7 +620,7 @@ final class ApiController extends Controller
 
         $category->setL11n(
             $request->getDataString('name') ?? $category->getL11n(),
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
 
         return $category;

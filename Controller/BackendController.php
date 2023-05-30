@@ -86,7 +86,7 @@ final class BackendController extends Controller
             ->with('name')
             ->where('parent', $request->getDataInt('category'))
             ->where('app', $app)
-            ->where('name/language', $response->getLanguage())
+            ->where('name/language', $response->header->l11n->language)
             ->execute();
 
         $view->setData('categories', $categories);
@@ -96,8 +96,8 @@ final class BackendController extends Controller
             ->with('tags')
             ->with('tags/title')
             ->where('app', $app)
-            ->where('language', $response->getLanguage())
-            ->where('tags/title/language', $response->getLanguage())
+            ->where('language', $response->header->l11n->language)
+            ->where('tags/title/language', $response->header->l11n->language)
             ->limit(25)->sort('createdAt', OrderType::DESC)
             ->execute();
 
@@ -207,7 +207,7 @@ final class BackendController extends Controller
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response));
 
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $list */
-        $list = WikiCategoryMapper::getAll()->with('name')->where('app', $app)->where('name/language', $response->getLanguage())->execute();
+        $list = WikiCategoryMapper::getAll()->with('name')->where('app', $app)->where('name/language', $response->header->l11n->language)->execute();
         $view->setData('categories', $list);
 
         return $view;
@@ -312,8 +312,8 @@ final class BackendController extends Controller
             ->with('tags/title')
             ->with('media')
             ->where('id', (int) $request->getData('id'))
-            ->where('language', $request->getLanguage())
-            ->where('tags/title/language', $response->getLanguage())
+            ->where('language', $request->header->l11n->language)
+            ->where('tags/title/language', $response->header->l11n->language)
             ->execute();
 
         $accountId = $request->header->account;
@@ -334,7 +334,7 @@ final class BackendController extends Controller
             ->with('name')
             ->where('parent', $request->getDataInt('category'))
             ->where('app', $app)
-            ->where('name/language', $response->getLanguage())
+            ->where('name/language', $response->header->l11n->language)
             ->execute();
 
         $view->setData('categories', $categories);
