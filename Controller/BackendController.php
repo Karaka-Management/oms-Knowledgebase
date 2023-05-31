@@ -339,8 +339,15 @@ final class BackendController extends Controller
 
         $view->data['categories'] = $categories;
         $view->data['document'] = $document;
-        $view->['editable'] = $this->app->accountManager->get($accountId)->hasPermission(
-            PermissionType::MODIFY, $this->app->unitId, $this->app->appId, self::NAME, PermissionCategory::WIKI, $document->id);
+        $view->data['editable'] = $this->app->accountManager->get($accountId)
+            ->hasPermission(
+                PermissionType::MODIFY,
+                $this->app->unitId,
+                $this->app->appId,
+                self::NAME,
+                PermissionCategory::WIKI,
+                $document->id
+            );
 
         return $view;
     }
