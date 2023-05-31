@@ -71,7 +71,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateWikiDocCreate($request))) {
             $response->data[$request->uri->__toString()] = new FormValidation($val);
-            $response->header->status = RequestStatusCode::R_400;
+            $response->header->status                    = RequestStatusCode::R_400;
 
             return;
         }
@@ -354,7 +354,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateWikiCategoryL11nCreate($request))) {
             $response->data['wiki_category_l11n_create'] = new FormValidation($val);
-            $response->header->status = RequestStatusCode::R_400;
+            $response->header->status                    = RequestStatusCode::R_400;
 
             return;
         }
@@ -501,7 +501,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateWikiCategoryCreate($request))) {
             $response->data[$request->uri->__toString()] = new FormValidation($val);
-            $response->header->status = RequestStatusCode::R_400;
+            $response->header->status                    = RequestStatusCode::R_400;
 
             return;
         }
@@ -665,7 +665,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateWikiAppCreate($request))) {
             $response->data[$request->uri->__toString()] = new FormValidation($val);
-            $response->header->status = RequestStatusCode::R_400;
+            $response->header->status                    = RequestStatusCode::R_400;
 
             return;
         }
