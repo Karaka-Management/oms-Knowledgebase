@@ -40,25 +40,18 @@ echo $this->data['nav']->render();
             <div class="portlet-head"><?= $this->printHtml($doc->name); ?></div>
             <div class="portlet-body">
                 <article><?= $doc->doc; ?></article>
+
+                <?php foreach ($tags as $tag) : ?>
+                    <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= !empty($tag->icon) ? '<i class="' . $this->printHtml($tag->icon) . '"></i>' : ''; ?><?= $this->printHtml($tag->getL11n()); ?></span>
+                <?php endforeach; ?>
+
+                <?php $files = $doc->getMedia(); foreach ($files as $file) : ?>
+                        <span><a class="content" href="<?= UriFactory::build('{/base}/media/single?id=' . $file->id);?>"><?= $file->name; ?></a></span>
+                <?php endforeach; ?>
             </div>
             <?php if ($editable || !empty($tags)) : ?>
             <div class="portlet-foot">
-                <div class="row">
-                    <div class="col-xs-6 overflowfix">
-                        <?php foreach ($tags as $tag) : ?>
-                            <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= !empty($tag->icon) ? '<i class="' . $this->printHtml($tag->icon) . '"></i>' : ''; ?><?= $this->printHtml($tag->getL11n()); ?></span>
-                        <?php endforeach; ?>
-
-                        <?php $files = $doc->getMedia(); foreach ($files as $file) : ?>
-                             <span><a class="content" href="<?= UriFactory::build('{/base}/media/single?id=' . $file->id);?>"><?= $file->name; ?></a></span>
-                        <?php endforeach; ?>
-                    </div>
-                    <?php if ($editable) : ?>
-                    <div class="col-xs-6 rightText">
-                        <a tabindex="0" class="button" href="<?= \phpOMS\Uri\UriFactory::build('wiki/doc/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
-                    </div>
-                    <?php endif; ?>
-                </div>
+                <a tabindex="0" class="button" href="<?= \phpOMS\Uri\UriFactory::build('wiki/doc/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
             </div>
             <?php endif; ?>
         </section>
