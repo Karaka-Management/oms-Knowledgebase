@@ -245,7 +245,7 @@ final class ApiController extends Controller
         $doc->category    = new NullWikiCategory($request->getDataInt('category') ?? 1);
         $doc->app         = new NullWikiApp($request->getDataInt('app') ?? 1);
         $doc->version     = $request->getDataString('version') ?? '';
-        $doc->setLanguage((string) ($request->getDataString('language') ?? $request->header->l11n->language));
+        $doc->setLanguage($request->getDataString('language') ?? $request->header->l11n->language);
         $doc->setStatus($request->getDataInt('status') ?? WikiStatus::INACTIVE);
 
         if (!empty($tags = $request->getDataJson('tags'))) {
@@ -446,11 +446,11 @@ final class ApiController extends Controller
      */
     private function updateDocFromRequest(RequestAbstract $request, WikiDoc $new) : WikiDoc
     {
-        $new->isVersioned = (bool) ($request->getData('versioned') ?? $new->isVersioned);
-        $new->name        = (string) ($request->getData('title') ?? $new->name);
-        $new->docRaw      = (string) ($request->getData('plain') ?? $new->docRaw);
-        $new->doc         = Markdown::parse((string) ($request->getData('plain') ?? $new->docRaw));
-        $new->version     = (string) ($request->getData('version') ?? $new->version);
+        $new->isVersioned = $request->getDataBool('versioned') ?? $new->isVersioned;
+        $new->name        = $request->getDataString('title') ?? $new->name;
+        $new->docRaw      = $request->getDataString('plain') ?? $new->docRaw;
+        $new->doc         = Markdown::parse($request->getDataString('plain') ?? $new->docRaw);
+        $new->version     = $request->getDataString('version') ?? $new->version;
 
         return $new;
     }
@@ -755,7 +755,7 @@ final class ApiController extends Controller
      */
     private function updateAppFromRequest(RequestAbstract $request, WikiApp $new) : WikiApp
     {
-        $new->name = (string) ($request->getData('name') ?? $new->name);
+        $new->name = $request->getDataString('name') ?? $new->name;
 
         return $new;
     }
