@@ -284,9 +284,7 @@ final class ApiController extends Controller
      */
     private function createHistory(WikiDoc $doc) : WikiDocHistory
     {
-        $history = WikiDocHistory::createFromDoc($doc);
-
-        return $history;
+        return WikiDocHistory::createFromDoc($doc);
     }
 
     /**
