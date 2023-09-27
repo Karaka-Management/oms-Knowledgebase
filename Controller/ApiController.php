@@ -57,7 +57,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -65,7 +65,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiDocCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiDocCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateWikiDocCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -228,7 +228,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return WikiDoc
      *
@@ -338,7 +338,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -346,7 +346,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiCategoryL11nCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateWikiCategoryL11nCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -386,7 +386,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -394,7 +394,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiDocGet(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiDocGet(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiDoc $doc */
         $doc = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -406,7 +406,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -414,7 +414,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiDocUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiDocUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiDoc $old */
         $old = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -458,7 +458,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -466,7 +466,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiDocDelete(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiDocDelete(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiDoc $doc */
         $doc = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -480,7 +480,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -488,7 +488,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiCategoryCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateWikiCategoryCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -551,7 +551,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -559,7 +559,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryGet(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiCategoryGet(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
         $category = WikiCategoryMapper::get()
@@ -576,7 +576,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -584,7 +584,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiCategoryUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiCategory $old */
         $old = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -618,7 +618,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -626,7 +626,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiCategoryDelete(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiCategoryDelete(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
         $category = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -640,7 +640,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -648,7 +648,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiAppCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiAppCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateWikiAppCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -704,7 +704,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -712,7 +712,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiAppGet(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiAppGet(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiApp $app */
         $app = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -724,7 +724,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -732,7 +732,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiAppUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiAppUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiApp $old */
         $old = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -763,7 +763,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -771,7 +771,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiWikiAppDelete(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiWikiAppDelete(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiApp $app */
         $app = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
