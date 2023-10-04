@@ -51,7 +51,7 @@ class WikiCategory implements \JsonSerializable
      * @var string|BaseStringL11n
      * @since 1.0.0
      */
-    private string | BaseStringL11n $name = '';
+    public string | BaseStringL11n $name = '';
 
     /**
      * Parent category.

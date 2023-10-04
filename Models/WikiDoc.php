@@ -110,7 +110,7 @@ class WikiDoc implements \JsonSerializable
      * @var Tag[]
      * @since 1.0.0
      */
-    private array $tags = [];
+    public array $tags = [];
 
     /**
      * Media files
@@ -118,7 +118,7 @@ class WikiDoc implements \JsonSerializable
      * @var array
      * @since 1.0.0
      */
-    protected array $media = [];
+    public array $media = [];
 
     /**
      * Is versioned
