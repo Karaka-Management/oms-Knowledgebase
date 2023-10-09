@@ -107,7 +107,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('name', 'Test App');
 
         $this->module->apiWikiAppCreate($request, $response);
-        self::assertGreaterThan(0, $aId = $response->get('')['response']->id);
+        self::assertGreaterThan(0, $aId = $response->getDataArray('')['response']->id);
 
         //read
         $response = new HttpResponse();
@@ -117,7 +117,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('id', $aId);
 
         $this->module->apiWikiAppGet($request, $response);
-        self::assertEquals('Test App', $response->get('')['response']->name);
+        self::assertEquals('Test App', $response->getDataArray('')['response']->name);
 
         // update
         $response = new HttpResponse();
@@ -128,7 +128,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('name', 'New title');
 
         $this->module->apiWikiAppUpdate($request, $response);
-        self::assertEquals('New title', $response->get('')['response']->name);
+        self::assertEquals('New title', $response->getDataArray('')['response']->name);
     }
 
     /**
@@ -162,7 +162,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('name', 'Test Category');
 
         $this->module->apiWikiCategoryCreate($request, $response);
-        self::assertGreaterThan(0, $cId = $response->get('')['response']->id);
+        self::assertGreaterThan(0, $cId = $response->getDataArray('')['response']->id);
 
         //read
         $response = new HttpResponse();
@@ -172,7 +172,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('id', $cId);
 
         $this->module->apiWikiCategoryGet($request, $response);
-        self::assertEquals('Test Category', $response->get('')['response']->getL11n());
+        self::assertEquals('Test Category', $response->getDataArray('')['response']->getL11n());
 
         // update
         $response = new HttpResponse();
@@ -183,7 +183,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('name', 'New title');
 
         $this->module->apiWikiCategoryUpdate($request, $response);
-        self::assertEquals('New title', $response->get('')['response']->getL11n());
+        self::assertEquals('New title', $response->getDataArray('')['response']->getL11n());
     }
 
     /**
@@ -216,7 +216,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('name', 'New Test Category');
 
         $this->module->apiWikiCategoryL11nCreate($request, $response);
-        self::assertGreaterThan(0, $response->get('')['response']->id);
+        self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
     /**
@@ -267,7 +267,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('media', \json_encode([1]));
 
         $this->module->apiWikiDocCreate($request, $response);
-        self::assertGreaterThan(0, $cId = $response->get('')['response']->id);
+        self::assertGreaterThan(0, $cId = $response->getDataArray('')['response']->id);
 
         //read
         $response = new HttpResponse();
@@ -277,7 +277,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('id', $cId);
 
         $this->module->apiWikiDocGet($request, $response);
-        self::assertEquals('Test Doc', $response->get('')['response']->name);
+        self::assertEquals('Test Doc', $response->getDataArray('')['response']->name);
 
         // update
         $response = new HttpResponse();
@@ -288,7 +288,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('title', 'New title');
 
         $this->module->apiWikiDocUpdate($request, $response);
-        self::assertEquals('New title', $response->get('')['response']->name);
+        self::assertEquals('New title', $response->getDataArray('')['response']->name);
     }
 
     /**
