@@ -23,7 +23,7 @@ final class NullWikiDocTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @covers Modules\Knowledgebase\Models\NullWikiDoc
-     * @group framework
+     * @group module
      */
     public function testNull() : void
     {
@@ -32,11 +32,21 @@ final class NullWikiDocTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers Modules\Knowledgebase\Models\NullWikiDoc
-     * @group framework
+     * @group module
      */
     public function testId() : void
     {
         $null = new NullWikiDoc(2);
         self::assertEquals(2, $null->id);
+    }
+
+    /**
+     * @covers Modules\Knowledgebase\Models\NullWikiDoc
+     * @group module
+     */
+    public function testJsonSerialize() : void
+    {
+        $null = new NullWikiDoc(2);
+        self::assertEquals(['id' => 2], $null);
     }
 }

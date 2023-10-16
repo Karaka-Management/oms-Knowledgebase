@@ -23,7 +23,7 @@ final class NullWikiAppTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @covers Modules\Knowledgebase\Models\NullWikiApp
-     * @group framework
+     * @group module
      */
     public function testNull() : void
     {
@@ -32,11 +32,21 @@ final class NullWikiAppTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers Modules\Knowledgebase\Models\NullWikiApp
-     * @group framework
+     * @group module
      */
     public function testId() : void
     {
         $null = new NullWikiApp(2);
         self::assertEquals(2, $null->id);
+    }
+
+    /**
+     * @covers Modules\Knowledgebase\Models\NullWikiApp
+     * @group module
+     */
+    public function testJsonSerialize() : void
+    {
+        $null = new NullWikiApp(2);
+        self::assertEquals(['id' => 2], $null);
     }
 }
