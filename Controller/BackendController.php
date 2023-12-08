@@ -75,7 +75,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        // @todo: assign default org app to wiki app and default flag, load the wiki app based on org id and with a default flag set. Use this app in the following line instead of the hardcoded "1"
+        // @todo assign default org app to wiki app and default flag, load the wiki app based on org id and with a default flag set. Use this app in the following line instead of the hardcoded "1"
         $app = $request->getDataInt('app') ?? 1;
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
