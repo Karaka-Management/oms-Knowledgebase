@@ -134,4 +134,25 @@ return [
             ],
         ],
     ],
+
+    '^.*/wiki/category/l11n$' => [
+        [
+            'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryL11nCreate',
+            'verb'       => RouteVerb::PUT,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::READ,
+                'state'  => PermissionCategory::CATEGORY,
+            ],
+        ],
+        [
+            'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryL11nUpdate',
+            'verb'       => RouteVerb::SET,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::READ,
+                'state'  => PermissionCategory::CATEGORY,
+            ],
+        ],
+    ],
 ];

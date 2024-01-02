@@ -19,6 +19,7 @@ use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\NullWikiDoc;
 use Modules\Knowledgebase\Models\PermissionCategory;
 use Modules\Knowledgebase\Models\WikiAppMapper;
+use Modules\Knowledgebase\Models\WikiCategoryL11nMapper;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use Modules\Knowledgebase\Models\WikiDocMapper;
 use phpOMS\Account\PermissionType;
@@ -42,7 +43,7 @@ use phpOMS\Views\View;
 final class BackendController extends Controller
 {
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -60,7 +61,7 @@ final class BackendController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -75,8 +76,10 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        // @todo assign default org app to wiki app and default flag, load the wiki app based on org id and with a default flag set. Use this app in the following line instead of the hardcoded "1"
-        $app = $request->getDataInt('app') ?? 1;
+        // @todo assign default org app to wiki app and default flag,
+        // load the wiki app based on org id and with a default flag set.
+        // Use this app in the following line instead of the hardcoded "1"
+        $app = $request->getDataInt('wiki') ?? 1;
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
@@ -84,7 +87,7 @@ final class BackendController extends Controller
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
         $categories = WikiCategoryMapper::getAll()
             ->with('name')
-            ->where('parent', $request->getDataInt('category'))
+            ->where('parent', null)
             ->where('app', $app)
             ->where('name/language', $response->header->l11n->language)
             ->execute();
@@ -98,7 +101,8 @@ final class BackendController extends Controller
             ->where('app', $app)
             ->where('language', $response->header->l11n->language)
             ->where('tags/title/language', $response->header->l11n->language)
-            ->limit(25)->sort('createdAt', OrderType::DESC)
+            ->limit(25)
+            ->sort('createdAt', OrderType::DESC)
             ->execute();
 
         $view->data['docs'] = $documents;
@@ -111,7 +115,7 @@ final class BackendController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -137,7 +141,7 @@ final class BackendController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -163,7 +167,7 @@ final class BackendController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -186,7 +190,7 @@ final class BackendController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -201,20 +205,26 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $app = $request->getDataInt('app') ?? $this->app->unitId;
-
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiCategory[] $list */
-        $list                     = WikiCategoryMapper::getAll()->with('name')->where('app', $app)->where('name/language', $response->header->l11n->language)->execute();
+        $list = WikiCategoryMapper::getAll()
+            ->with('name')
+            ->where('name/language', $response->header->l11n->language)
+            ->execute();
+
         $view->data['categories'] = $list;
+
+        /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
+        $apps               = WikiAppMapper::getAll()->execute();
+        $view->data['apps'] = $apps;
 
         return $view;
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -233,14 +243,28 @@ final class BackendController extends Controller
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
-        $category               = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $category = WikiCategoryMapper::get()
+            ->with('name')
+            ->where('id', (int) $request->getData('id'))
+            ->where('name/language', $response->header->l11n->language)
+            ->execute();
+
         $view->data['category'] = $category;
+
+        $view->data['l11nView'] = new \Web\Backend\Views\L11nView($this->app->l11nManager, $request, $response);
+
+        /** @var \phpOMS\Localization\BaseStringL11n[] $l11nValues */
+        $l11nValues = WikiCategoryL11nMapper::getAll()
+            ->where('ref', $category->id)
+            ->execute();
+
+        $view->data['l11nValues'] = $l11nValues;
 
         return $view;
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -254,7 +278,7 @@ final class BackendController extends Controller
     public function viewKnowledgebaseCategoryCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
-        $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-single');
+        $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-create');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         $view->data['category'] = new NullWikiCategory();
@@ -263,7 +287,7 @@ final class BackendController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -276,20 +300,44 @@ final class BackendController extends Controller
      */
     public function viewKnowledgebaseDocList(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
+        $app = $request->getDataInt('wiki') ?? 1;
+
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-list');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        /** @var \Modules\Knowledgebase\Models\WikiDoc[] $list */
-        $list               = WikiDocMapper::getAll()->limit(25)->execute();
-        $view->data['docs'] = $list;
+        /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
+        $categories = WikiCategoryMapper::getAll()
+            ->with('name')
+            ->where('app', $app)
+            ->where('name/language', $response->header->l11n->language)
+            ->execute();
+
+        $view->data['categories'] = $categories;
+
+        /** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
+        $documents = WikiDocMapper::getAll()
+            ->with('tags')
+            ->with('tags/title')
+            ->where('app', $app)
+            ->where('category', $request->getDataInt('category') ?? \reset($categories)->id)
+            ->where('language', $response->header->l11n->language)
+            ->where('tags/title/language', $response->header->l11n->language)
+            ->sort('createdAt', OrderType::DESC)
+            ->execute();
+
+        $view->data['docs'] = $documents;
+
+        /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
+        $apps               = WikiAppMapper::getAll()->execute();
+        $view->data['apps'] = $apps;
 
         return $view;
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -304,7 +352,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
-        $app = $request->getDataInt('app') ?? $this->app->unitId;
+        $app = $request->getDataInt('wiki') ?? $this->app->unitId;
 
         /** @var \Modules\Knowledgebase\Models\WikiDoc $document */
         $document = WikiDocMapper::get()
@@ -353,7 +401,7 @@ final class BackendController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -383,7 +431,7 @@ final class BackendController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Routing end-point for application behavior.
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -399,7 +447,7 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-create');
-        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1000601001, $request, $response);
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         $editor               = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
         $view->data['editor'] = $editor;

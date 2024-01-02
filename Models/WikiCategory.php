@@ -70,7 +70,7 @@ class WikiCategory implements \JsonSerializable
     public string $virtualPath = '/';
 
     /**
-     * Cosntructor
+     * Constructor
      *
      * @since 1.0.0
      */

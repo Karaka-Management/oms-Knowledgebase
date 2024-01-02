@@ -40,6 +40,7 @@ return [
             ],
         ],
     ],
+
     '^.*/wiki/category/list.*$' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseCategoryList',
@@ -73,6 +74,7 @@ return [
             ],
         ],
     ],
+
     '^.*/wiki/doc/single.*$' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseDoc',
@@ -114,6 +116,40 @@ return [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
                 'state'  => PermissionCategory::WIKI,
+            ],
+        ],
+    ],
+
+    '^.*/wiki/app/list.*$' => [
+        [
+            'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseAppList',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::NAME,
+                'type'   => PermissionType::READ,
+                'state'  => PermissionCategory::CATEGORY,
+            ],
+        ],
+    ],
+    '^.*/wiki/app/single.*$' => [
+        [
+            'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseApp',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::NAME,
+                'type'   => PermissionType::READ,
+                'state'  => PermissionCategory::CATEGORY,
+            ],
+        ],
+    ],
+    '^.*/wiki/app/create.*$' => [
+        [
+            'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseAppCreate',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::NAME,
+                'type'   => PermissionType::CREATE,
+                'state'  => PermissionCategory::CATEGORY,
             ],
         ],
     ],

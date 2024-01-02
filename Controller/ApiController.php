@@ -257,7 +257,7 @@ final class ApiController extends Controller
                     $request->setData('language', $tag['language'], true);
 
                     $internalResponse = new HttpResponse();
-                    $this->app->moduleManager->get('Tag')->apiTagCreate($request, $internalResponse);
+                    $this->app->moduleManager->get('Tag')->apiWikiCategoryL11nCreate($request, $internalResponse);
 
                     if (!\is_array($data = $internalResponse->getDataArray($request->uri->__toString()))) {
                         continue;
@@ -778,5 +778,127 @@ final class ApiController extends Controller
 
         $this->deleteModel($request->header->account, $app, WikiAppMapper::class, 'app', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $app);
+    }
+
+    /**
+     * Api method to update CategoryL11n
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param array            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiWikiCategoryL11nUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
+    {
+        if (!empty($val = $this->validateCategoryL11nUpdate($request))) {
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidUpdateResponse($request, $response, $val);
+
+            return;
+        }
+
+        /** @var BaseStringL11n $old */
+        $old = WikiCategoryL11nMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $new = $this->updateCategoryL11nFromRequest($request, clone $old);
+
+        $this->updateModel($request->header->account, $old, $new, WikiCategoryL11nMapper::class, 'category_l11n', $request->getOrigin());
+        $this->createStandardUpdateResponse($request, $response, $new);
+    }
+
+    /**
+     * Method to update CategoryL11n from request.
+     *
+     * @param RequestAbstract $request Request
+     * @param BaseStringL11n  $new     Model to modify
+     *
+     * @return BaseStringL11n
+     *
+     * @todo Implement API update function
+     *
+     * @since 1.0.0
+     */
+    public function updateCategoryL11nFromRequest(RequestAbstract $request, BaseStringL11n $new) : BaseStringL11n
+    {
+        $new->setLanguage(
+            $request->getDataString('language') ?? $new->language
+        );
+        $new->content = $request->getDataString('title') ?? $new->content;
+
+        return $new;
+    }
+
+    /**
+     * Validate CategoryL11n update request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @todo Implement API validation function
+     *
+     * @since 1.0.0
+     */
+    private function validateCategoryL11nUpdate(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['id'] = !$request->hasData('id'))) {
+            return $val;
+        }
+
+        return [];
+    }
+
+    /**
+     * Api method to delete CategoryL11n
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param array            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiWikiCategoryL11nDelete(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
+    {
+        if (!empty($val = $this->validateCategoryL11nDelete($request))) {
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidDeleteResponse($request, $response, $val);
+
+            return;
+        }
+
+        /** @var BaseStringL11n $categoryL11n */
+        $categoryL11n = WikiCategoryL11nMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $this->deleteModel($request->header->account, $categoryL11n, WikiCategoryL11nMapper::class, 'category_l11n', $request->getOrigin());
+        $this->createStandardDeleteResponse($request, $response, $categoryL11n);
+    }
+
+    /**
+     * Validate CategoryL11n delete request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @todo Implement API validation function
+     *
+     * @since 1.0.0
+     */
+    private function validateCategoryL11nDelete(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['id'] = !$request->hasData('id'))) {
+            return $val;
+        }
+
+        return [];
     }
 }

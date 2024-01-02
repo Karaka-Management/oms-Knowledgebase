@@ -29,27 +29,30 @@ echo $this->data['nav']->render(); ?>
 <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-9">
         <div class="row">
-            <?php foreach ($documents as $doc) : $url = UriFactory::build('{/base}/wiki/doc/single?id=' . $doc->id); ?>
-            <div class="col-xs-12 plain-grid">
+            <div class="col-xs-12">
                 <div class="portlet">
-                    <div class="portlet-head"><a href="<?= $url; ?>"><?= $this->printHtml($doc->name); ?></a></div>
-                    <div class="portlet-body">
-                        <article>
-                            <?= Markdown::parse(\substr($doc->docRaw, 0, 500)); ?>
-                        </article>
-                        <?php $tags = $doc->getTags(); foreach ($tags as $tag) : ?>
-                            <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= empty($tag->icon) ? '' : ''; ?><?= $this->printHtml($tag->getL11n()); ?></span>
-                        <?php endforeach; ?>
+                    <div class="portlet-head">
+                        <?= $this->getHtml('Docs'); ?>
+                        <i class="g-icon download btn end-xs">download</i>
                     </div>
-                    <div class="portlet-foot">
-                        <a href="<?= $url; ?>" class="button floatRight"><?= $this->getHtml('More', '0', '0'); ?></a>
+                    <div class="slider">
+                    <table class="default sticky">
+                        <thead>
+                        <tr>
+                            <td class="wf-100"><?= $this->getHtml('Name'); ?>
+                        <tbody>
+                        <?php foreach ($documents as $key => $value) :
+                                $url = UriFactory::build('{/base}/wiki/doc/single?id=' . $value->id); ?>
+                        <tr tabindex="0" data-href="<?= $url; ?>">
+                            <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->name); ?></a>
+                        <?php endforeach; ?>
+                        <?php if (empty($documents)) : ?>
+                        <tr><td colspan="1" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
+                        <?php endif; ?>
+                    </table>
                     </div>
                 </div>
             </div>
-            <?php endforeach; ?>
-            <?php if (empty($documents)) : ?>
-            <div class="emptyPage"></div>
-            <?php endif; ?>
         </div>
     </div>
 
