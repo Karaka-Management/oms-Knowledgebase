@@ -22,5 +22,4 @@ return ['Knowledgebase' => [
     'Name'       => 'Name',
     'Parent'     => 'Elternteil',
     'Status'     => 'Status',
-    'Wiki'       => 'Wiki',
 ]];
