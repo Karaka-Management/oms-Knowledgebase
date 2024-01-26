@@ -110,9 +110,9 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(
             [
-                'id'                => 0,
-                'app'               => $this->category->app,
-                'virtualPath'       => '/test/path',
+                'id'          => 0,
+                'app'         => $this->category->app,
+                'virtualPath' => '/test/path',
             ],
             $serialized
         );

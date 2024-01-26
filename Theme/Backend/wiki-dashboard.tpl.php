@@ -29,7 +29,7 @@ echo $this->data['nav']->render(); ?>
 <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-9">
         <div class="row">
-            <?php foreach ($documents as $doc) : $url = UriFactory::build('{/base}/wiki/doc/single?id=' . $doc->id); ?>
+            <?php foreach ($documents as $doc) : $url = UriFactory::build('{/base}/wiki/doc/view?id=' . $doc->id); ?>
             <div class="col-xs-12 plain-grid">
                 <div class="portlet">
                     <div class="portlet-head"><a href="<?= $url; ?>"><?= $this->printHtml($doc->name); ?></a></div>
@@ -37,7 +37,7 @@ echo $this->data['nav']->render(); ?>
                         <article>
                             <?= Markdown::parse(\substr($doc->docRaw, 0, 500)); ?>
                         </article>
-                        <?php $tags = $doc->getTags(); foreach ($tags as $tag) : ?>
+                        <?php foreach ($doc->tags as $tag) : ?>
                             <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= empty($tag->icon) ? '' : ''; ?><?= $this->printHtml($tag->getL11n()); ?></span>
                         <?php endforeach; ?>
                     </div>

@@ -17,9 +17,9 @@ use Modules\Knowledgebase\Models\WikiStatus;
 use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc $wiki */
-$wiki         = $this->getData('doc') ?? new NullWikiDoc();
-$isNewDoc     = $wiki->id === 0;
-$languages    = \phpOMS\Localization\ISO639Enum::getConstants();
+$wiki      = $this->getData('doc') ?? new NullWikiDoc();
+$isNewDoc  = $wiki->id === 0;
+$languages = \phpOMS\Localization\ISO639Enum::getConstants();
 
 /** @var \phpOMS\Views\View $this */
 echo $this->data['nav']->render(); ?>
@@ -53,14 +53,14 @@ echo $this->data['nav']->render(); ?>
                     <table class="layout wf-100">
                         <tr><td>
                                 <select name="status" id="iStatus">
-                                    <option value="<?= $this->printHtml((string) WikiStatus::DRAFT); ?>"<?= $wiki->getStatus() === WikiStatus::DRAFT ? ' selected' : ''; ?>><?= $this->getHtml('Draft'); ?>
-                                    <option value="<?= $this->printHtml((string) WikiStatus::ACTIVE); ?>"<?= $wiki->getStatus() === WikiStatus::ACTIVE ? ' selected' : ''; ?>><?= $this->getHtml('Active'); ?>
+                                    <option value="<?= WikiStatus::DRAFT; ?>"<?= $wiki->status === WikiStatus::DRAFT ? ' selected' : ''; ?>><?= $this->getHtml('Draft'); ?>
+                                    <option value="<?= WikiStatus::ACTIVE; ?>"<?= $wiki->status === WikiStatus::ACTIVE ? ' selected' : ''; ?>><?= $this->getHtml('Active'); ?>
                                 </select>
                         <tr><td><label for="iLanguages"><?= $this->getHtml('Language'); ?></label>
                         <tr><td>
                                 <select id="iLanguages" name="lang">
                                     <?php foreach ($languages as $code => $language) : $code = \strtolower(\substr($code, 1)); ?>
-                                    <option value="<?= $this->printHtml($code); ?>"<?= $this->printHtml($code === $wiki->getLanguage() ? ' selected' : ''); ?>><?= $this->printHtml($language); ?>
+                                    <option value="<?= $this->printHtml($code); ?>"<?= $code === $wiki->language ? ' selected' : ''; ?>><?= $this->printHtml($language); ?>
                                     <?php endforeach; ?>
                                 </select>
                     </table>
@@ -70,7 +70,7 @@ echo $this->data['nav']->render(); ?>
                         <tr>
                             <td>
                                 <?php if ($isNewDoc) : ?>
-                                    <a href="<?= UriFactory::build('{/base}//wiki/dashboard'); ?>" class="button"><?= $this->getHtml('Delete', '0', '0'); ?></a>
+                                    <a href="<?= UriFactory::build('{/base}/wiki/dashboard'); ?>" class="button"><?= $this->getHtml('Delete', '0', '0'); ?></a>
                                 <?php else : ?>
                                     <input type="submit" name="deleteButton" id="iDeleteButton" value="<?= $this->getHtml('Delete', '0', '0'); ?>">
                                 <?php endif; ?>

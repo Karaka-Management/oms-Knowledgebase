@@ -18,7 +18,7 @@ use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
 return [
-    '^.*/wiki/doc.*$' => [
+    '^.*/wiki/doc(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiDocCreate',
             'verb'       => RouteVerb::PUT,
@@ -57,7 +57,7 @@ return [
         ],
     ],
 
-    '^.*/wiki/category.*$' => [
+    '^.*/wiki/category(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryCreate',
             'verb'       => RouteVerb::PUT,
@@ -96,7 +96,7 @@ return [
         ],
     ],
 
-    '^.*/wiki/app.*$' => [
+    '^.*/wiki/app(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiAppCreate',
             'verb'       => RouteVerb::PUT,

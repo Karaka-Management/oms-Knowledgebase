@@ -134,53 +134,15 @@ class WikiDocHistory implements \JsonSerializable
     }
 
     /**
-     * Get id.
-     *
-     * @return int Model id
-     *
-     * @since 1.0.0
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get language
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getLanguage() : string
-    {
-        return $this->language;
-    }
-
-    /**
-     * Set language
-     *
-     * @param string $language Language
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setLanguage(string $language) : void
-    {
-        $this->language = $language;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function toArray() : array
     {
         return [
-            'id'        => $this->id,
-            'name'      => $this->name,
-            'doc'       => $this->doc,
-            'docRaw'    => $this->docRaw,
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'doc'    => $this->doc,
+            'docRaw' => $this->docRaw,
         ];
     }
 

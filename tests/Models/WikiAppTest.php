@@ -67,8 +67,8 @@ final class WikiAppTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(
             [
-                'id'         => 0,
-                'name'       => 'Title',
+                'id'   => 0,
+                'name' => 'Title',
             ],
             $serialized
         );

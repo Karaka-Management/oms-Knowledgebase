@@ -18,7 +18,7 @@ use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
 return [
-    '^.*/wiki.*$' => [
+    '^.*/wiki(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:setUpBackend',
             'verb'       => RouteVerb::GET,
@@ -29,7 +29,7 @@ return [
             ],
         ],
     ],
-    '^.*/wiki/dashboard.*$' => [
+    '^.*/wiki/dashboard(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseDashboard',
             'verb'       => RouteVerb::GET,
@@ -41,7 +41,7 @@ return [
         ],
     ],
 
-    '^.*/wiki/category/list.*$' => [
+    '^.*/wiki/category/list(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseCategoryList',
             'verb'       => RouteVerb::GET,
@@ -52,7 +52,7 @@ return [
             ],
         ],
     ],
-    '^.*/wiki/category/single.*$' => [
+    '^.*/wiki/category/view(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseCategory',
             'verb'       => RouteVerb::GET,
@@ -63,7 +63,7 @@ return [
             ],
         ],
     ],
-    '^.*/wiki/category/create.*$' => [
+    '^.*/wiki/category/create(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseCategoryCreate',
             'verb'       => RouteVerb::GET,
@@ -75,7 +75,7 @@ return [
         ],
     ],
 
-    '^.*/wiki/doc/single.*$' => [
+    '^.*/wiki/doc/view(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseDoc',
             'verb'       => RouteVerb::GET,
@@ -86,7 +86,7 @@ return [
             ],
         ],
     ],
-    '^.*/wiki/doc/create.*$' => [
+    '^.*/wiki/doc/create(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseDocCreate',
             'verb'       => RouteVerb::GET,
@@ -97,7 +97,7 @@ return [
             ],
         ],
     ],
-    '^.*/wiki/doc/edit.*$' => [
+    '^.*/wiki/doc/edit(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseDocEdit',
             'verb'       => RouteVerb::GET,
@@ -108,7 +108,7 @@ return [
             ],
         ],
     ],
-    '^.*/wiki/doc/list.*$' => [
+    '^.*/wiki/doc/list(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseDocList',
             'verb'       => RouteVerb::GET,
@@ -120,7 +120,7 @@ return [
         ],
     ],
 
-    '^.*/wiki/app/list.*$' => [
+    '^.*/wiki/app/list(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseAppList',
             'verb'       => RouteVerb::GET,
@@ -131,7 +131,7 @@ return [
             ],
         ],
     ],
-    '^.*/wiki/app/single.*$' => [
+    '^.*/wiki/app/view(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseApp',
             'verb'       => RouteVerb::GET,
@@ -142,7 +142,7 @@ return [
             ],
         ],
     ],
-    '^.*/wiki/app/create.*$' => [
+    '^.*/wiki/app/create(\?.*$|$)' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\BackendController:viewKnowledgebaseAppCreate',
             'verb'       => RouteVerb::GET,

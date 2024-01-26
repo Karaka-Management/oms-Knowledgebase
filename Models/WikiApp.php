@@ -49,18 +49,6 @@ class WikiApp implements \JsonSerializable
     public string $name = '';
 
     /**
-     * Get id.
-     *
-     * @return int Model id
-     *
-     * @since 1.0.0
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function toArray() : array

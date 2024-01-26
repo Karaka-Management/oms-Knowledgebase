@@ -56,10 +56,10 @@ class WikiCategory implements \JsonSerializable
     /**
      * Parent category.
      *
-     * @var self
+     * @var null|self
      * @since 1.0.0
      */
-    public self $parent;
+    public ?self $parent = null;
 
     /**
      * Path for organizing.
@@ -76,21 +76,8 @@ class WikiCategory implements \JsonSerializable
      */
     public function __construct()
     {
-        $this->app    = new NullWikiApp();
-        $this->parent = new NullWikiCategory();
+        $this->app = new NullWikiApp();
         $this->setL11n('');
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int Model id
-     *
-     * @since 1.0.0
-     */
-    public function getId() : int
-    {
-        return $this->id;
     }
 
     /**
@@ -121,9 +108,9 @@ class WikiCategory implements \JsonSerializable
         } elseif ($this->name instanceof BaseStringL11n) {
             $this->name->content = $name;
         } else {
-            $this->name          = new BaseStringL11n();
-            $this->name->content = $name;
-            $this->name->setLanguage($lang);
+            $this->name           = new BaseStringL11n();
+            $this->name->content  = $name;
+            $this->name->language = $lang;
         }
     }
 

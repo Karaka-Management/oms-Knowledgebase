@@ -12,10 +12,8 @@
  */
 declare(strict_types=1);
 
-use phpOMS\Uri\UriFactory;
-
 /** @var \Modules\Knowledgebase\Models\WikiCategory */
-$category  = $this->data['category'];
+$category = $this->data['category'];
 
 /** @var \phpOMS\Views\View $this */
 echo $this->data['nav']->render(); ?>

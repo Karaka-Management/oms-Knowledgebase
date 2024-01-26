@@ -16,7 +16,6 @@ namespace Modules\Knowledgebase\Models;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
-use Modules\Media\Models\Media;
 use Modules\Tag\Models\Tag;
 use phpOMS\Localization\ISO639x1Enum;
 
@@ -113,14 +112,6 @@ class WikiDoc implements \JsonSerializable
     public array $tags = [];
 
     /**
-     * Media files
-     *
-     * @var array
-     * @since 1.0.0
-     */
-    public array $media = [];
-
-    /**
      * Is versioned
      *
      * @var bool
@@ -156,122 +147,6 @@ class WikiDoc implements \JsonSerializable
     }
 
     /**
-     * Get id.
-     *
-     * @return int Model id
-     *
-     * @since 1.0.0
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get language
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getLanguage() : string
-    {
-        return $this->language;
-    }
-
-    /**
-     * Set language
-     *
-     * @param string $language Language
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setLanguage(string $language) : void
-    {
-        $this->language = $language;
-    }
-
-    /**
-     * Get status
-     *
-     * @return int
-     *
-     * @since 1.0.0
-     */
-    public function getStatus() : int
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set status
-     *
-     * @param int $status Status
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setStatus(int $status) : void
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * Get tags
-     *
-     * @return array
-     *
-     * @since 1.0.0
-     */
-    public function getTags() : array
-    {
-        return $this->tags;
-    }
-
-    /**
-     * Add tag
-     *
-     * @param Tag $tag Tag
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function addTag(Tag $tag) : void
-    {
-        $this->tags[] = $tag;
-    }
-
-    /**
-     * Get all media
-     *
-     * @return Media[]
-     *
-     * @since 1.0.0
-     */
-    public function getMedia() : array
-    {
-        return $this->media;
-    }
-
-    /**
-     * Add media
-     *
-     * @param Media $media Media to add
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function addMedia(Media $media) : void
-    {
-        $this->media[] = $media;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function toArray() : array
@@ -285,7 +160,7 @@ class WikiDoc implements \JsonSerializable
             'docRaw'    => $this->docRaw,
             'language'  => $this->language,
             'tags'      => $this->tags,
-            'media'     => $this->media,
+            'media'     => $this->files,
             'createdAt' => $this->createdAt,
             'createdBy' => $this->createdBy,
         ];
@@ -298,4 +173,6 @@ class WikiDoc implements \JsonSerializable
     {
         return $this->toArray();
     }
+
+    use \Modules\Media\Models\MediaListTrait;
 }

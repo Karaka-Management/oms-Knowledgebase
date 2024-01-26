@@ -33,10 +33,8 @@ use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\NullMedia;
 use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
-use Modules\Tag\Models\NullTag;
 use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\ISO639x1Enum;
-use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
@@ -245,29 +243,11 @@ final class ApiController extends Controller
         $doc->category    = new NullWikiCategory($request->getDataInt('category') ?? 1);
         $doc->app         = new NullWikiApp($request->getDataInt('app') ?? 1);
         $doc->version     = $request->getDataString('version') ?? '';
-        $doc->setLanguage($request->getDataString('language') ?? $request->header->l11n->language);
-        $doc->setStatus($request->getDataInt('status') ?? WikiStatus::INACTIVE);
+        $doc->language    = ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language;
+        $doc->status      = WikiStatus::tryFromValue($request->getDataInt('status')) ?? WikiStatus::INACTIVE;
 
-        if (!empty($tags = $request->getDataJson('tags'))) {
-            foreach ($tags as $tag) {
-                if (!isset($tag['id'])) {
-                    $request->setData('title', $tag['title'], true);
-                    $request->setData('color', $tag['color'], true);
-                    $request->setData('icon', $tag['icon'] ?? null, true);
-                    $request->setData('language', $tag['language'], true);
-
-                    $internalResponse = new HttpResponse();
-                    $this->app->moduleManager->get('Tag')->apiWikiCategoryL11nCreate($request, $internalResponse);
-
-                    if (!\is_array($data = $internalResponse->getDataArray($request->uri->__toString()))) {
-                        continue;
-                    }
-
-                    $doc->addTag($data['response']);
-                } else {
-                    $doc->addTag(new NullTag((int) $tag['id']));
-                }
-            }
+        if ($request->hasData('tags')) {
+            $doc->tags = $this->app->moduleManager->get('Tag', 'Api')->createTagsFromRequest($request);
         }
 
         return $doc;
@@ -371,12 +351,10 @@ final class ApiController extends Controller
      */
     private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $l11nWikiCategory      = new BaseStringL11n();
-        $l11nWikiCategory->ref = $request->getDataInt('category') ?? 0;
-        $l11nWikiCategory->setLanguage(
-            $request->getDataString('language') ?? $request->header->l11n->language
-        );
-        $l11nWikiCategory->content = $request->getDataString('name') ?? '';
+        $l11nWikiCategory           = new BaseStringL11n();
+        $l11nWikiCategory->ref      = $request->getDataInt('category') ?? 0;
+        $l11nWikiCategory->language = ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language;
+        $l11nWikiCategory->content  = $request->getDataString('name') ?? '';
 
         return $l11nWikiCategory;
     }
@@ -517,7 +495,7 @@ final class ApiController extends Controller
         $category->app = new NullWikiApp($request->getDataInt('app') ?? 1);
         $category->setL11n(
             $request->getDataString('name') ?? '',
-            $request->getDataString('language') ?? $request->header->l11n->language
+            ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language
         );
 
         if ($request->hasData('parent')) {
@@ -607,7 +585,7 @@ final class ApiController extends Controller
     {
         $new->setL11n(
             $request->getDataString('name') ?? $new->getL11n(),
-            $request->getDataString('language') ?? $request->header->l11n->language
+            ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language
         );
 
         return $new;
@@ -824,10 +802,8 @@ final class ApiController extends Controller
      */
     public function updateCategoryL11nFromRequest(RequestAbstract $request, BaseStringL11n $new) : BaseStringL11n
     {
-        $new->setLanguage(
-            $request->getDataString('language') ?? $new->language
-        );
-        $new->content = $request->getDataString('title') ?? $new->content;
+        $new->language = ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $new->language;
+        $new->content  = $request->getDataString('title') ?? $new->content;
 
         return $new;
     }

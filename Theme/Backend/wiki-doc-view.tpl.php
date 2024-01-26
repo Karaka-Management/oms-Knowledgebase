@@ -24,9 +24,6 @@ $categories = $this->data['categories'] ?? [];
 /** @var \Modules\Knowledgebase\Models\WikiDoc $doc */
 $doc = $this->getData('document') ?? new NullWikiDoc();
 
-/** @var \Modules\Tag\Models\Tag[] $tag */
-$tags = $doc->getTags();
-
 /** @var bool $editable */
 $editable = $this->data['editable'];
 
@@ -41,15 +38,15 @@ echo $this->data['nav']->render();
             <div class="portlet-body">
                 <article><?= $doc->doc; ?></article>
 
-                <?php foreach ($tags as $tag) : ?>
+                <?php foreach ($doc->tags as $tag) : ?>
                     <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= empty($tag->icon) ? '' : ''; ?><?= $this->printHtml($tag->getL11n()); ?></span>
                 <?php endforeach; ?>
 
-                <?php $files = $doc->getMedia(); foreach ($files as $file) : ?>
-                        <span><a class="content" href="<?= UriFactory::build('{/base}/media/single?id=' . $file->id);?>"><?= $file->name; ?></a></span>
+                <?php $files = $doc->files; foreach ($files as $file) : ?>
+                        <span><a class="content" href="<?= UriFactory::build('{/base}/media/view?id=' . $file->id);?>"><?= $file->name; ?></a></span>
                 <?php endforeach; ?>
             </div>
-            <?php if ($editable || !empty($tags)) : ?>
+            <?php if ($editable || !empty($doc->tags)) : ?>
             <div class="portlet-foot">
                 <a tabindex="0" class="button" href="<?= \phpOMS\Uri\UriFactory::build('wiki/doc/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
             </div>

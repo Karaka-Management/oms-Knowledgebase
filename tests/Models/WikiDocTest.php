@@ -18,8 +18,6 @@ use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\WikiDoc;
 use Modules\Knowledgebase\Models\WikiStatus;
-use Modules\Media\Models\Media;
-use Modules\Tag\Models\NullTag;
 use phpOMS\Localization\ISO639x1Enum;
 
 /**
@@ -51,10 +49,10 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('', $this->doc->name);
         self::assertEquals('', $this->doc->doc);
         self::assertEquals('', $this->doc->docRaw);
-        self::assertEquals(WikiStatus::ACTIVE, $this->doc->getStatus());
+        self::assertEquals(WikiStatus::ACTIVE, $this->doc->status);
         self::assertNull($this->doc->category);
-        self::assertEquals('en', $this->doc->getLanguage());
-        self::assertEquals([], $this->doc->getTags());
+        self::assertEquals('en', $this->doc->language);
+        self::assertEquals([], $this->doc->tags);
     }
 
     /**
@@ -102,17 +100,6 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @testdox The status can be correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
-    public function testStatusInputOutput() : void
-    {
-        $this->doc->setStatus(WikiStatus::DRAFT);
-        self::assertEquals(WikiStatus::DRAFT, $this->doc->getStatus());
-    }
-
-    /**
      * @testdox The category can be correctly set and returned
      * @covers Modules\Knowledgebase\Models\WikiDoc
      * @group module
@@ -124,46 +111,14 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @testdox The language can be correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
-    public function testLanguageInputOutput() : void
-    {
-        $this->doc->setLanguage('de');
-        self::assertEquals('de', $this->doc->getLanguage());
-    }
-
-    /**
-     * @testdox A tag can be correctly added and returned
-     * @covers Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
-    public function testTagInputOutput() : void
-    {
-        $this->doc->addTag(new NullTag(5));
-        self::assertEquals([new NullTag(5)], $this->doc->getTags());
-    }
-
-    /**
-     * @covers Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
-    public function testMediaInputOutput() : void
-    {
-        $this->doc->addMedia(new Media());
-        self::assertCount(1, $this->doc->getMedia());
-    }
-
-    /**
      * @covers Modules\Knowledgebase\Models\WikiDoc
      * @group module
      */
     public function testSerialize() : void
     {
-        $this->doc->app  = new NullWikiApp(1);
-        $this->doc->name = '/test/path';
-        $this->doc->setStatus(WikiStatus::DRAFT);
+        $this->doc->app    = new NullWikiApp(1);
+        $this->doc->name   = '/test/path';
+        $this->doc->status = WikiStatus::DRAFT;
         $this->doc->doc    = 'TestDoc';
         $this->doc->docRaw = 'TestDocRaw';
 
@@ -171,17 +126,17 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(
             [
-                'id'         => 0,
-                'app'        => $this->doc->app,
-                'name'       => '/test/path',
-                'status'     => WikiStatus::DRAFT,
-                'doc'        => 'TestDoc',
-                'docRaw'     => 'TestDocRaw',
-                'language'   => ISO639x1Enum::_EN,
-                'tags'       => [],
-                'media'      => [],
-                'createdAt'  => $this->doc->createdAt,
-                'createdBy'  => $this->doc->createdBy,
+                'id'        => 0,
+                'app'       => $this->doc->app,
+                'name'      => '/test/path',
+                'status'    => WikiStatus::DRAFT,
+                'doc'       => 'TestDoc',
+                'docRaw'    => 'TestDocRaw',
+                'language'  => ISO639x1Enum::_EN,
+                'tags'      => [],
+                'media'     => [],
+                'createdAt' => $this->doc->createdAt,
+                'createdBy' => $this->doc->createdBy,
             ],
             $serialized
         );

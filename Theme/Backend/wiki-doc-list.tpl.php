@@ -13,11 +13,13 @@
 declare(strict_types=1);
 
 use \phpOMS\Uri\UriFactory;
-use phpOMS\Utils\Parser\Markdown\Markdown;
 
 /** @var \phpOMS\Views\View $this */
 /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
 $categories = $this->data['categories'] ?? [];
+
+/** @var \Modules\Knowledgebase\Models\WikiCategory $category */
+$category = $this->data['category'] ?? [];
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
 $documents = $this->data['docs'] ?? [];
@@ -42,7 +44,7 @@ echo $this->data['nav']->render(); ?>
                             <td class="wf-100"><?= $this->getHtml('Name'); ?>
                         <tbody>
                         <?php foreach ($documents as $key => $value) :
-                                $url = UriFactory::build('{/base}/wiki/doc/single?id=' . $value->id); ?>
+                                $url = UriFactory::build('{/base}/wiki/doc/view?id=' . $value->id); ?>
                         <tr tabindex="0" data-href="<?= $url; ?>">
                             <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->name); ?></a>
                         <?php endforeach; ?>
@@ -74,6 +76,7 @@ echo $this->data['nav']->render(); ?>
             <div class="portlet-head"><?= $this->getHtml('Categories'); ?></div>
             <div class="portlet-body">
                 <ul>
+                    <li><a href="<?= UriFactory::build('{/base}/wiki/doc/list?{?}&category=' . $category->parent?->id); ?>"><?= $this->printHtml('..'); ?></a>
                     <?php foreach ($categories as $category) : ?>
                         <li><a href="<?= UriFactory::build('{/base}/wiki/doc/list?{?}&category=' . $category->id); ?>"><?= $this->printHtml($category->getL11n()); ?></a>
                     <?php endforeach; ?>

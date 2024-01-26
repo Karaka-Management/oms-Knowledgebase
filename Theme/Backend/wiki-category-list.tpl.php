@@ -44,7 +44,7 @@ echo $this->data['nav']->render();
                     <td><?= $this->getHtml('Parent'); ?>
                 <tbody>
                 <?php foreach ($categories as $key => $value) :
-                        $url = UriFactory::build('{/base}/wiki/category/single?id=' . $value->id); ?>
+                        $url = UriFactory::build('{/base}/wiki/category/view?id=' . $value->id); ?>
                 <tr tabindex="0" data-href="<?= $url; ?>">
                     <td data-label="<?= $this->getHtml('ID', '0', '0'); ?>"><a href="<?= $url; ?>"><?= $value->id; ?></a>
                     <td data-label="<?= $this->getHtml('App'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($this->data['apps'][$value->app->id]->name); ?></a>

@@ -39,18 +39,18 @@ final class WikiDocMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const COLUMNS = [
-        'wiki_article_id'             => ['name' => 'wiki_article_id',       'type' => 'int',    'internal' => 'id'],
-        'wiki_article_version'        => ['name' => 'wiki_article_version',    'type' => 'string', 'internal' => 'version'],
-        'wiki_article_app'            => ['name' => 'wiki_article_app',      'type' => 'int',    'internal' => 'app'],
-        'wiki_article_title'          => ['name' => 'wiki_article_title',    'type' => 'string', 'internal' => 'name'],
-        'wiki_article_language'       => ['name' => 'wiki_article_language', 'type' => 'string', 'internal' => 'language'],
-        'wiki_article_doc'            => ['name' => 'wiki_article_doc',      'type' => 'string', 'internal' => 'doc'],
-        'wiki_article_docraw'         => ['name' => 'wiki_article_docraw',      'type' => 'string', 'internal' => 'docRaw'],
-        'wiki_article_versioned'      => ['name' => 'wiki_article_versioned',      'type' => 'bool', 'internal' => 'isVersioned'],
-        'wiki_article_status'         => ['name' => 'wiki_article_status',   'type' => 'int',    'internal' => 'status'],
-        'wiki_article_category'       => ['name' => 'wiki_article_category', 'type' => 'int',    'internal' => 'category'],
-        'wiki_article_created_at'     => ['name' => 'wiki_article_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt'],
-        'wiki_article_created_by'     => ['name' => 'wiki_article_created_by', 'type' => 'int',               'internal' => 'createdBy'],
+        'wiki_article_id'         => ['name' => 'wiki_article_id',       'type' => 'int',    'internal' => 'id'],
+        'wiki_article_version'    => ['name' => 'wiki_article_version',    'type' => 'string', 'internal' => 'version'],
+        'wiki_article_app'        => ['name' => 'wiki_article_app',      'type' => 'int',    'internal' => 'app'],
+        'wiki_article_title'      => ['name' => 'wiki_article_title',    'type' => 'string', 'internal' => 'name'],
+        'wiki_article_language'   => ['name' => 'wiki_article_language', 'type' => 'string', 'internal' => 'language'],
+        'wiki_article_doc'        => ['name' => 'wiki_article_doc',      'type' => 'string', 'internal' => 'doc'],
+        'wiki_article_docraw'     => ['name' => 'wiki_article_docraw',      'type' => 'string', 'internal' => 'docRaw'],
+        'wiki_article_versioned'  => ['name' => 'wiki_article_versioned',      'type' => 'bool', 'internal' => 'isVersioned'],
+        'wiki_article_status'     => ['name' => 'wiki_article_status',   'type' => 'int',    'internal' => 'status'],
+        'wiki_article_category'   => ['name' => 'wiki_article_category', 'type' => 'int',    'internal' => 'category'],
+        'wiki_article_created_at' => ['name' => 'wiki_article_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt'],
+        'wiki_article_created_by' => ['name' => 'wiki_article_created_by', 'type' => 'int',               'internal' => 'createdBy'],
     ];
 
     /**
@@ -66,7 +66,7 @@ final class WikiDocMapper extends DataMapperFactory
             'self'     => 'wiki_tag_dst',
             'external' => 'wiki_tag_src',
         ],
-        'media'        => [
+        'files' => [
             'mapper'   => MediaMapper::class,
             'table'    => 'wiki_article_media',
             'external' => 'wiki_article_media_dst',
@@ -82,12 +82,12 @@ final class WikiDocMapper extends DataMapperFactory
      */
     public const BELONGS_TO = [
         'category' => [
-            'mapper'     => WikiCategoryMapper::class,
-            'external'   => 'wiki_article_category',
+            'mapper'   => WikiCategoryMapper::class,
+            'external' => 'wiki_article_category',
         ],
         'app' => [
-            'mapper'     => WikiAppMapper::class,
-            'external'   => 'wiki_article_app',
+            'mapper'   => WikiAppMapper::class,
+            'external' => 'wiki_article_app',
         ],
         'createdBy' => [
             'mapper'   => AccountMapper::class,
