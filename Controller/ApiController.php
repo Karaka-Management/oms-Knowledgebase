@@ -123,7 +123,7 @@ final class ApiController extends Controller
                     $doc->id,
                     $media->id,
                     WikiDocMapper::class,
-                    'media',
+                    'files',
                     '',
                     $request->getOrigin()
                 );
@@ -171,7 +171,7 @@ final class ApiController extends Controller
                     $doc->id,
                     $media->id,
                     WikiDocMapper::class,
-                    'media',
+                    'files',
                     '',
                     $request->getOrigin()
                 );
