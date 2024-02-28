@@ -42,7 +42,7 @@ echo $this->data['nav']->render(); ?>
                         <?php endforeach; ?>
                     </div>
                     <div class="portlet-foot">
-                        <a href="<?= $url; ?>" class="button floatRight"><?= $this->getHtml('More', '0', '0'); ?></a>
+                        <a href="<?= $url; ?>" class="button rf"><?= $this->getHtml('More', '0', '0'); ?></a>
                     </div>
                 </div>
             </div>

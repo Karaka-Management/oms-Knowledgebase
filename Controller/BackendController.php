@@ -57,7 +57,7 @@ final class BackendController extends Controller
     public function setUpBackend(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         $head = $response->data['Content']->head;
-        $head->addAsset(AssetType::CSS, '/Modules/Knowledgebase/Theme/Backend/styles.css?v=1.0.0');
+        $head->addAsset(AssetType::CSS, '/Modules/Knowledgebase/Theme/Backend/styles.css?v=' . self::VERSION);
     }
 
     /**
