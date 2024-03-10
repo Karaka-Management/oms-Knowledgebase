@@ -38,7 +38,10 @@ echo $this->data['nav']->render(); ?>
                             <?= Markdown::parse(\substr($doc->docRaw, 0, 500)); ?>
                         </article>
                         <?php foreach ($doc->tags as $tag) : ?>
-                            <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= empty($tag->icon) ? '' : ''; ?><?= $this->printHtml($tag->getL11n()); ?></span>
+                            <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>">
+                                <?= empty($tag->icon) ? '' : '<i class="g-icon">' . $this->printHtml($tag->icon) . '</i>'; ?>
+                                <?= $this->printHtml($tag->getL11n()); ?>
+                            </span>
                         <?php endforeach; ?>
                     </div>
                     <div class="portlet-foot">
