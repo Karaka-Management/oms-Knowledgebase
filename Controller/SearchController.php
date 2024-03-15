@@ -65,10 +65,10 @@ final class SearchController extends Controller
                 'link'      => '{/base}/wiki/doc/view?id=' . $doc->id,
                 'account'   => '',
                 'createdAt' => $doc->createdAt,
-                'image' => '',
-                'tags'  => $doc->tags,
-                'type'  => 'list_links',
-                'module'  => 'Knowledgebase',
+                'image'     => '',
+                'tags'      => $doc->tags,
+                'type'      => 'list_links',
+                'module'    => 'Knowledgebase',
             ];
         }
 
