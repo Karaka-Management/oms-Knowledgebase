@@ -34,10 +34,10 @@ use phpOMS\System\MimeType;
 use phpOMS\Utils\TestUtils;
 
 /**
- * @testdox Modules\Knowledgebase\tests\Controller\ApiControllerTest: Knowledgebase api controller
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Controller\ApiController::class)]
+#[\PHPUnit\Framework\Attributes\TestDox('Modules\Knowledgebase\tests\Controller\ApiControllerTest: Knowledgebase api controller')]
 final class ApiControllerTest extends \PHPUnit\Framework\TestCase
 {
     protected ApplicationAbstract $app;
@@ -92,10 +92,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         TestUtils::setMember($this->module, 'app', $this->app);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiAppCRU() : void
     {
         // create
@@ -130,10 +127,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('New title', $response->getDataArray('')['response']->name);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiWikiAppCreateInvalidData() : void
     {
         $response = new HttpResponse();
@@ -146,10 +140,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testWikiCategoryCRU() : void
     {
         // create
@@ -185,10 +176,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('New title', $response->getDataArray('')['response']->getL11n());
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiWikiCategoryCreateInvalidData() : void
     {
         $response = new HttpResponse();
@@ -201,10 +189,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testWikiCategoryL11nCRU() : void
     {
         $response = new HttpResponse();
@@ -218,10 +203,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiWikiCategoryL11nCreateInvalidData() : void
     {
         $response = new HttpResponse();
@@ -234,10 +216,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testWikiDocCRU() : void
     {
         // create
@@ -290,10 +269,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('New title', $response->getDataArray('')['response']->name);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiWikiDocCreateInvalidData() : void
     {
         $response = new HttpResponse();

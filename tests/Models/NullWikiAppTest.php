@@ -19,31 +19,23 @@ use Modules\Knowledgebase\Models\NullWikiApp;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Models\NullWikiApp::class)]
 final class NullWikiAppTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiApp
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testNull() : void
     {
         self::assertInstanceOf('\Modules\Knowledgebase\Models\WikiApp', new NullWikiApp());
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiApp
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testId() : void
     {
         $null = new NullWikiApp(2);
         self::assertEquals(2, $null->id);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiApp
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testJsonSerialize() : void
     {
         $null = new NullWikiApp(2);

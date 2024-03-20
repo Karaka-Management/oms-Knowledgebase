@@ -17,10 +17,10 @@ namespace Modules\Knowledgebase\tests\Models;
 use Modules\Knowledgebase\Models\WikiApp;
 
 /**
- * @testdox Modules\tests\Knowledgebase\Models\WikiAppTest: Wiki application
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Models\WikiApp::class)]
+#[\PHPUnit\Framework\Attributes\TestDox('Modules\tests\Knowledgebase\Models\WikiAppTest: Wiki application')]
 final class WikiAppTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiApp $app;
@@ -33,32 +33,23 @@ final class WikiAppTest extends \PHPUnit\Framework\TestCase
         $this->app = new WikiApp();
     }
 
-    /**
-     * @testdox The model has the expected default values after initialization
-     * @covers \Modules\Knowledgebase\Models\WikiApp
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The model has the expected default values after initialization')]
     public function testDefault() : void
     {
         self::assertEquals(0, $this->app->id);
         self::assertEquals('', $this->app->name);
     }
 
-    /**
-     * @testdox The name can be correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiApp
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The name can be correctly set and returned')]
     public function testNameInputOutput() : void
     {
         $this->app->name = 'Test name';
         self::assertEquals('Test name', $this->app->name);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\WikiApp
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testSerialize() : void
     {
         $this->app->name = 'Title';

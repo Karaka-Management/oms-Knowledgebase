@@ -20,10 +20,10 @@ use Modules\Knowledgebase\Models\WikiCategory;
 use phpOMS\Localization\BaseStringL11n;
 
 /**
- * @testdox Modules\tests\Knowledgebase\Models\WikiCateboryTest: Wiki category
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Models\WikiCategory::class)]
+#[\PHPUnit\Framework\Attributes\TestDox('Modules\tests\Knowledgebase\Models\WikiCateboryTest: Wiki category')]
 final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiCategory $category;
@@ -36,11 +36,8 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
         $this->category = new WikiCategory();
     }
 
-    /**
-     * @testdox The model has the expected default values after initialization
-     * @covers \Modules\Knowledgebase\Models\WikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The model has the expected default values after initialization')]
     public function testDefault() : void
     {
         self::assertEquals(0, $this->category->id);
@@ -50,22 +47,16 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(0, $this->category->parent->id);
     }
 
-    /**
-     * @testdox The application can correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The application can correctly set and returned')]
     public function testAppInputOutput() : void
     {
         $this->category->app = new NullWikiApp(2);
         self::assertEquals(2, $this->category->app->id);
     }
 
-    /**
-     * @testdox The name can correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The name can correctly set and returned')]
     public function testNameInputOutput() : void
     {
         $this->category->setL11n('Test');
@@ -75,32 +66,23 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('NewTest', $this->category->getL11n());
     }
 
-    /**
-     * @testdox The path can correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The path can correctly set and returned')]
     public function testPathInputOutput() : void
     {
         $this->category->virtualPath = '/test/path';
         self::assertEquals('/test/path', $this->category->virtualPath);
     }
 
-    /**
-     * @testdox The parent can correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The parent can correctly set and returned')]
     public function testParentInputOutput() : void
     {
         $this->category->parent = new NullWikiCategory(2);
         self::assertEquals(2, $this->category->parent->id);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\WikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testSerialize() : void
     {
         $this->category->app         = new NullWikiApp(1);

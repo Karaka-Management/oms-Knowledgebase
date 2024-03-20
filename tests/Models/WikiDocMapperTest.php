@@ -22,17 +22,14 @@ use Modules\Knowledgebase\Models\WikiStatus;
 use phpOMS\DataStorage\Database\Query\OrderType;
 
 /**
- * @testdox Modules\tests\Knowledgebase\Models\WikiDocMapperTest: Wiki document mapper
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Models\WikiDocMapper::class)]
+#[\PHPUnit\Framework\Attributes\TestDox('Modules\tests\Knowledgebase\Models\WikiDocMapperTest: Wiki document mapper')]
 final class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @testdox The model can be created and read from the database
-     * @covers \Modules\Knowledgebase\Models\WikiDocMapper
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The model can be created and read from the database')]
     public function testCR() : void
     {
         $doc = new WikiDoc();

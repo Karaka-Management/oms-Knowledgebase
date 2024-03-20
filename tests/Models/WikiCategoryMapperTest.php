@@ -21,10 +21,10 @@ use Modules\Knowledgebase\Models\WikiCategoryMapper;
 use phpOMS\Localization\ISO639x1Enum;
 
 /**
- * @testdox Modules\tests\Knowledgebase\Models\WikiCategoryMapperTest: Wiki category mapper
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Models\WikiCategoryMapper::class)]
+#[\PHPUnit\Framework\Attributes\TestDox('Modules\tests\Knowledgebase\Models\WikiCategoryMapperTest: Wiki category mapper')]
 final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiCategory $category;
@@ -37,11 +37,8 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
         $this->category = new WikiCategory();
     }
 
-    /**
-     * @testdox The model can be created and read from the database
-     * @covers \Modules\Knowledgebase\Models\WikiCategoryMapper
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The model can be created and read from the database')]
     public function testCR() : void
     {
         $this->category->setL11n('Test Category');
@@ -56,11 +53,8 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
         self::assertGreaterThan(0, \count(WikiCategoryMapper::getAll()->where('app', 1)->execute()));
     }
 
-    /**
-     * @testdox The model can be created and read from the database with a parent category
-     * @covers \Modules\Knowledgebase\Models\WikiCategoryMapper
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The model can be created and read from the database with a parent category')]
     public function testChildCR() : void
     {
         $this->category->app = new NullWikiApp(1);

@@ -19,31 +19,23 @@ use Modules\Knowledgebase\Models\NullWikiCategory;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Models\NullWikiCategory::class)]
 final class NullWikiCategoryTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testNull() : void
     {
         self::assertInstanceOf('\Modules\Knowledgebase\Models\WikiCategory', new NullWikiCategory());
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testId() : void
     {
         $null = new NullWikiCategory(2);
         self::assertEquals(2, $null->id);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiCategory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testJsonSerialize() : void
     {
         $null = new NullWikiCategory(2);

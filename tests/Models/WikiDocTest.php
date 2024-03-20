@@ -21,10 +21,10 @@ use Modules\Knowledgebase\Models\WikiStatus;
 use phpOMS\Localization\ISO639x1Enum;
 
 /**
- * @testdox Modules\tests\Knowledgebase\Models\WikiDocTest: Wiki document
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Models\WikiDoc::class)]
+#[\PHPUnit\Framework\Attributes\TestDox('Modules\tests\Knowledgebase\Models\WikiDocTest: Wiki document')]
 final class WikiDocTest extends \PHPUnit\Framework\TestCase
 {
     protected WikiDoc $doc;
@@ -37,11 +37,8 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
         $this->doc = new WikiDoc();
     }
 
-    /**
-     * @testdox The model has the expected default values after initialization
-     * @covers \Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The model has the expected default values after initialization')]
     public function testDefault() : void
     {
         self::assertEquals(0, $this->doc->id);
@@ -55,65 +52,47 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
         self::assertEquals([], $this->doc->tags);
     }
 
-    /**
-     * @testdox The application can be correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The application can be correctly set and returned')]
     public function tesAppInputOutput() : void
     {
         $this->doc->app = new NullWikiApp(2);
         self::assertEquals(2, $this->doc->app->id);
     }
 
-    /**
-     * @testdox The name can be correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The name can be correctly set and returned')]
     public function testNameInputOutput() : void
     {
         $this->doc->name = 'Test name';
         self::assertEquals('Test name', $this->doc->name);
     }
 
-    /**
-     * @testdox The content can be correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The content can be correctly set and returned')]
     public function testDocInputOutput() : void
     {
         $this->doc->doc = 'Test content';
         self::assertEquals('Test content', $this->doc->doc);
     }
 
-    /**
-     * @testdox The raw content can be correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The raw content can be correctly set and returned')]
     public function testDocRawInputOutput() : void
     {
         $this->doc->docRaw = 'Test content';
         self::assertEquals('Test content', $this->doc->docRaw);
     }
 
-    /**
-     * @testdox The category can be correctly set and returned
-     * @covers \Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
+    #[\PHPUnit\Framework\Attributes\TestDox('The category can be correctly set and returned')]
     public function testCategoryInputOutput() : void
     {
         $this->doc->category = new NullWikiCategory(3);
         self::assertEquals(3, $this->doc->category->id);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\WikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testSerialize() : void
     {
         $this->doc->app    = new NullWikiApp(1);

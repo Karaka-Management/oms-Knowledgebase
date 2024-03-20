@@ -19,31 +19,23 @@ use Modules\Knowledgebase\Models\NullWikiDoc;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Knowledgebase\Models\NullWikiDoc::class)]
 final class NullWikiDocTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testNull() : void
     {
         self::assertInstanceOf('\Modules\Knowledgebase\Models\WikiDoc', new NullWikiDoc());
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testId() : void
     {
         $null = new NullWikiDoc(2);
         self::assertEquals(2, $null->id);
     }
 
-    /**
-     * @covers \Modules\Knowledgebase\Models\NullWikiDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testJsonSerialize() : void
     {
         $null = new NullWikiDoc(2);
