@@ -35,7 +35,7 @@ final class WikiAppTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The model has the expected default values after initialization
-     * @covers Modules\Knowledgebase\Models\WikiApp
+     * @covers \Modules\Knowledgebase\Models\WikiApp
      * @group module
      */
     public function testDefault() : void
@@ -46,7 +46,7 @@ final class WikiAppTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The name can be correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiApp
+     * @covers \Modules\Knowledgebase\Models\WikiApp
      * @group module
      */
     public function testNameInputOutput() : void
@@ -56,7 +56,7 @@ final class WikiAppTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Models\WikiApp
+     * @covers \Modules\Knowledgebase\Models\WikiApp
      * @group module
      */
     public function testSerialize() : void

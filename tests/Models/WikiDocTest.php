@@ -39,7 +39,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The model has the expected default values after initialization
-     * @covers Modules\Knowledgebase\Models\WikiDoc
+     * @covers \Modules\Knowledgebase\Models\WikiDoc
      * @group module
      */
     public function testDefault() : void
@@ -57,7 +57,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The application can be correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiDoc
+     * @covers \Modules\Knowledgebase\Models\WikiDoc
      * @group module
      */
     public function tesAppInputOutput() : void
@@ -68,7 +68,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The name can be correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiDoc
+     * @covers \Modules\Knowledgebase\Models\WikiDoc
      * @group module
      */
     public function testNameInputOutput() : void
@@ -79,7 +79,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The content can be correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiDoc
+     * @covers \Modules\Knowledgebase\Models\WikiDoc
      * @group module
      */
     public function testDocInputOutput() : void
@@ -90,7 +90,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The raw content can be correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiDoc
+     * @covers \Modules\Knowledgebase\Models\WikiDoc
      * @group module
      */
     public function testDocRawInputOutput() : void
@@ -101,7 +101,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The category can be correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiDoc
+     * @covers \Modules\Knowledgebase\Models\WikiDoc
      * @group module
      */
     public function testCategoryInputOutput() : void
@@ -111,7 +111,7 @@ final class WikiDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Models\WikiDoc
+     * @covers \Modules\Knowledgebase\Models\WikiDoc
      * @group module
      */
     public function testSerialize() : void

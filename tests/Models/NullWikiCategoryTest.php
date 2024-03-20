@@ -22,7 +22,7 @@ use Modules\Knowledgebase\Models\NullWikiCategory;
 final class NullWikiCategoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers Modules\Knowledgebase\Models\NullWikiCategory
+     * @covers \Modules\Knowledgebase\Models\NullWikiCategory
      * @group module
      */
     public function testNull() : void
@@ -31,7 +31,7 @@ final class NullWikiCategoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Models\NullWikiCategory
+     * @covers \Modules\Knowledgebase\Models\NullWikiCategory
      * @group module
      */
     public function testId() : void
@@ -41,7 +41,7 @@ final class NullWikiCategoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Models\NullWikiCategory
+     * @covers \Modules\Knowledgebase\Models\NullWikiCategory
      * @group module
      */
     public function testJsonSerialize() : void

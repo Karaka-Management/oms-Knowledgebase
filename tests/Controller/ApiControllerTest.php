@@ -93,7 +93,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Controller\ApiController
+     * @covers \Modules\Knowledgebase\Controller\ApiController
      * @group module
      */
     public function testApiAppCRU() : void
@@ -131,7 +131,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Controller\ApiController
+     * @covers \Modules\Knowledgebase\Controller\ApiController
      * @group module
      */
     public function testApiWikiAppCreateInvalidData() : void
@@ -147,7 +147,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Controller\ApiController
+     * @covers \Modules\Knowledgebase\Controller\ApiController
      * @group module
      */
     public function testWikiCategoryCRU() : void
@@ -186,7 +186,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Controller\ApiController
+     * @covers \Modules\Knowledgebase\Controller\ApiController
      * @group module
      */
     public function testApiWikiCategoryCreateInvalidData() : void
@@ -202,7 +202,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Controller\ApiController
+     * @covers \Modules\Knowledgebase\Controller\ApiController
      * @group module
      */
     public function testWikiCategoryL11nCRU() : void
@@ -219,7 +219,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Controller\ApiController
+     * @covers \Modules\Knowledgebase\Controller\ApiController
      * @group module
      */
     public function testApiWikiCategoryL11nCreateInvalidData() : void
@@ -235,7 +235,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Controller\ApiController
+     * @covers \Modules\Knowledgebase\Controller\ApiController
      * @group module
      */
     public function testWikiDocCRU() : void
@@ -291,7 +291,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Controller\ApiController
+     * @covers \Modules\Knowledgebase\Controller\ApiController
      * @group module
      */
     public function testApiWikiDocCreateInvalidData() : void

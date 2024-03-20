@@ -30,7 +30,7 @@ final class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @testdox The model can be created and read from the database
-     * @covers Modules\Knowledgebase\Models\WikiDocMapper
+     * @covers \Modules\Knowledgebase\Models\WikiDocMapper
      * @group module
      */
     public function testCR() : void

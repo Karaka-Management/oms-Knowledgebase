@@ -38,7 +38,7 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The model has the expected default values after initialization
-     * @covers Modules\Knowledgebase\Models\WikiCategory
+     * @covers \Modules\Knowledgebase\Models\WikiCategory
      * @group module
      */
     public function testDefault() : void
@@ -52,7 +52,7 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The application can correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiCategory
+     * @covers \Modules\Knowledgebase\Models\WikiCategory
      * @group module
      */
     public function testAppInputOutput() : void
@@ -63,7 +63,7 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The name can correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiCategory
+     * @covers \Modules\Knowledgebase\Models\WikiCategory
      * @group module
      */
     public function testNameInputOutput() : void
@@ -77,7 +77,7 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The path can correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiCategory
+     * @covers \Modules\Knowledgebase\Models\WikiCategory
      * @group module
      */
     public function testPathInputOutput() : void
@@ -88,7 +88,7 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The parent can correctly set and returned
-     * @covers Modules\Knowledgebase\Models\WikiCategory
+     * @covers \Modules\Knowledgebase\Models\WikiCategory
      * @group module
      */
     public function testParentInputOutput() : void
@@ -98,7 +98,7 @@ final class WikiCategoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Models\WikiCategory
+     * @covers \Modules\Knowledgebase\Models\WikiCategory
      * @group module
      */
     public function testSerialize() : void

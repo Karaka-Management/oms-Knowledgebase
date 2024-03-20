@@ -26,7 +26,7 @@ final class WikiAppMapperTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @testdox The model can be created and read from the database
-     * @covers Modules\Knowledgebase\Models\WikiAppMapper
+     * @covers \Modules\Knowledgebase\Models\WikiAppMapper
      * @group module
      */
     public function testCR() : void

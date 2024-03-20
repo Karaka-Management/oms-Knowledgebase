@@ -39,7 +39,7 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The model can be created and read from the database
-     * @covers Modules\Knowledgebase\Models\WikiCategoryMapper
+     * @covers \Modules\Knowledgebase\Models\WikiCategoryMapper
      * @group module
      */
     public function testCR() : void
@@ -58,7 +58,7 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @testdox The model can be created and read from the database with a parent category
-     * @covers Modules\Knowledgebase\Models\WikiCategoryMapper
+     * @covers \Modules\Knowledgebase\Models\WikiCategoryMapper
      * @group module
      */
     public function testChildCR() : void

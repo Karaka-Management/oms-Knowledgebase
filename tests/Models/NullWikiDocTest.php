@@ -22,7 +22,7 @@ use Modules\Knowledgebase\Models\NullWikiDoc;
 final class NullWikiDocTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers Modules\Knowledgebase\Models\NullWikiDoc
+     * @covers \Modules\Knowledgebase\Models\NullWikiDoc
      * @group module
      */
     public function testNull() : void
@@ -31,7 +31,7 @@ final class NullWikiDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Models\NullWikiDoc
+     * @covers \Modules\Knowledgebase\Models\NullWikiDoc
      * @group module
      */
     public function testId() : void
@@ -41,7 +41,7 @@ final class NullWikiDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Knowledgebase\Models\NullWikiDoc
+     * @covers \Modules\Knowledgebase\Models\NullWikiDoc
      * @group module
      */
     public function testJsonSerialize() : void
