@@ -86,8 +86,7 @@
                 "from": "Knowledgebase",
                 "permission": { "permission": 4, "category": null, "element": null },
                 "parent": 1005901001,
-                "children": [],
-                "status": 3
+                "children": []
             }
         ]
     }

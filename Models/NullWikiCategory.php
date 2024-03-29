@@ -34,6 +34,7 @@ final class NullWikiCategory extends WikiCategory
     public function __construct(int $id = 0)
     {
         $this->id = $id;
+        parent::__construct();
     }
 
     /**

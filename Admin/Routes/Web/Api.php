@@ -22,6 +22,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiDocCreate',
             'verb'       => RouteVerb::PUT,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -31,6 +32,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiDocUpdate',
             'verb'       => RouteVerb::SET,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::MODIFY,
@@ -40,6 +42,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiDocGet',
             'verb'       => RouteVerb::GET,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -49,6 +52,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiDocDelete',
             'verb'       => RouteVerb::DELETE,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
@@ -61,6 +65,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryCreate',
             'verb'       => RouteVerb::PUT,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -70,6 +75,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryUpdate',
             'verb'       => RouteVerb::SET,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::MODIFY,
@@ -79,6 +85,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryGet',
             'verb'       => RouteVerb::GET,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -88,6 +95,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryDelete',
             'verb'       => RouteVerb::DELETE,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
@@ -100,6 +108,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiAppCreate',
             'verb'       => RouteVerb::PUT,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -109,6 +118,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiAppUpdate',
             'verb'       => RouteVerb::SET,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::MODIFY,
@@ -118,6 +128,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiAppGet',
             'verb'       => RouteVerb::GET,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -127,6 +138,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiAppDelete',
             'verb'       => RouteVerb::DELETE,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
@@ -139,6 +151,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryL11nCreate',
             'verb'       => RouteVerb::PUT,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -148,6 +161,7 @@ return [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryL11nUpdate',
             'verb'       => RouteVerb::SET,
+            'csrf'       => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,

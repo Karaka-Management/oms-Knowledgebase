@@ -18,6 +18,7 @@ use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\NullWikiDoc;
 use Modules\Knowledgebase\Models\PermissionCategory;
+use Modules\Knowledgebase\Models\WikiApp;
 use Modules\Knowledgebase\Models\WikiAppMapper;
 use Modules\Knowledgebase\Models\WikiCategoryL11nMapper;
 use Modules\Knowledgebase\Models\WikiCategoryMapper;
@@ -260,6 +261,19 @@ final class BackendController extends Controller
 
         $view->data['l11nValues'] = $l11nValues;
 
+        $view->data['apps'] = WikiAppMapper::getAll()
+            ->where('unit', [$this->app->unitId, null])
+            ->executeGetArray();
+
+        $appIds = \array_map(function (WikiApp $app) { return $app->id; }, $view->data['apps']);
+        $appIds = \array_unique($appIds);
+
+        $view->data['parents'] = WikiCategoryMapper::getAll()
+            ->with('name')
+            ->where('app', $appIds)
+            ->where('name/language', $request->header->l11n->language)
+            ->executeGetArray();
+
         return $view;
     }
 
@@ -278,10 +292,23 @@ final class BackendController extends Controller
     public function viewKnowledgebaseCategoryCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
-        $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-create');
+        $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-view');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         $view->data['category'] = new NullWikiCategory();
+
+        $view->data['apps'] = WikiAppMapper::getAll()
+            ->where('unit', [$this->app->unitId, null])
+            ->executeGetArray();
+
+        $appIds = \array_map(function (WikiApp $app) { return $app->id; }, $view->data['apps']);
+        $appIds = \array_unique($appIds);
+
+        $view->data['parents'] = WikiCategoryMapper::getAll()
+            ->with('name')
+            ->where('app', $appIds)
+            ->where('name/language', $request->header->l11n->language)
+            ->executeGetArray();
 
         return $view;
     }

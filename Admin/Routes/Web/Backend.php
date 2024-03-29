@@ -127,7 +127,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionCategory::CATEGORY,
+                'state'  => PermissionCategory::APP,
             ],
         ],
     ],
@@ -138,7 +138,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionCategory::CATEGORY,
+                'state'  => PermissionCategory::APP,
             ],
         ],
     ],
@@ -149,7 +149,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
-                'state'  => PermissionCategory::CATEGORY,
+                'state'  => PermissionCategory::APP,
             ],
         ],
     ],
