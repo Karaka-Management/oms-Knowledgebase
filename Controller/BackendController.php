@@ -91,7 +91,7 @@ final class BackendController extends Controller
             ->where('parent', null)
             ->where('app', $app)
             ->where('name/language', $response->header->l11n->language)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['categories'] = $categories;
 
@@ -104,12 +104,12 @@ final class BackendController extends Controller
             ->where('tags/title/language', $response->header->l11n->language)
             ->limit(25)
             ->sort('createdAt', OrderType::DESC)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['docs'] = $documents;
 
         /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
-        $apps               = WikiAppMapper::getAll()->execute();
+        $apps               = WikiAppMapper::getAll()->executeGetArray();
         $view->data['apps'] = $apps;
 
         return $view;
@@ -135,7 +135,7 @@ final class BackendController extends Controller
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         /** @var \Modules\Knowledgebase\Models\WikiApp[] $list */
-        $list               = WikiAppMapper::getAll()->execute();
+        $list               = WikiAppMapper::getAll()->executeGetArray();
         $view->data['apps'] = $list;
 
         return $view;
@@ -213,12 +213,12 @@ final class BackendController extends Controller
         $list = WikiCategoryMapper::getAll()
             ->with('name')
             ->where('name/language', $response->header->l11n->language)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['categories'] = $list;
 
         /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
-        $apps               = WikiAppMapper::getAll()->execute();
+        $apps               = WikiAppMapper::getAll()->executeGetArray();
         $view->data['apps'] = $apps;
 
         return $view;
@@ -257,7 +257,7 @@ final class BackendController extends Controller
         /** @var \phpOMS\Localization\BaseStringL11n[] $l11nValues */
         $l11nValues = WikiCategoryL11nMapper::getAll()
             ->where('ref', $category->id)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['l11nValues'] = $l11nValues;
 
@@ -341,7 +341,7 @@ final class BackendController extends Controller
             ->where('app', $wikiId)
             ->where('parent', $categoryId === 0 ? null : $categoryId)
             ->where('name/language', $response->header->l11n->language)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['categories'] = $categories;
 
@@ -358,12 +358,12 @@ final class BackendController extends Controller
             ->where('language', $response->header->l11n->language)
             ->where('tags/title/language', $response->header->l11n->language)
             ->sort('createdAt', OrderType::DESC)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['docs'] = $documents;
 
         /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
-        $apps               = WikiAppMapper::getAll()->execute();
+        $apps               = WikiAppMapper::getAll()->executeGetArray();
         $view->data['apps'] = $apps;
 
         return $view;
@@ -416,7 +416,7 @@ final class BackendController extends Controller
             ->where('parent', $request->getDataInt('category'))
             ->where('app', $app)
             ->where('name/language', $response->header->l11n->language)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['categories'] = $categories;
         $view->data['document']   = $document;

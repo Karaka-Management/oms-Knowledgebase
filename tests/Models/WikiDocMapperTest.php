@@ -54,7 +54,7 @@ final class WikiDocMapperTest extends \PHPUnit\Framework\TestCase
 
         self::assertGreaterThan(0,
             \count(
-                WikiDocMapper::getAll()->where('app', 1)->sort('id', OrderType::DESC)->execute()
+                WikiDocMapper::getAll()->where('app', 1)->sort('id', OrderType::DESC)->executeGetArray()
             )
         );
     }

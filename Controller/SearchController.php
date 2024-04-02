@@ -55,7 +55,7 @@ final class SearchController extends Controller
             ->where('tags/title/language', $response->header->l11n->language)
             ->sort('createdAt', OrderType::DESC)
             ->limit(8)
-            ->execute();
+            ->executeGetArray();
 
         $results = [];
         foreach ($docs as $doc) {

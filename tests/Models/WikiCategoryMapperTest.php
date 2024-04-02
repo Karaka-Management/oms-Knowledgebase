@@ -50,7 +50,7 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
         $categoryR = WikiCategoryMapper::get()->with('name')->where('id', $this->category->id)->where('name/language', ISO639x1Enum::_EN)->execute();
         self::assertEquals($this->category->getL11n(), $categoryR->getL11n());
 
-        self::assertGreaterThan(0, \count(WikiCategoryMapper::getAll()->where('app', 1)->execute()));
+        self::assertGreaterThan(0, \count(WikiCategoryMapper::getAll()->where('app', 1)->executeGetArray()));
     }
 
     #[\PHPUnit\Framework\Attributes\Group('module')]
@@ -81,7 +81,7 @@ final class WikiCategoryMapperTest extends \PHPUnit\Framework\TestCase
                     ->where('parent', 1)
                     ->where('app', 1)
                     ->where('name/language', ISO639x1Enum::_EN)
-                    ->execute()
+                    ->executeGetArray()
             )
         );
     }
