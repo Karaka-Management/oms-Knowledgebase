@@ -287,7 +287,7 @@ final class ApiController extends Controller
     }
 
     /**
-     * Validate tag l11n create request
+     * Validate category l11n create request
      *
      * @param RequestAbstract $request Request
      *
@@ -308,7 +308,7 @@ final class ApiController extends Controller
     }
 
     /**
-     * Api method to create tag localization
+     * Api method to create category localization
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -335,7 +335,7 @@ final class ApiController extends Controller
     }
 
     /**
-     * Method to create tag localization from request.
+     * Method to create category localization from request.
      *
      * @param RequestAbstract $request Request
      *
@@ -790,8 +790,6 @@ final class ApiController extends Controller
      *
      * @return BaseStringL11n
      *
-     * @todo Implement API update function
-     *
      * @since 1.0.0
      */
     public function updateCategoryL11nFromRequest(RequestAbstract $request, BaseStringL11n $new) : BaseStringL11n
@@ -809,14 +807,15 @@ final class ApiController extends Controller
      *
      * @return array<string, bool>
      *
-     * @todo Implement API validation function
-     *
      * @since 1.0.0
      */
     private function validateCategoryL11nUpdate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['id'] = !$request->hasData('id'))) {
+        if (($val['id'] = !$request->hasData('id'))
+            || (($val['title'] = !$request->hasData('title'))
+                && ($val['language'] = !$request->hasData('language')))
+        ) {
             return $val;
         }
 

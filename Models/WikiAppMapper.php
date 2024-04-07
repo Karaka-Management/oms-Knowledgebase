@@ -17,7 +17,7 @@ namespace Modules\Knowledgebase\Models;
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
- * Mapper class.
+ * WikiApp mapper class.
  *
  * @package Modules\Knowledgebase\Models
  * @license OMS License 2.0

@@ -18,7 +18,7 @@ use Modules\Admin\Models\AccountMapper;
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
- * Mapper class.
+ * WikiDocHistory mapper class.
  *
  * @package Modules\Knowledgebase\Models
  * @license OMS License 2.0
