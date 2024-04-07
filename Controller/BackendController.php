@@ -265,7 +265,8 @@ final class BackendController extends Controller
             ->where('unit', [$this->app->unitId, null])
             ->executeGetArray();
 
-        $appIds = \array_map(function (WikiApp $app) { return $app->id; }, $view->data['apps']);
+        $appIds = \array_map(function (WikiApp $app) { return $app->id;
+        }, $view->data['apps']);
         $appIds = \array_unique($appIds);
 
         $view->data['parents'] = WikiCategoryMapper::getAll()
@@ -301,7 +302,8 @@ final class BackendController extends Controller
             ->where('unit', [$this->app->unitId, null])
             ->executeGetArray();
 
-        $appIds = \array_map(function (WikiApp $app) { return $app->id; }, $view->data['apps']);
+        $appIds = \array_map(function (WikiApp $app) { return $app->id;
+        }, $view->data['apps']);
         $appIds = \array_unique($appIds);
 
         $view->data['parents'] = WikiCategoryMapper::getAll()
