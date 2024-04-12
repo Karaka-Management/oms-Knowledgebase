@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Controller;
 
-use Modules\Admin\Models\AccountMapper;
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Knowledgebase\Models\NullWikiApp;
@@ -28,11 +27,6 @@ use Modules\Knowledgebase\Models\WikiDoc;
 use Modules\Knowledgebase\Models\WikiDocHistory;
 use Modules\Knowledgebase\Models\WikiDocMapper;
 use Modules\Knowledgebase\Models\WikiStatus;
-use Modules\Media\Models\CollectionMapper;
-use Modules\Media\Models\MediaMapper;
-use Modules\Media\Models\NullMedia;
-use Modules\Media\Models\Reference;
-use Modules\Media\Models\ReferenceMapper;
 use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Message\Http\RequestStatusCode;
@@ -103,98 +97,28 @@ final class ApiController extends Controller
     {
         $path = $this->createWikiDir($doc);
 
-        /** @var \Modules\Admin\Models\Account $account */
-        $account = AccountMapper::get()->where('id', $request->header->account)->execute();
-
-        $collection = null;
-
-        if (!empty($uploadedFiles = $request->files)) {
-            $uploaded = $this->app->moduleManager->get('Media', 'Api')->uploadFiles(
+        if (!empty($request->files)) {
+            $this->app->moduleManager->get('Media', 'Api')->uploadFiles(
                 names: [],
                 fileNames: [],
-                files: $uploadedFiles,
+                files: $request->files,
                 account: $request->header->account,
                 basePath: __DIR__ . '/../../../Modules/Media/Files' . $path,
                 virtualPath: $path,
+                rel: $doc->id,
+                mapper: WikiDocMapper::class,
+                field: 'files'
             );
-
-            foreach ($uploaded as $media) {
-                $this->createModelRelation(
-                    $request->header->account,
-                    $doc->id,
-                    $media->id,
-                    WikiDocMapper::class,
-                    'files',
-                    '',
-                    $request->getOrigin()
-                );
-
-                $accountPath = '/Accounts/' . $account->id . ' ' . $account->login
-                    . '/Knowledgebase/' . ($doc->category?->id ?? '0')
-                    . '/' . $doc->id;
-
-                $ref            = new Reference();
-                $ref->name      = $media->name;
-                $ref->source    = new NullMedia($media->id);
-                $ref->createdBy = new NullAccount($request->header->account);
-                $ref->setVirtualPath($accountPath);
-
-                $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
-
-                $collection ??= $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                    $accountPath,
-                    $request->header->account,
-                    __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->id . '/Knowledgebase/' . ($doc->category?->id ?? '0') . '/' . $doc->id
-                );
-
-                $this->createModelRelation(
-                    $request->header->account,
-                    $collection->id,
-                    $ref->id,
-                    CollectionMapper::class,
-                    'sources',
-                    '',
-                    $request->getOrigin()
-                );
-            }
         }
 
-        $mediaFiles = $request->getDataJson('media');
-        foreach ($mediaFiles as $file) {
-            /** @var \Modules\Media\Models\Media $media */
-            $media = MediaMapper::get()->where('id', (int) $file)->limit(1)->execute();
-            $this->createModelRelation(
+        if (!empty($media = $request->getDataJson('media'))) {
+            $this->app->moduleManager->get('Media', 'Api')->addMediaToCollectionAndModel(
                 $request->header->account,
+                $media,
                 $doc->id,
-                $media->id,
                 WikiDocMapper::class,
                 'files',
-                '',
-                $request->getOrigin()
-            );
-
-            $ref            = new Reference();
-            $ref->name      = $media->name;
-            $ref->source    = new NullMedia($media->id);
-            $ref->createdBy = new NullAccount($request->header->account);
-            $ref->setVirtualPath($path);
-
-            $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
-
-            $collection ??= $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                $path,
-                $request->header->account,
-                __DIR__ . '/../../../Modules/Media/Files' . $path
-            );
-
-            $this->createModelRelation(
-                $request->header->account,
-                $collection->id,
-                $ref->id,
-                CollectionMapper::class,
-                'sources',
-                '',
-                $request->getOrigin()
+                $path
             );
         }
     }
