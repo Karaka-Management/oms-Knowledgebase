@@ -85,18 +85,14 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-dashboard');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
-        $categories = WikiCategoryMapper::getAll()
+        $view->data['categories'] = WikiCategoryMapper::getAll()
             ->with('name')
             ->where('parent', null)
             ->where('app', $app)
             ->where('name/language', $response->header->l11n->language)
             ->executeGetArray();
 
-        $view->data['categories'] = $categories;
-
-        /** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
-        $documents = WikiDocMapper::getAll()
+        $view->data['docs'] = WikiDocMapper::getAll()
             ->with('tags')
             ->with('tags/title')
             ->where('app', $app)
@@ -106,11 +102,9 @@ final class BackendController extends Controller
             ->sort('createdAt', OrderType::DESC)
             ->executeGetArray();
 
-        $view->data['docs'] = $documents;
-
-        /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
-        $apps               = WikiAppMapper::getAll()->executeGetArray();
-        $view->data['apps'] = $apps;
+        $view->data['apps'] = WikiAppMapper::getAll()
+            ->where('unit', [$this->app->unitId, null])
+            ->executeGetArray();
 
         return $view;
     }
@@ -134,9 +128,9 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-list');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        /** @var \Modules\Knowledgebase\Models\WikiApp[] $list */
-        $list               = WikiAppMapper::getAll()->executeGetArray();
-        $view->data['apps'] = $list;
+        $view->data['apps'] = WikiAppMapper::getAll()
+            ->where('unit', [$this->app->unitId, null])
+            ->executeGetArray();
 
         return $view;
     }
@@ -160,9 +154,9 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-view');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        /** @var \Modules\Knowledgebase\Models\WikiApp $app */
-        $app               = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
-        $view->data['app'] = $app;
+        $view->data['app'] = WikiAppMapper::get()
+            ->where('id', (int) $request->getData('id'))
+            ->execute();
 
         return $view;
     }
@@ -184,8 +178,6 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-app-view');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
-
-        $view->data['app'] = new NullWikiApp();
 
         return $view;
     }
@@ -209,17 +201,14 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-list');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        /** @var \Modules\Knowledgebase\Models\WikiCategory[] $list */
-        $list = WikiCategoryMapper::getAll()
+        $view->data['categories'] = WikiCategoryMapper::getAll()
             ->with('name')
             ->where('name/language', $response->header->l11n->language)
             ->executeGetArray();
 
-        $view->data['categories'] = $list;
-
-        /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
-        $apps               = WikiAppMapper::getAll()->executeGetArray();
-        $view->data['apps'] = $apps;
+        $view->data['apps'] = WikiAppMapper::getAll()
+            ->where('unit', [$this->app->unitId, null])
+            ->executeGetArray();
 
         return $view;
     }
@@ -243,30 +232,29 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-category-view');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
-        $category = WikiCategoryMapper::get()
+        $view->data['category'] = WikiCategoryMapper::get()
             ->with('name')
             ->where('id', (int) $request->getData('id'))
             ->where('name/language', $response->header->l11n->language)
             ->execute();
 
-        $view->data['category'] = $category;
-
         $view->data['l11nView'] = new \Web\Backend\Views\L11nView($this->app->l11nManager, $request, $response);
 
-        /** @var \phpOMS\Localization\BaseStringL11n[] $l11nValues */
-        $l11nValues = WikiCategoryL11nMapper::getAll()
-            ->where('ref', $category->id)
+        $view->data['l11nValues'] = WikiCategoryL11nMapper::getAll()
+            ->where('ref', $view->data['category']->id)
             ->executeGetArray();
-
-        $view->data['l11nValues'] = $l11nValues;
 
         $view->data['apps'] = WikiAppMapper::getAll()
             ->where('unit', [$this->app->unitId, null])
             ->executeGetArray();
 
-        $appIds = \array_map(function (WikiApp $app) { return $app->id;
-        }, $view->data['apps']);
+        $appIds = \array_map(
+            function (WikiApp $app) {
+                return $app->id;
+            },
+            $view->data['apps']
+        );
+
         $appIds = \array_unique($appIds);
 
         $view->data['parents'] = WikiCategoryMapper::getAll()
@@ -302,8 +290,13 @@ final class BackendController extends Controller
             ->where('unit', [$this->app->unitId, null])
             ->executeGetArray();
 
-        $appIds = \array_map(function (WikiApp $app) { return $app->id;
-        }, $view->data['apps']);
+        $appIds = \array_map(
+            function (WikiApp $app) {
+                return $app->id;
+            },
+            $view->data['apps']
+        );
+
         $appIds = \array_unique($appIds);
 
         $view->data['parents'] = WikiCategoryMapper::getAll()
@@ -337,22 +330,18 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Knowledgebase/Theme/Backend/wiki-doc-list');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
-        /** @var \Modules\Knowledgebase\Models\WikiCategory[] $categories */
-        $categories = WikiCategoryMapper::getAll()
+        $view->data['categories'] = WikiCategoryMapper::getAll()
             ->with('name')
             ->where('app', $wikiId)
             ->where('parent', $categoryId === 0 ? null : $categoryId)
             ->where('name/language', $response->header->l11n->language)
             ->executeGetArray();
 
-        $view->data['categories'] = $categories;
-
         $view->data['category'] = WikiCategoryMapper::get()
             ->where('id', $categoryId === 0 ? null : $categoryId)
             ->execute();
 
-        /** @var \Modules\Knowledgebase\Models\WikiDoc[] $documents */
-        $documents = WikiDocMapper::getAll()
+        $view->data['docs'] = WikiDocMapper::getAll()
             ->with('tags')
             ->with('tags/title')
             ->where('app', $wikiId)
@@ -362,11 +351,9 @@ final class BackendController extends Controller
             ->sort('createdAt', OrderType::DESC)
             ->executeGetArray();
 
-        $view->data['docs'] = $documents;
-
-        /** @var \Modules\Knowledgebase\Models\WikiApp[] $apps */
-        $apps               = WikiAppMapper::getAll()->executeGetArray();
-        $view->data['apps'] = $apps;
+        $view->data['apps'] = WikiAppMapper::getAll()
+            ->where('unit', [$this->app->unitId, null])
+            ->executeGetArray();
 
         return $view;
     }
