@@ -249,7 +249,7 @@ final class BackendController extends Controller
             ->executeGetArray();
 
         $appIds = \array_map(
-            function (WikiApp $app) {
+            function (WikiApp $app) : int {
                 return $app->id;
             },
             $view->data['apps']
@@ -291,7 +291,7 @@ final class BackendController extends Controller
             ->executeGetArray();
 
         $appIds = \array_map(
-            function (WikiApp $app) {
+            function (WikiApp $app) : int {
                 return $app->id;
             },
             $view->data['apps']
