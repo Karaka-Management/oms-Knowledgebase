@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Modules\Knowledgebase\Controller;
 
-use Modules\Knowledgebase\Models\NullWikiApp;
 use Modules\Knowledgebase\Models\NullWikiCategory;
 use Modules\Knowledgebase\Models\NullWikiDoc;
 use Modules\Knowledgebase\Models\PermissionCategory;
