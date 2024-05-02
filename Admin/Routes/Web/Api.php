@@ -159,7 +159,7 @@ return [
         ],
     ],
 
-    '^.*/wiki/category/l11n$' => [
+    '^.*/wiki/category/l11n(\?.*|$)$' => [
         [
             'dest'       => '\Modules\Knowledgebase\Controller\ApiController:apiWikiCategoryL11nCreate',
             'verb'       => RouteVerb::PUT,

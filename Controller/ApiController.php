@@ -55,6 +55,10 @@ final class ApiController extends Controller
      *
      * @api
      *
+     * @question Consider to use the Editor module for the content instead of handling
+     *      the content separately in the wiki module.
+     *      https://github.com/Karaka-Management/oms-Knowledgebase/issues/7
+     *
      * @since 1.0.0
      */
     public function apiWikiDocCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
