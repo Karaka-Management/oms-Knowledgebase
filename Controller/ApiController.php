@@ -168,9 +168,11 @@ final class ApiController extends Controller
         $doc->language    = ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language;
         $doc->status      = WikiStatus::tryFromValue($request->getDataInt('status')) ?? WikiStatus::INACTIVE;
 
+        /*
         if ($request->hasData('tags')) {
             $doc->tags = $this->app->moduleManager->get('Tag', 'Api')->createTagsFromRequest($request);
         }
+        */
 
         return $doc;
     }

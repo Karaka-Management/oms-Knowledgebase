@@ -32,7 +32,7 @@ echo $this->data['nav']->render(); ?>
     <div class="col-xs-12 col-md-8 col-lg-9">
         <div class="row">
             <div class="col-xs-12">
-                <div class="portlet">
+                <section class="portlet">
                     <div class="portlet-head">
                         <?= $this->getHtml('Docs'); ?>
                         <i class="g-icon download btn end-xs">download</i>
@@ -53,7 +53,7 @@ echo $this->data['nav']->render(); ?>
                         <?php endif; ?>
                     </table>
                     </div>
-                </div>
+                </section>
             </div>
         </div>
     </div>

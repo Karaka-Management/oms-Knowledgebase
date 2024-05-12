@@ -31,7 +31,7 @@ echo $this->data['nav']->render(); ?>
         <div class="row">
             <?php foreach ($documents as $doc) : $url = UriFactory::build('{/base}/wiki/doc/view?id=' . $doc->id); ?>
             <div class="col-xs-12 plain-grid">
-                <div class="portlet">
+                <section class="portlet">
                     <div class="portlet-head"><a href="<?= $url; ?>"><?= $this->printHtml($doc->name); ?></a></div>
                     <div class="portlet-body">
                         <article>
@@ -49,7 +49,7 @@ echo $this->data['nav']->render(); ?>
                     <div class="portlet-foot">
                         <a href="<?= $url; ?>" class="button rf"><?= $this->getHtml('More', '0', '0'); ?></a>
                     </div>
-                </div>
+                </section>
             </div>
             <?php endforeach; ?>
             <?php if (empty($documents)) : ?>

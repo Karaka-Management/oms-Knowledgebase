@@ -23,6 +23,7 @@ return [
             'dest'       => '\Modules\Knowledgebase\Controller\SearchController:searchGeneral',
             'verb'       => RouteVerb::ANY,
             'active'     => true,
+            'order'      => 7,
             'permission' => [
                 'module' => SearchController::NAME,
                 'type'   => PermissionType::READ,
