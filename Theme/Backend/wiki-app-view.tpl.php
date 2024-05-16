@@ -15,7 +15,7 @@ declare(strict_types=1);
 use Modules\Knowledgebase\Models\NullWikiApp;
 use phpOMS\Uri\UriFactory;
 
-$app = $this->data['app'] ?? new NullWikiApp();
+$app   = $this->data['app'] ?? new NullWikiApp();
 $isNew = $app->id === 0;
 
 /** @var \phpOMS\Views\View $this */
