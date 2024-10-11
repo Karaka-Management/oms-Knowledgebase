@@ -25,7 +25,9 @@ echo $this->data['nav']->render(); ?>
 <div class="row">
     <div class="col-xs-12 col-md-6">
         <section class="portlet">
-            <form method="<?= $isNew ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}wiki/category?csrf={$CSRF}'); ?>">
+            <form id="iCategoryForm" method="<?= $isNew ? 'PUT' : 'POST'; ?>"
+                action="<?= UriFactory::build('{/api}wiki/category?csrf={$CSRF}'); ?>"
+                <?= $isNew ? 'data-redirect="' . UriFactory::build('{/base}/wiki/category/view') . '?id={/0/response/id}"' : ''; ?>>
                 <div class="portlet-head"><?= $this->getHtml('Category'); ?></div>
                 <div class="portlet-body">
                     <div class="form-group">
@@ -73,7 +75,8 @@ echo $this->data['nav']->render(); ?>
     <?= $this->data['l11nView']->render(
         $this->data['l11nValues'],
         [],
-        '{/api}wiki/category/l11n?csrf={$CSRF}'
+        '{/api}wiki/category/l11n?csrf={$CSRF}',
+        (string) $category->id
     );
     ?>
 </div>

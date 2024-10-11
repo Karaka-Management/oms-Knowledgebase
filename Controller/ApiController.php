@@ -228,8 +228,8 @@ final class ApiController extends Controller
     private function validateWikiCategoryL11nCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['name'] = !$request->hasData('name'))
-            || ($val['category'] = !$request->hasData('category'))
+        if (($val['content'] = !$request->hasData('content'))
+            || ($val['ref'] = !$request->hasData('ref'))
         ) {
             return $val;
         }
@@ -276,9 +276,9 @@ final class ApiController extends Controller
     private function createWikiCategoryL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $l11nWikiCategory           = new BaseStringL11n();
-        $l11nWikiCategory->ref      = $request->getDataInt('category') ?? 0;
+        $l11nWikiCategory->ref      = $request->getDataInt('ref') ?? 0;
         $l11nWikiCategory->language = ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language;
-        $l11nWikiCategory->content  = $request->getDataString('name') ?? '';
+        $l11nWikiCategory->content  = $request->getDataString('content') ?? '';
 
         return $l11nWikiCategory;
     }
@@ -418,7 +418,7 @@ final class ApiController extends Controller
         $category      = new WikiCategory();
         $category->app = new NullWikiApp($request->getDataInt('app') ?? 1);
         $category->setL11n(
-            $request->getDataString('name') ?? '',
+            $request->getDataString('content') ?? '',
             ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language
         );
 
@@ -441,7 +441,7 @@ final class ApiController extends Controller
     private function validateWikiCategoryCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['name'] = !$request->hasData('name'))) {
+        if (($val['content'] = !$request->hasData('content'))) {
             return $val;
         }
 
@@ -508,7 +508,7 @@ final class ApiController extends Controller
     private function updateCategoryFromRequest(RequestAbstract $request, WikiCategory $new) : WikiCategory
     {
         $new->setL11n(
-            $request->getDataString('name') ?? $new->getL11n(),
+            $request->getDataString('content') ?? $new->getL11n(),
             ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language
         );
 
@@ -725,7 +725,7 @@ final class ApiController extends Controller
     public function updateCategoryL11nFromRequest(RequestAbstract $request, BaseStringL11n $new) : BaseStringL11n
     {
         $new->language = ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $new->language;
-        $new->content  = $request->getDataString('title') ?? $new->content;
+        $new->content  = $request->getDataString('content') ?? $new->content;
 
         return $new;
     }
@@ -743,7 +743,7 @@ final class ApiController extends Controller
     {
         $val = [];
         if (($val['id'] = !$request->hasData('id'))
-            || (($val['title'] = !$request->hasData('title'))
+            || (($val['content'] = !$request->hasData('content'))
                 && ($val['language'] = !$request->hasData('language')))
         ) {
             return $val;

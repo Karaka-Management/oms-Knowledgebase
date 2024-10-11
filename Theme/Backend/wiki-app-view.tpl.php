@@ -24,7 +24,7 @@ echo $this->data['nav']->render();
 <div class="row">
     <div class="col-xs-12 col-md-6">
         <section class="portlet">
-            <form method="<?= $isNew ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}wiki/app?csrf={$CSRF}'); ?>">
+            <form id="fApp" method="<?= $isNew ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}wiki/app?csrf={$CSRF}'); ?>">
                 <div class="portlet-head"><?= $this->getHtml('App'); ?></div>
                 <div class="portlet-body">
                     <div class="form-group">

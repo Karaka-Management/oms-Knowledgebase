@@ -50,29 +50,28 @@ echo $this->data['nav']->render(); ?>
             <form id="docForm" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}wiki/doc?' . ($isNewDoc ? '' : 'id={?id}&') . 'csrf={$CSRF}'); ?>">
                 <div class="portlet-head"><?= $this->getHtml('Status'); ?></div>
                 <div class="portlet-body">
-                    <table class="layout wf-100">
-                        <tr><td>
-                                <select name="status" id="iStatus">
-                                    <option value="<?= WikiStatus::DRAFT; ?>"<?= $wiki->status === WikiStatus::DRAFT ? ' selected' : ''; ?>><?= $this->getHtml('Draft'); ?>
-                                    <option value="<?= WikiStatus::ACTIVE; ?>"<?= $wiki->status === WikiStatus::ACTIVE ? ' selected' : ''; ?>><?= $this->getHtml('Active'); ?>
-                                </select>
-                        <tr><td><label for="iLanguages"><?= $this->getHtml('Language'); ?></label>
-                        <tr><td>
-                                <select id="iLanguages" name="lang">
-                                    <?php foreach ($languages as $code => $language) : $code = \strtolower(\substr($code, 1)); ?>
-                                    <option value="<?= $this->printHtml($code); ?>"<?= $code === $wiki->language ? ' selected' : ''; ?>><?= $this->printHtml($language); ?>
-                                    <?php endforeach; ?>
-                                </select>
-                    </table>
+                    <div class="form-group">
+                        <select name="status" id="iStatus">
+                            <option value="<?= WikiStatus::DRAFT; ?>"<?= $wiki->status === WikiStatus::DRAFT ? ' selected' : ''; ?>><?= $this->getHtml('Draft'); ?>
+                            <option value="<?= WikiStatus::ACTIVE; ?>"<?= $wiki->status === WikiStatus::ACTIVE ? ' selected' : ''; ?>><?= $this->getHtml('Active'); ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="iLanguages"><?= $this->getHtml('Language'); ?></label>
+                        <select id="iLanguages" name="lang">
+                            <?php foreach ($languages as $code => $language) : $code = \strtolower(\substr($code, 1)); ?>
+                            <option value="<?= $this->printHtml($code); ?>"<?= $code === $wiki->language ? ' selected' : ''; ?>><?= $this->printHtml($language); ?>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 </div>
                 <div class="portlet-foot">
                     <table class="layout wf-100">
                         <tr>
                             <td>
-                                <?php if ($isNewDoc) : ?>
-                                    <a href="<?= UriFactory::build('{/base}/wiki/dashboard'); ?>" class="button"><?= $this->getHtml('Delete', '0', '0'); ?></a>
-                                <?php else : ?>
-                                    <input type="submit" name="deleteButton" id="iDeleteButton" value="<?= $this->getHtml('Delete', '0', '0'); ?>">
+                                <?php if (!$isNewDoc) : ?>
+                                    <input type="submit" formmethod="DELETE" name="deleteButton" id="iDeleteButton" value="<?= $this->getHtml('Delete', '0', '0'); ?>">
                                 <?php endif; ?>
                             <td class="rT">
                                 <input type="submit" name="saveButton" id="iSaveButton" value="<?= $this->getHtml('Save', '0', '0'); ?>">
@@ -84,14 +83,30 @@ echo $this->data['nav']->render(); ?>
         <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Categories'); ?></div>
             <div class="portlet-body">
-                <table class="layout wf-100">
-                    <tr><td><label for="iApp"><?= $this->getHtml('App'); ?></label>
-                    <tr><td><select id="iApp" name="app"></select>
-                    <tr><td><label for="iCategory"><?= $this->getHtml('Category'); ?></label>
-                    <tr><td><select id="iCategory" name="category"></select>
-                    <tr><td><?= $this->getHtml('Tags', 'Tag'); ?>
-                    <tr><td><?= $this->getData('tagSelector')->render('iTag', 'tag', 'fEditor', false); ?>
-                </table>
+                <div class="form-group">
+                    <label for="iApp"><?= $this->getHtml('App'); ?></label>
+                    <select id="iApp" form="docForm" name="app">
+                        <?php foreach ($this->data['apps'] as $app) : ?>
+                            <option value="<?= $app->id; ?>"<?= $app->id === $wiki->app?->id ? ' selected' : ''; ?>><?= $this->printHtml($app->name); ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="iCategory"><?= $this->getHtml('Category'); ?></label>
+                    <select id="iCategory" form="docForm" name="category">
+                        <?php foreach ($this->data['categories'] as $category) : ?>
+                            <option value="<?= $category->id; ?>"<?= $category->id === $wiki->category?->id ? ' selected' : ''; ?>><?= $this->printHtml($category->name); ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <!--
+                <div class="form-group">
+                    <?= $this->getHtml('Tags', 'Tag'); ?>
+                    <?= $this->getData('tagSelector')->render('iTag', 'tag', 'fEditor', false); ?>
+                </div>
+                -->
             </div>
         </section>
     </div>

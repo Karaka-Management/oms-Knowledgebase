@@ -448,6 +448,15 @@ final class BackendController extends Controller
 
         $view->data['doc'] = new NullWikiDoc();
 
+        $view->data['categories'] = WikiCategoryMapper::getAll()
+            ->with('name')
+            ->where('name/language', $response->header->l11n->language)
+            ->executeGetArray();
+
+        $view->data['apps'] = WikiAppMapper::getAll()
+            ->where('unit', [$this->app->unitId, null])
+            ->executeGetArray();
+
         return $view;
     }
 
@@ -480,6 +489,15 @@ final class BackendController extends Controller
         $view->data['tagSelector'] = $tagSelector;
 
         $view->data['doc'] = WikiDocMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
+
+        $view->data['categories'] = WikiCategoryMapper::getAll()
+            ->with('name')
+            ->where('name/language', $response->header->l11n->language)
+            ->executeGetArray();
+
+        $view->data['apps'] = WikiAppMapper::getAll()
+            ->where('unit', [$this->app->unitId, null])
+            ->executeGetArray();
 
         return $view;
     }
