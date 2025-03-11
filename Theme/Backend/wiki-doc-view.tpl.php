@@ -30,7 +30,6 @@ $editable = $this->data['editable'];
 /** @var \phpOMS\Views\View $this */
 echo $this->data['nav']->render();
 ?>
-
 <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-9">
         <section class="portlet">

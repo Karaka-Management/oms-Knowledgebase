@@ -20,7 +20,6 @@ $categories = $this->data['categories'] ?? [];
 /** @var \phpOMS\Views\View $this */
 echo $this->data['nav']->render();
 ?>
-
 <div class="row">
     <div class="box">
         <a class="button end-xs save" href="<?= UriFactory::build('{/base}/wiki/category/create'); ?>"><?= $this->getHtml('New', '0', '0'); ?></a>
