@@ -22,7 +22,7 @@ use Modules\Knowledgebase\Models\NullWikiDoc;
 $categories = $this->data['categories'] ?? [];
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc $doc */
-$doc = $this->getData('document') ?? new NullWikiDoc();
+$doc = $this->data['document'] ?? new NullWikiDoc();
 
 /** @var bool $editable */
 $editable = $this->data['editable'];

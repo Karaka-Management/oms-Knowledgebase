@@ -17,7 +17,7 @@ use Modules\Knowledgebase\Models\WikiStatus;
 use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Knowledgebase\Models\WikiDoc $wiki */
-$wiki      = $this->getData('doc') ?? new NullWikiDoc();
+$wiki      = $this->data['doc'] ?? new NullWikiDoc();
 $isNewDoc  = $wiki->id === 0;
 $languages = \phpOMS\Localization\ISO639Enum::getConstants();
 
@@ -35,12 +35,12 @@ echo $this->data['nav']->render(); ?>
 
             <section class="portlet">
                 <div class="portlet-body">
-                    <?= $this->getData('editor')->render('iWiki'); ?>
+                    <?= $this->data['editor']->render('iWiki'); ?>
                 </div>
             </section>
 
             <div class="box wf-100">
-            <?= $this->getData('editor')->getData('text')->render('iWiki', 'plain', 'docForm', $wiki->docRaw, $wiki->doc); ?>
+            <?= $this->data['editor']->data['text']->render('iWiki', 'plain', 'docForm', $wiki->docRaw, $wiki->doc); ?>
             </div>
         </div>
     </div>
@@ -104,7 +104,7 @@ echo $this->data['nav']->render(); ?>
                 <!--
                 <div class="form-group">
                     <?= $this->getHtml('Tags', 'Tag'); ?>
-                    <?= $this->getData('tagSelector')->render('iTag', 'tag', 'fEditor', false); ?>
+                    <?= $this->data['tagSelector']->render('iTag', 'tag', 'fEditor', false); ?>
                 </div>
                 -->
             </div>

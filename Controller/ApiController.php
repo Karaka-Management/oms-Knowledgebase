@@ -299,7 +299,7 @@ final class ApiController extends Controller
     public function apiWikiDocGet(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiDoc $doc */
-        $doc = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $doc = WikiDocMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $this->createStandardReturnResponse($request, $response, $doc);
     }
 
@@ -319,7 +319,7 @@ final class ApiController extends Controller
     public function apiWikiDocUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiDoc $old */
-        $old = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = WikiDocMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $new = $this->updateDocFromRequest($request, clone $old);
         $this->updateModel($request->header->account, $old, $new, WikiDocMapper::class, 'doc', $request->getOrigin());
 
@@ -371,7 +371,7 @@ final class ApiController extends Controller
     public function apiWikiDocDelete(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiDoc $doc */
-        $doc = WikiDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $doc = WikiDocMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
 
         $this->deleteModel($request->header->account, $doc, WikiDocMapper::class, 'doc', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $doc);
@@ -466,7 +466,7 @@ final class ApiController extends Controller
         /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
         $category = WikiCategoryMapper::get()
             ->with('name')
-            ->where('id', (int) $request->getData('id'))
+            ->where('id', $request->getDataInt('id') ?? 0)
             ->where('name/language', ISO639x1Enum::_EN)
             ->execute();
 
@@ -489,7 +489,7 @@ final class ApiController extends Controller
     public function apiWikiCategoryUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiCategory $old */
-        $old = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = WikiCategoryMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $new = $this->updateCategoryFromRequest($request, clone $old);
 
         $this->updateModel($request->header->account, $old, $new, WikiCategoryMapper::class, 'category', $request->getOrigin());
@@ -531,7 +531,7 @@ final class ApiController extends Controller
     public function apiWikiCategoryDelete(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiCategory $category */
-        $category = WikiCategoryMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $category = WikiCategoryMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
 
         $this->deleteModel($request->header->account, $category, WikiCategoryMapper::class, 'category', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $category);
@@ -617,7 +617,7 @@ final class ApiController extends Controller
     public function apiWikiAppGet(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiApp $app */
-        $app = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $app = WikiAppMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $this->createStandardReturnResponse($request, $response, $app);
     }
 
@@ -637,7 +637,7 @@ final class ApiController extends Controller
     public function apiWikiAppUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiApp $old */
-        $old = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = WikiAppMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $new = $this->updateAppFromRequest($request, clone $old);
 
         $this->updateModel($request->header->account, $old, $new, WikiAppMapper::class, 'app', $request->getOrigin());
@@ -676,7 +676,7 @@ final class ApiController extends Controller
     public function apiWikiAppDelete(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Knowledgebase\Models\WikiApp $app */
-        $app = WikiAppMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $app = WikiAppMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
 
         $this->deleteModel($request->header->account, $app, WikiAppMapper::class, 'app', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $app);
@@ -705,7 +705,7 @@ final class ApiController extends Controller
         }
 
         /** @var BaseStringL11n $old */
-        $old = WikiCategoryL11nMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = WikiCategoryL11nMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $new = $this->updateCategoryL11nFromRequest($request, clone $old);
 
         $this->updateModel($request->header->account, $old, $new, WikiCategoryL11nMapper::class, 'category_l11n', $request->getOrigin());
@@ -775,7 +775,7 @@ final class ApiController extends Controller
         }
 
         /** @var BaseStringL11n $categoryL11n */
-        $categoryL11n = WikiCategoryL11nMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $categoryL11n = WikiCategoryL11nMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $this->deleteModel($request->header->account, $categoryL11n, WikiCategoryL11nMapper::class, 'category_l11n', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $categoryL11n);
     }

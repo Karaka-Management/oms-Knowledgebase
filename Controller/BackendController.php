@@ -154,7 +154,7 @@ final class BackendController extends Controller
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005901001, $request, $response);
 
         $view->data['app'] = WikiAppMapper::get()
-            ->where('id', (int) $request->getData('id'))
+            ->where('id', $request->getDataInt('id') ?? 0)
             ->execute();
 
         return $view;
@@ -233,7 +233,7 @@ final class BackendController extends Controller
 
         $view->data['category'] = WikiCategoryMapper::get()
             ->with('name')
-            ->where('id', (int) $request->getData('id'))
+            ->where('id', $request->getDataInt('id') ?? 0)
             ->where('name/language', $response->header->l11n->language)
             ->execute();
 
@@ -380,7 +380,7 @@ final class BackendController extends Controller
             ->with('tags')
             ->with('tags/title')
             ->with('files')
-            ->where('id', (int) $request->getData('id'))
+            ->where('id', $request->getDataInt('id') ?? 0)
             ->where('language', $request->header->l11n->language)
             ->where('tags/title/language', $response->header->l11n->language)
             ->execute();
